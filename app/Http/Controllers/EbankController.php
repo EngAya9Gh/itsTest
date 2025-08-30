@@ -5,14 +5,21 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Ebank;
 use Illuminate\Support\Facades\DB;
-
+use App\Utils\ProfitCalculationService;
 class EbankController extends Controller
-{
+{  protected $profitService;
+    public function __construct(ProfitCalculationService $profitService)
+    {
+        $this->profitService = $profitService;
+    }
     public function index()
     { 
         $ebanks=DB::table('ebanks')->select('*')->orderBy('id', 'desc')->paginate(500);
         
         $ebankSections=DB::table('ebank_sections')->select('*')->orderBy('id', 'desc')->paginate(500);
+        foreach ($ebanks as $service) {
+            $service->price = $this->profitService->getPrice($service);    // إنشاء رابط 
+        }
         return view('backend.ebank.ebanks.index', compact('ebanks','ebankSections'));
     }
 

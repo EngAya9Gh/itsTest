@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('user_id');
             $table->foreign('card_id')->references('id')->on('cards')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->integer('price');
+            $table->decimal('price', 8, 4);
             $table->integer('count');
             $table->string('note')->nullable();
             

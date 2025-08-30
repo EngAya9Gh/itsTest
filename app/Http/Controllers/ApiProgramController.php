@@ -14,6 +14,7 @@ class ApiProgramController extends Controller
         $programs=DB::table('programs')->select('*')->orderBy('id', 'desc')->paginate(500);
         foreach ($programs as $app) {
             $app->image_url = asset('assets/images/programs/' . $app->image);  // إنشاء رابط للصورة
+          
         }
         return response()->json(['programs'=>$programs]);
     }

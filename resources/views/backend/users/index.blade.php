@@ -10,18 +10,18 @@
         <div class="block-header">
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12">
-                    <h2>Project Board</h2>
+                    <h2>المستخدمين</h2>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.html"><i class="fa fa-dashboard"></i></a></li>                            
-                        <li class="breadcrumb-item">Dashboard</li>
-                        <li class="breadcrumb-item active">Project Board</li>
+                        <li class="breadcrumb-item">لوحة التحكم</li>
+                        <li class="breadcrumb-item active">المستخدمين </li>
                     </ul>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="d-flex flex-row-reverse">
                         <div class="page_action"> 
-                            <a href="javascript:void(0);" data-toggle="modal"  class="btn btn-primary" data-target="#createmodal" ><i class="fa fa-add">أضف مستخدمًا</i></a>
-                        </div>
+ <!--      <a href="javascript:void(0);" data-toggle="modal"  class="btn btn-primary" data-target="#createmodal" ><i class="fa fa-add">أضف مستخدمًا</i></a>
+-->     </div>
                         <div class="p-2 d-flex">
                         </div>
                     </div>
@@ -40,10 +40,9 @@
                                         <tr>                                            
                                             <th>اسم المستخدم</th>
                                             <th> الهاتف</th>
-                                            <th> -----</th>
+                                            <th>الرصيد الحالي</th>
                                             <th>البريد الالكتروني</th>
-                                            <th> -----</th>
-                                            <th> -----</th>
+                                       
                                             <th>النوع</th>
                                             <th>العمليات</th>
                                         </tr>
@@ -57,20 +56,12 @@
                                             </td>
                                             <td  style="direction:ltr">{{$user->mobile}}</td>
                                             <td>
-                                                <div class="progress progress-xs">
-                                                    <div class="progress-bar" role="progressbar" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100" style="width: 48%;"></div>                                                
-                                                </div>
-                                                <small>Completion with: 48%</small>
+                                            <span class="badge badge-success">
+                                               {{$user->balance}}TL
+                                               <span>
                                             </td>
                                             <td>{{$user->email}}</td>
-                                            <td><img src="assets/images/xs/avatar1.jpg" data-toggle="tooltip" data-placement="top" title="Team Lead" alt="Avatar" class="width35 rounded"></td>
-                                            <td>
-                                                <ul class="list-unstyled team-info">
-                                                    <li><img src="assets/images/xs/avatar1.jpg" data-toggle="tooltip" data-placement="top" title="Avatar" alt="Avatar"></li>
-                                                    <li><img src="assets/images/xs/avatar2.jpg" data-toggle="tooltip" data-placement="top" title="Avatar"></li>
-                                                    <li><img src="assets/images/xs/avatar3.jpg" data-toggle="tooltip" data-placement="top" title="Avatar"></li>
-                                                </ul>
-                                            </td>
+                                      
                                             <td>
                                                 <span class="badge badge-success">
                                                     @if($user->role==4)
@@ -86,8 +77,10 @@
                                             </td>
                                             <td class="project-actions">
                                                 <a href="#defaultModal" data-toggle="modal" data-target="#defaultModal">
-                                                <a href="javascript:void(0);" class="btn btn-sm btn-outline-primary"><i class="icon-eye"></i></a>
+                                                <a href="javascript:void(0);" class="btn btn-sm btn-outline-primary"   data-toggle="modal" data-target="#balanceModal{{$user->id}}"><i class="icon-plus"></i></a>
+                                                <a href="/users/other/agent/{{$user->id}}" class="btn btn-sm btn-outline-primary"><i class="icon-users"></i></a>
                                                 <a href="javascript:void(0);" data-toggle="modal" data-target="#editModal{{$user->id}}" class="btn btn-sm btn-outline-success"><i class="icon-pencil"></i></a>
+                                                <a href="javascript:void(0);" data-toggle="modal" data-target="#changePassModal{{$user->id}}" class="btn btn-sm btn-outline-success"><i class="icon-key"></i></a>
                                                 <a  href="javascript:void(0);" data-toggle="modal" data-target="#deleteModal{{$user->id}}" class="btn btn-sm btn-outline-danger" ><i class="icon-trash"></i></a>
                                             </td>
                                         </tr>
@@ -143,7 +136,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fa fa-edit"> </i></span>
                                 </div>
-                                <select class="custom-select" required name="role_id" id="role">
+                                <select class="custom-select" required name="vip_id" id="role">
                                   <option selected value="">  العمولة </option>
                                   @foreach ($vips as $key => $vip)
                                     <option value="{{$key}}" selected>{{$vip->role_name}}</option>
@@ -1619,7 +1612,7 @@
                            
                          <div class="modal-footer">  
                                <button type="submit" class="btn btn-primary">حفظ</button>
-                               <a href="/" class="btn btn-secondary">الغاء الأمر</a>
+                               <a href="#"  data-dismiss="modal" class="btn btn-secondary">الغاء الأمر</a>
                          </div>   
                 </form>
             </div>
@@ -1627,10 +1620,91 @@
     </div>
 </div>
 
+<!--------------balance -------------->
+@foreach ($users as $key => $user)
+<div class="modal fade" id="balanceModal{{$user->id}}" tabindex="-1" role="dialog">
+ <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="title" id="defaultModalLabel"> اضافة رصيد الى  {{$user->name}}</h4>
+            </div>
+            <div class="modal-body"> 
+            <form method="POST" action="{{ route('users.balance') }}" enctype="multipart/form-data">
+            {{ csrf_field() }}
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">@</span>
+                        </div>
+                    <input type="number" class="form-control" required placeholder="القيمة بدون كتابة TL" aria-label=" " name="value" aria-describedby="basic-addon1" min="0" step="0.01">
+                    </div>
+                        <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">@</span>
+                        </div>
+
+                        <select class="custom-select" required name="payment_done" id="role">
+                                  <option selected value="1">  مدفوع </option>
+                                   <option value="0">دين</option>
+                               
+                                </select>  
+
+
+                    </div>
+                    <input class="form-control" require aria-label=" "  type="hidden"  name ="agent_id" value="{{$user->id}}" aria-describedby="basic-addon1">
+                 
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                    <div class="modal-footer"> 
+                        <button type="submit" class="btn btn-primary">حفظ</button>
+                        <a href="#"  data-dismiss="modal" class="btn btn-secondary">الغاء الأمر</a>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@endforeach
+
+<!-------  changepassword  ------>
+
+@foreach ($users as $key => $user)
+<div class="modal fade" id="changePassModal{{$user->id}}" tabindex="-1" role="dialog">
+ <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="title" id="defaultModalLabel"> تغيير كلمة المرور  {{$user->name}}</h4>
+            </div>
+            <div class="modal-body"> 
+              <form method="POST" action="{{ route('user.change-password', $user->id) }}" enctype="multipart/form-data">
+
+            {{ csrf_field() }}
+    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">@</span>
+                        </div>
+                        <input type="text" class="form-control" required placeholder=" لدخل كلمة المرور "   aria-label="اسم المستخدم"  name ="password" aria-describedby="basic-addon1">
+                    </div>
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                    <div class="modal-footer"> 
+                        <button type="submit" class="btn btn-primary">حفظ</button>
+                        <a href="#"  data-dismiss="modal" class="btn btn-secondary">الغاء الأمر</a>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@endforeach
+
+
+
 <!--------------delete -------------->
 @foreach ($users as $key => $user)
 <div class="modal fade" id="deleteModal{{$user->id}}" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
+<div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="title" id="defaultModalLabel">
@@ -1646,16 +1720,16 @@
                <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                <div class="modal-footer">
                    <button type="submit" class="btn btn-primary">نعم</button>
-                   <a href="#" class="btn btn-secondary">الغاء الأمر</a>
+                   <a href="#"  data-dismiss="modal" class="btn btn-secondary">الغاء الأمر</a>
                </div>
               </form>
             
              </div>     
         </div>
     </div>
+
 </div>
 @endforeach
-
 
 <!--------------edit -------------->
 @foreach ($users as $key => $user)
@@ -1675,11 +1749,13 @@
                         </div>
                         <input type="text" class="form-control" required placeholder=" اسم المستخدم"  value="{{$user->name}}" aria-label="اسم المستخدم"  name ="name" aria-describedby="basic-addon1">
                     </div>
+                   @if(auth()->user() && auth()->user()->role == 1)
                     <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                   <span class="input-group-text"><i class="fa fa-edit"> </i></span>
                             </div>
                         <select class="custom-select" required name="role" id="role{{$user->id}}">
+                          
                             @if($user->role==2)
                             <option value="2" selected>وكيل</option>
                             @else
@@ -1701,15 +1777,16 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fa fa-edit"> </i></span>
                                 </div>
-                                <select class="custom-select" required name="role_id" id="role">
-                                  <option selected value="">  العمولة </option>
+                                <select class="custom-select"  name="vip_id" id="role">
+                                  <option  value="{{$user->role}}">  العمولة </option>
                                   @foreach ($vips as $key => $vip)
-                                  @if( $vip->id==$key)
-                            <option value="{{$key}}" selected>{{$vip->role_name}}</option>
-                                @else
-                            <option value="{{$key}}" >{{$vip->role_name}}</option>
-                                @endif
                                     
+                                       @if($user->vip_id== $vip->id)
+                                      <option value="{{$vip->id}}" selected>{{$vip->role_name}}</option>
+                                      @else
+                                      <option value="{{$vip->id}}" >{{$vip->role_name}}</option>
+                                      @endif
+
 
                                   @endforeach
                              
@@ -1720,6 +1797,7 @@
                                     </span>
                                     @enderror
                            </div>
+                  @endif
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fa fa-edit"> </i></span>
@@ -1732,13 +1810,42 @@
                         </div>
                         <input type="text" class="form-control" value="{{$user->last_name}}" required placeholder=" الكنية" aria-label=" الكنية"name="last_name" -describedby="basic-addon1">
                     </div>
+                   @if(auth()->user()->role==1)
                     <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                    <span class="input-group-text">الرصيد</span>
+                            </div>
+                        <input type="text" class="form-control"value="{{$user->balance}}" required placeholder="البريد الالكتروني"  name="balance" aria-label="'البريد الالكتروني " aria-describedby="basic-addon2">
+                     
+                    </div> 
+                  @endif
+                  <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fa fa-edit"> </i></span>
                             </div>
                         <input type="text" class="form-control"value="{{$user->email}}" required placeholder="البريد الالكتروني"  name="email" aria-label="'البريد الالكتروني " aria-describedby="basic-addon2">
                      
                     </div>
+                   <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-edit"> </i></span>
+                                </div>
+                                <select class="custom-select"  name="preferred_currency_id" id="role">
+                                  <option  value="{{$user->preferred_currency_id}}">  العملة </option>
+                                  @foreach ($currencies as $key => $c)
+                                    
+                                       @if($user->preferred_currency_id== $c->id)
+                                      <option value="{{$c->id}}" selected>{{$c->name}}</option>
+                                      @else
+                                      <option value="{{$c->id}}" >{{$c->name}}</option>
+                                      @endif
+
+
+                                  @endforeach
+                             
+                                </select>   
+                                   
+                           </div>
                  <div class="col-lg-6 col-md-12">
                     <div class="input-group mb-3">
                         الجنس:
@@ -1770,12 +1877,7 @@
                                     </span>
                                     @enderror
                         </div>    
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fa fa-edit"> </i></span>
-                                </div>
-                        <input type="password" value="{{$user->password}}" class="form-control" required placeholder=" كلمة السر" aria-label=" كلمة السر"name="password" -describedby="basic-addon1">
-                    </div>
+             
     
                     <div class="input-group mb-3">
                        <div class="input-group-prepend">
@@ -1787,7 +1889,7 @@
                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                     <div class="modal-footer"> 
                         <button type="submit" class="btn btn-primary">حفظ</button>
-                        <a href="#" class="btn btn-secondary">الغاء الأمر</a>
+                        <a href="#"   data-dismiss="modal"class="btn btn-secondary">الغاء الأمر</a>
                     </div>
                 </div>
                 </form>

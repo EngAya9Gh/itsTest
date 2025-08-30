@@ -12,7 +12,11 @@ class TransferMoneyFirmController extends Controller
 
     public function index()
     {
-        $transferMoneyFirms=DB::table('transfer_money_firms')->select('*')->orderBy('id', 'desc')->paginate(500);
+      $transferMoneyFirms = DB::table('transfer_money_firms')
+    ->select('*')
+    ->where('id', '!=', 0)  // إضافة فاصلة بين select و where
+    ->orderBy('id', 'desc')
+    ->paginate(500);
         return view('backend.transferMoneyFirm.transferMoneyFirms.index', compact('transferMoneyFirms'));
     }
 
@@ -24,7 +28,7 @@ class TransferMoneyFirmController extends Controller
         {
             if ($file = $request->file('image')) {
                 $name = 'app'.time().$file->getClientOriginalName();
-                $file->move('assets/images/TransferMoneyFirm/', $name);
+                $file->move('assets/images/transferMoneyFirm/', $name);
                 $input['image'] = $name;
             }
         }
@@ -44,7 +48,7 @@ class TransferMoneyFirmController extends Controller
         {
            if ($file = $request->file('image')) {
                $name = 'app'.time().$file->getClientOriginalName();
-               $file->move('assets/images/TransferMoneyFirm/', $name);
+               $file->move('assets/images/transferMoneyFirm/', $name);
                $input['image'] = $name;
             }
         }

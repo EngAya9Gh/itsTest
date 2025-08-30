@@ -20,8 +20,9 @@
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="d-flex flex-row-reverse">
                         <div class="page_action">
+                        @if(auth()->user()->role==1)
                             <a href="javascript:void(0);" data-toggle="modal" class="btn btn-primary" data-target="#createmodal" ><i class="fa fa-add">أضف بطاقة جديد</i></a>
-                        </div>
+                       @endif </div>
                         <div class="p-2 d-flex">
                         </div>
                     </div>
@@ -42,8 +43,10 @@
                                             <th> الصورة </th>
                                             <th> التصنيف </th>
                                             <th>السعر</th>
+                                            @if(auth()->user()->role==1)
                                             <th>العمليات</th>
                                             <th>الحالة</th>
+                                            @endif
                                         </tr>
                                     </thead>
                                     
@@ -71,6 +74,7 @@
                                                     @endforeach
                                                 </h6>
                                             </td>
+                                            @if(auth()->user()->role==1)
                                             <td class="project-actions">
                                                 <a href="#defaultModal" data-toggle="modal" data-target="#defaultModal">
                                                 <a href="javascript:void(0);" data-toggle="modal" data-target="#editModal{{$ecard->id}}" class="btn btn-sm btn-outline-success"><i class="icon-pencil"></i></a>
@@ -84,6 +88,7 @@
 
                                                 @endif
                                             </td>
+                                            @endif
                                         </tr>
                                         @endforeach
                                     </tbody>

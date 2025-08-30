@@ -16,7 +16,7 @@ return new class extends Migration
             $table->integer('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('ime');
-            $table->integer('price');
+            $table->decimal('price', 8, 4);
             $table->string('note')->nullable();
             $table->string('status')->nullable()->default('قيد المراجعة');
             

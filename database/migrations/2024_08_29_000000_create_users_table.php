@@ -31,7 +31,12 @@ return new class extends Migration
             $table->integer('balance')->default('0');
             $table->string('password');
             $table->tinyInteger('status')->default('0');
-            
+             // إضافة العمود كـ unsignedBigInteger (nullable يعني اختياري)
+            $table->unsignedBigInteger('preferred_currency_id')->nullable()->after('password');
+
+            // تعيين المفتاح الأجنبي
+            $table->foreign('preferred_currency_id')->references('id')->on('currencies')->onDelete('set null');
+   
             $table->string('currency')->nullable()->default('$');
             $table->rememberToken();
             $table->timestamps();

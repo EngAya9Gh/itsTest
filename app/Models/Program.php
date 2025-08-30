@@ -17,10 +17,14 @@ class Program extends Model
         'note',
         'status',
     ];
-    
+   
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'program_orders', 'program_id', 'user_id');
     }
+    public function orders()
+{
+    return $this->hasMany(ProgramOrder::class, 'program_id');
+}
 
 }

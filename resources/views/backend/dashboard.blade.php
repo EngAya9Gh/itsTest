@@ -13,7 +13,7 @@
         <div class="block-header">
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-12">
-                        <h2>Project Board</h2>
+                        <h2>لوحة التحكم</h2>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="index.html"><i class="fa fa-dashboard"></i></a></li>                            
                             <li class="breadcrumb-item">لوحة التحكم</li>
@@ -29,7 +29,78 @@
                         </div>
                     </div>
                 </div>
-            </div>   
+            </div> 
+             <div class="row clearfix">
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="card">
+                        <div class="body">
+                            <div class="currency_state d-flex">
+                                <div><img src="assets/images/coin/BTC.svg" width="40"></div>
+                                <div class="ml-3">
+                                    <div class="name">الرصيد الحالي</div>
+                                    <h5 class="mb-0">{{$balance}} TL</h5>
+                                </div>
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+             </div>
+                    
+            <div class="row clearfix">
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="card">
+                        <div class="body">
+                            <div class="currency_state d-flex">
+                                <div><img src="assets/images/coin/BTC.svg" width="40"></div>
+                                <div class="ml-3">
+                                    <div class="name">الصادر</div>
+                                    <h5 class="mb-0">{{ number_format($financials['outgoing'], 2) }} TL</h5>
+                                </div>
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="card">
+                        <div class="body">
+                            <div class="currency_state d-flex">
+                                <div><img src="assets/images/coin/BTC.svg" width="40"></div>
+                                <div class="ml-3">
+                                    <div class="name">الورد</div>
+                                    <h5 class="mb-0"> {{ number_format($financials['incoming'], 2) }} TL</h5>
+                                </div>
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="card">
+                        <div class="body">
+                            <div class="currency_state d-flex">
+                                <div><img src="assets/images/coin/BTC.svg" width="40"></div>
+                                <div class="ml-3">
+                                    <div class="name">الارباح</div>
+                                    <h5 class="mb-0">{{ number_format($financials['profitTotals'], 2) }}TL</h5>
+                                </div>
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="card">
+                        <div class="body">
+                            <div class="currency_state d-flex">
+                                <div><img src="assets/images/coin/BTC.svg" width="40"></div>
+                                <div class="ml-3">
+                                    <div class="name">المدين</div>
+                                    <h5 class="mb-0">{{ number_format($financials['debts'], 2) }}TL</h5>
+                                </div>
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+                
+            </div>  
         <div class="row clearfix row-deck">
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="card number-chart">
@@ -110,9 +181,9 @@
                         <div class="body">
                             <div class="icon"><i class="fa fa-user"></i> </div>
                             <div class="content">
-                                <div class="text mb-2 text-uppercase">VISITORS</div>
-                                <h4 class="number mb-0">21K <span class="font-12 text-muted"><i class="fa fa-level-down"></i> 4%</span></h4>
-                                <small class="text-muted">Analytics for last week</small>
+                                <div class="text mb-2 text-uppercase">خدمات السرفر</div>
+                                <h4 class="number mb-0">{{$serviceRecords}} <span class="font-12 text-muted"><i class="fa fa-level-down"></i> 4%</span></h4>
+                                <small class="text-muted">********</small>
                             </div>
                             
                         <div class="sparkline" data-type="line" data-spot-Radius="0" data-offset="90" data-width="100%" data-height="50px"
@@ -120,21 +191,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="card top_widget">
-                        <div class="body">
-                            <div class="icon"><i class="fa fa-thumbs-up"></i> </div>
-                            <div class="content">
-                                <div class="text mb-2 text-uppercase">LIKES</div>
-                                <h4 class="number mb-0">53K <span class="font-12 text-muted"><i class="fa fa-level-up"></i> 15%</span></h4>
-                                <small class="text-muted">Analytics for last week</small>
-                            </div>
-                            
-                        <div class="sparkline" data-type="line" data-spot-Radius="0" data-offset="90" data-width="100%" data-height="50px"
-                        data-line-Width="1" data-line-Color="#ffa901" data-fill-Color="#efc26b">1,4,2,3,6,2</div>
-                        </div>
-                    </div>
-                </div>
+         
             </div>
 
 

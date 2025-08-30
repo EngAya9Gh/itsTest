@@ -19,6 +19,7 @@ class User extends Authenticatable
     protected $table="users";
     protected $fillable = [
         'name',
+      'google2fa_secret',
         'first_name',
         'last_name',
         'mobile',
@@ -33,7 +34,9 @@ class User extends Authenticatable
         'email_verified_at',
         'password',
         'currency',
-        'balance'
+      'balance',
+        'balance_profit',
+      'preferred_currency_id'
     ];
 
     /**
@@ -46,11 +49,8 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
+  
+  
     protected function casts(): array
     {
         return [
@@ -58,13 +58,25 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-
+      public function preferredCurrency()
+    {
+        return $this->belongsTo(Currency::class, 'preferred_currency_id');
+    }
+    public function services(): BelongsToMany
+    {
+        return $this->BelongsToMany(Service::class, 'service_orders', 'user_id', 'service_id');
+    }
+    
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
     public function vip(): BelongsTo
     {
         return $this->belongsTo(Vip::class);
     }
 
-    public function turkificationOrders(): HasMany
+  /*  public function turkificationOrders(): HasMany
     {
         return $this->hasMany(TurkificationOrder::class);
     }
@@ -74,25 +86,34 @@ class User extends Authenticatable
         return $this->hasMany(TransferOrder::class);
     }
 
-    public function apps(): BelongsToMany
-    {
-        return $this->belongsToMany(App::class, 'app_orders', 'app_id', 'user_id');
-    }
+ 
     
     public function cards(): BelongsToMany
     {
         return $this->belongsToMany(Card::class, 'card_orders', 'card_id', 'user_id');
     }
+    
+  */
+    public function tweetcells(): BelongsToMany
+    {
+        return $this->belongsToMany(Tweetcell::class, 'tweetcell_orders', 'tweetcell_id', 'user_id');
+    }
+     public function tweetcellKontors(): BelongsToMany
+    {
+        return $this->belongsToMany(TweetcellKontor::class, 'tweetcell_kontor_orders', 'tweetcell_kontor_id', 'user_id');
+    }
  
-    // public function datas(): BelongsToMany
-    // {
-    //     return $this->BelongsToMany(Data::class, 'data_orders', 'data_id', 'user_id');
-    // }
-
+/*
+   public function apps(): BelongsToMany
+    {
+        return $this->belongsToMany(App::class, 'app_orders', 'app_id', 'user_id');
+    }
     public function ebanks(): BelongsToMany
     {
-        return $this->BelongsToMany(Ebank::class, 'ebank_orders', 'ebank_id', 'user_id');
+        return $this->BelongsToMany(Ebank::class, 'ebank_orders', 'user_id', 'ebank_id');
     }
+  
+  
 
     public function ecards(): BelongsToMany
     {
@@ -101,22 +122,35 @@ class User extends Authenticatable
 
     public function games(): BelongsToMany
     {
-        return $this->belongsToMany(Game::class, 'game_orders', 'game_id', 'user_id');
+        return $this->BelongsToMany(Game::class, 'game_orders', 'user_id', 'game_id');
     }
-
-    public function programs(): BelongsToMany
+    public function DataCommunications(): BelongsToMany
+    {
+        return $this->belongsToMany(DataCommunication::class, 'data_communication_orders', 'data_communication_id', 'user_id');
+    }
+*/
+// إرفاق حدث الحذف
+    protected static function booted()
+    {
+        static::deleting(function ($user) {
+            // حذف السجلات المرتبطة مثل الخدمة المفضلة
+            $user->favorites()->delete();
+            $user->tweetcells()->detach();
+            $user->services()->detach();
+            $user->tweetcellKontors()->detach();
+            $user->transferMoneyFirms()->detach();
+        });
+    }
+   /* public function programs(): BelongsToMany
     {
         return $this->belongsToMany(Program::class, 'program_orders', 'program_id', 'user_id');
-    }
+    }*/
        
     public function transferMoneyFirms(): BelongsToMany
     {
         return $this->belongsToMany(TransferMoneyFirm::class, 'transfer_money_firm_orders', 'transfer_money_firm_id', 'user_id');
     }
 
-    public function DataCommunications(): BelongsToMany
-    {
-        return $this->belongsToMany(DataCommunication::class, 'data_communication_orders', 'data_id', 'user_id');
-    }
+   
 
 }

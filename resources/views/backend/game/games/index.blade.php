@@ -20,7 +20,9 @@
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="d-flex flex-row-reverse">
                         <div class="page_action">
+                        @if(auth()->user()->role==1)
                             <a href="javascript:void(0);" data-toggle="modal" class="btn btn-primary" data-target="#createmodal" ><i class="fa fa-add">أضف لعبة جديد</i></a>
+                       @endif
                         </div>
                         <div class="p-2 d-flex">
                         </div>
@@ -40,11 +42,14 @@
                                         <tr>                                            
                                             <th>اسم  اللعبة</th>
                                             <th> الصورة </th>
-                                            <th>السعر</th>
+                                            <th>السعر الاساسي </th>
+                                            <th>السعر للبيع</th>
                                             <th> التصنيف </th>
+                                            @if(auth()->user()->role==1)
                                             <th>العمليات</th>
-                                            
                                             <th>الحالة</th>
+                                            @endif
+
                                         </tr>
                                     </thead>
                                     
@@ -56,7 +61,10 @@
                                             </td>
                                         
 
-                                            <td><img src="{{asset('assets/images/game/'.$game->image)}}" data-toggle="tooltip" data-placement="top" title="Team Lead" alt="Avatar" class="width35 rounded"></td>
+                                            <td><img src="{{asset('assets/images/games/'.$game->image)}}" data-toggle="tooltip" data-placement="top" title="Team Lead" alt="Avatar" class="width35 rounded"></td>
+                                            <td class="project-title">
+                                                <h6>{{$game->basic_price}}</h6>
+                                            </td>
                                             <td class="project-title">
                                                 <h6>{{$game->price}}</h6>
                                             </td>
@@ -72,6 +80,7 @@
                                                     @endforeach
                                                 </h6>
                                             </td>
+                                            @if(auth()->user()->role==1)
                                             <td class="project-actions">
                                                 <a href="#defaultModal" data-toggle="modal" data-target="#defaultModal">
                                                 <a href="javascript:void(0);" data-toggle="modal" data-target="#editModal{{$game->id}}" class="btn btn-sm btn-outline-success"><i class="icon-pencil"></i></a>
@@ -85,6 +94,7 @@
 
                                                 @endif
                                             </td>
+                                            @endif
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -132,7 +142,13 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-edit"> </i></span>
                         </div>
-                        <input type="text" class="form-control" required placeholder="السعر"  name="price" aria-label="price" aria-describedby="basic-addon2">
+                        <input type="text" class="form-control" required placeholder=" السعر الاساسي"   name="basic_price" aria-label="price" aria-describedby="basic-addon2">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-edit"> </i></span>
+                        </div>
+                        <input type="text" class="form-control" required placeholder="السعر للبيع"  name="price" aria-label="price" aria-describedby="basic-addon2">
                     </div>
 
                     <div class="input-group mb-3">
@@ -222,10 +238,15 @@
                         </div>
                         <input type="text" class="form-control" value="{{$game->name}}" required placeholder="الاسم" name="name" aria-label="name" aria-describedby="basic-addon2">
                     </div>
-
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fa fa-edit"> </i></span>
+                            <span class="input-group-text">السعر الاساسي</span>
+                        </div>
+                        <input type="text" class="form-control" required placeholder="السعر" value="{{$game->basic_price}}"  name="basic_price" aria-label="price" aria-describedby="basic-addon2">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">السعر للبيع</span>
                         </div>
                         <input type="text" class="form-control" required placeholder="السعر" value="{{$game->price}}"  name="price" aria-label="price" aria-describedby="basic-addon2">
                     </div>
@@ -234,7 +255,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-edit"> </i></span>
                         </div>
-                        <textarea class="form-control"  name="note"  placeholder="الوصف"  >{{$game->price}}</textarea>
+                        <textarea class="form-control"  name="note"  placeholder="الوصف"  >{{$game->note}}</textarea>
                     </div>
 
                     <div class="input-group mb-3">

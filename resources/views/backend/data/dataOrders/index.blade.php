@@ -42,6 +42,7 @@
                                             <th> السعر </th>
                                             <th> الوصف </th> 
                                             <th> رقم الهاتف </th>
+                                            <th>الحالة</th>
                                             <th>العمليات</th>
                                             
                                         </tr>
@@ -58,10 +59,21 @@
                                             <td>{{$dataOrder->price}}</td>
                                             <td>{{$dataOrder->note}}</td>
                                             <td>{{$dataOrder->mobile}}</td>
+                                            <td>{{$dataOrder->status}}</td>
                                             <td class="project-actions">
                                                 <a href="#defaultModal" data-toggle="modal" data-target="#defaultModal">
                                                 <a href="javascript:void(0);" data-toggle="modal" data-target="#editModal{{$dataOrder->id}}" class="btn btn-sm btn-outline-success"><i class="icon-pencil"></i></a>
                                                 <a href="javascript:void(0);" data-toggle="modal" data-target="#deleteModal{{$dataOrder->id}}" class="btn btn-sm btn-outline-danger" ><i class="icon-trash"></i></a>
+                                                @if($dataOrder->status=='قيد المراجعة')
+                                                <a href="/data-communication-order/reject/{{$dataOrder->id}}" title="رفض الطلب"  class="btn btn-sm btn-danger"><i class="icon-close" style="font-size:19px"></i></a>
+                                                <a href="/data-communication-order/accept/{{$dataOrder->id}}" title="قبول الطلب"  class="btn btn-sm btn-success"><i class="icon-check" style="font-size:19px"></i></a>
+                                               @elseif($dataOrder->status=='مرفوض')
+                                                    <a href="/data-communication-order/accept/{{$dataOrder->id}}" title="قبول الطلب"  class="btn btn-sm btn-success"><i class="icon-check" style="font-size:19px"></i></a>
+                                           
+                                                @else
+                                                <a href="/data-communication-order/reject/{{$dataOrder->id}}" title="رفض الطلب"  class="btn btn-sm btn-danger"><i class="icon-close" style="font-size:19px"></i></a>
+                                                                                        
+                                                @endif
                                             </td>
                                         </tr>
                                         @endforeach
@@ -84,7 +96,7 @@
                 <h4 class="title" >إضافة طلب شركة جديد</h4>
             </div>
             <div class="modal-body"> 
-                <form method="Post" action="{{ route('data-order.store') }}" enctype="multipart/form-data">
+                <form method="Post" action="{{ route('data-communication-order.store') }}" enctype="multipart/form-data">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-edit"> </i></span>
@@ -143,7 +155,7 @@
                 <h4 class="title" >هل أنت بالتاكيد تريد الحذف </h4>
             </div>
             <div class="modal-body"> 
-             <form action="{{ route('data-order.destroy', $dataOrder->id) }}" method="POST">
+             <form action="{{ route('data-communication-order.destroy', $dataOrder->id) }}" method="POST">
                @csrf
                @method('DELETE')
                <input type="hidden" name="_token" value="{{ csrf_token() }}" />
@@ -167,7 +179,7 @@
                 <h4 class="title" >تعديل المعلومات</h4>
             </div>
             <div class="modal-body"> 
-                <form method="POST" action="{{ route('data-order.update',  $dataOrder->id) }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('data-communication-order.update',  $dataOrder->id) }}" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     {{ method_field('PATCH') }}
                     <div class="input-group mb-3">

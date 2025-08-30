@@ -1,0 +1,1 @@
+* * * * * cd /home/u687169997/domains/itc-center.com/public_html/itsTest &&  php artisan znet:update>> /home/u687169997/domains/itc-center.com/public_html/itsTest/storage/logs/laravel.log 2>&1

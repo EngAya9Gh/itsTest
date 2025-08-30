@@ -40,38 +40,78 @@
                                 <a href="#App" class="has-arrow"><i class="fa fa-th-large"></i><span>الخدمات</span></a>
                                     <ul>
 
-                                    <li><a href="#">قسم  التطبيقات</a>
+                                    <li><a href="#">قسم خدمات السرفر</a>
                                     <ul>
-                                      <li><a href="/app-section">الأقسام</a></li>
-                                      <li><a href="/app">التطبيقات</a></li>
-                                      <li><a href="/app-order">طلبات التطبيقات</a></li>
+                                      <li><a href="/service-category/1/type">الأقسام</a></li>
+                                     
+                                      <li><a href="/service-order/1/type">طلبات الخدمات</a></li>
 
                                      </ul>
+                                    </li>
+                                            <li><a href="#">قسم خدمات ITS</a>
+                                    <ul>
+                                      <li><a href="/service-category/2/type">الأقسام</a></li>
+                                      <li><a href="/service-order/2/type">طلبات الخدمات</a></li>
+
+                                     </ul>
+                                    </li>
+                                    <li><a href="#">قسم  التطبيقات</a>
+                                      <ul>
+                                        <li><a href="/oyun-section/2/type">التطبيقات</a></li>
+                                      
+                                        <li><a href="/oyun-order/2">طلبات التطبيقات</a></li>
+
+                                       </ul>
                                     </li>
                                     <li><a href="#">قسم الألعاب</a>
                                      <ul>
-                                      <li><a href="/game-section">الأقسام</a></li>
-                                      <li><a href="/game">الألعاب</a></li>
-                                      <li><a href="/game-order">طلبات الألعاب</a></li>
+                                      <li><a href="/oyun-section/1/type">الالعاب</a></li>
+                                      <li><a href="/oyun-order/1">طلبات الألعاب</a></li>
 
                                      </ul>
                                     </li>
-                                    <li><a href="#">قسم شركات الشحن</a>
-                                      <ul>
+                                    <li><a href="#">قسم البطاقات الرقمية</a>
+                                     <ul>
+                                      <li><a href="/oyun-section/3/type">البطاقات الرقمية</a></li>
+                                      <li><a href="/oyun-order/3">طلبات البطاقات الرقمية</a></li>
 
-                                        <li><a href="/transfer-money-firm">الشركات</a></li>
-                                        <li><a href="/transfer-money-firm-order">الطلبات </a></li>
-
-                                      </ul>
-                                      
+                                     </ul>
                                     </li>
+                                 
                                     <li><a href="#"> قسم البيانات والاتصالات</a>
                                        <ul>
-                                        <li><a href="/data-communication">الشركات</a></li>
-                                        <li><a href="/data-communication-order">الطلبات </a></li>
+                                      
+                                       <li><a href="/kontor/1/category"> Turktelekom</a> </li>   
+                                       <li><a href="/kontor/2/category"> turkcell</a> </li>   
+                                       <li><a href="/kontor/3/category"> vodafone</a> </li> 
+                                        <li><a href="/kontor-order/">  طلبات شحن الرصيد</a> </li>
+                                             @if(auth()->user()->role==1)
+                                        <li><a href="/kontor-section/"> الاعدادات العامة </a> </li>
+                                         @endif
                                       </ul>
                                     </li>
-                                    <li><a href="/ebank-section">قسم البنوك الرقمية</a>
+                                    @if(auth()->user()->role==1)
+                                       <li><a href="#"> ZNet New </a>
+                                              <ul>
+                                                <li><a href="/oyun-section/0/type/1/provider">الاقسام</a></li>
+                                                <li><a href="/oyun-status/off">الخدمات</a></li>
+                                               </ul>
+                                       </li>
+                                        <li><a href="#"> MasarCard New </a>
+                                              <ul>
+                                                <li><a href="/oyun-section/0/type/2/provider">الاقسام</a></li>
+                                                <li><a href="/oyun-status/off">الخدمات</a></li>
+                                               </ul>
+                                       </li>
+                                          <li><a href="#">قسم  دفع الفواتير</a>
+                                     <ul>
+                                      <li><a href="/fatura-section"> أنواع الفواتير</a></li>
+                                      <li><a href="#">طلبات دفع الفواتير</a></li>
+
+                                     </ul>
+                                    </li>
+                                      @endif
+                               <!--     <li><a href="/ebank-section">قسم البنوك الرقمية</a>
                                         <ul>
                                              <li><a href="/ebank-section">الأقسام</a></li>
                                              <li><a href="/ebank">البنوك</a></li>
@@ -79,14 +119,8 @@
 
                                        </ul>
                                     </li>
-
-                                    <li><a href="#">خدمة تفعيل البرامج</a>
-                                      <ul>
-                                        <li><a href="/program">البرامج</a></li>
-                                        <li><a href="/program-order">طلبات تفعيل البرامج</a></li>
-
-                                      </ul>
-                                    </li>
+                                  
+                                
 
                                     <li><a href="/card"> بطاقاتنا</a>
                                       <ul>
@@ -95,54 +129,77 @@
 
                                       </ul>
                                     </li>
-                                    <li><a href="/card">  قسم البطاقات الرقمية</a>
+                                    <li><a href="/ecard">  قسم البطاقات الرقمية</a>
                                        <ul>
 
-                                        <li><a href="/ecard-section">أنواع البطاقات</a></li>
+                                        <li><a href="/ecard-section"> الاقسام</a></li>
                                         <li><a href="/ecard">البطاقات</a></li>
                                         <li><a href="/ecard-order">طلبات البطاقات</a></li>
 
                                       </ul>
                                     </li>
                                     <li><a href="/turkification-order">طلبات التتريك </a></li>
+                                    
+                                    <li><a href="/transfer-order">خدمة نقل الرصيد الى master kontor
+                                    </a></li>-->
                                   </ul>
                             </li>
-                            <li >
+                          
+                       
+                       
+                             <li >
                                 <a href="#Dashboard" class="has-arrow"><i class="fa icon-users"></i><span>العملاء</span></a>
                                 <ul>
-                                    <li><a href="/users/2/category">الوكلاء</a></li>
-                                    <li><a href="/users/3/category">أصحاب المحلات</a></li>
-                                    <li><a href="/users/4/category">زبون عادي</a></li>
-                                    <li><a href="/vip/">أنواع العملاء</a></li>
+                                    <li><a href="/users/agents">عملائي</a></li>
+                                    <li><a href="/users/wallets">محفظات العملاء</a></li>
+                                  
+                                    @if(auth()->user()->role==1)
+
+                                    <li><a href="/vip/">عمولات العملاء</a></li>
+                                 
+                                    @endif
                                 </ul>
+                            </li>
+                            <li >
+                                <a href="#Dashboard" class="has-arrow"><i class="fa fa-money"></i><span> عمليات تعبئة الرصيد</span></a>
+                                <ul>
+                                        <li><a href="/transfer-money-firm">شركات شحن الرصيد</a></li>
+                                        <li><a href="/transfer-money-firm-order">طلبات شحن الرصيد </a></li>
+                                        <li><a href="/users/transactions/all/done/{{auth()->user()->id}}">   عمليات تعبئة الرصيد المكتملة</a></li>
+                                    <li><a href="/users/transactions/all/debts/{{auth()->user()->id}}">   عمليات  تعبئة الرصيد (الديون المستحقة لي )</a></li>
+                                    <li><a href="/users/transactions/all/mydebts/{{auth()->user()->id}}">   عمليات  تعبئة الرصيد ( الديون المستحقة علي)</a></li>
+                                </ul>
+                            </li>
+                            @if(auth()->user()->role==1)
+ 
+                             <li>
+                                <a href="/program" class=""><i class="fa fa-user"></i><span>الوكلاء</span></a>
                             </li>
                             <li>
                                 <a href="/users/1/category" class=""><i class="fa fa-user"></i><span>المستخدمين</span></a>
                             </li>
-                            <li>
-                                <a href="#forms" class=""><i class="fa fa-money"></i><span>اضافة رصيد</span></a>
-                            </li>
+                      
                             <li>
                                 <a href="/setting" class=""><i class="fa fa-dashboard"></i><span>الاعدادات</span></a>
                             </li>
-                            <li>
-                                <a href="/slider" class=""><i class="fa fa-dashboard"></i><span>إعداد الشرائح في الصفحة الرئيسية</span></a>
+                              <li>
+                                <a href="/currency" class=""><i class="fa fa-dollar"></i><span>العملات</span></a>
                             </li>
+                            <li>
+                                <a href="/hero/slide" class=""><i class="fa fa-dashboard"></i><span>إعداد الشرائح في الصفحة الرئيسية</span></a>
+                            </li>
+                            <li>
+                                <a href="/hero/news" class=""><i class="fa fa-dashboard"></i><span>الاعلانات(الاخبار)</span></a>
+                            </li>
+                            @endif
+
+                            
                         </ul>
                     </nav>
                 </div>
 
                 <div class="tab-pane" id="setting">
-                    <h6>Choose Skin</h6>
-                    <ul class="choose-skin list-unstyled">
-                        <li data-theme="purple"><div class="purple"></div></li>
-                        <li data-theme="blue"><div class="blue"></div></li>
-                        <li data-theme="cyan" class="active"><div class="cyan"></div></li>
-                        <li data-theme="green"><div class="green"></div></li>
-                        <li data-theme="orange"><div class="orange"></div></li>
-                        <li data-theme="blush"><div class="blush"></div></li>
-                        <li data-theme="red"><div class="red"></div></li>
-                    </ul>
+                 
 
                     <ul class="list-unstyled font_setting mt-3">
                         <li>
@@ -195,34 +252,9 @@
                         </li>
                     </ul>
 
-                    <hr>
-                    <h6>General Settings</h6>
-                    <ul class="setting-list list-unstyled">
-                        <li>
-                            <label class="fancy-checkbox">
-                                <input type="checkbox" name="checkbox" checked>
-                                <span>Allowed Notifications</span>
-                            </label>
-                        </li>
-                        <li>
-                            <label class="fancy-checkbox">
-                                <input type="checkbox" name="checkbox">
-                                <span>Offline</span>
-                            </label>
-                        </li>
-                        <li>
-                            <label class="fancy-checkbox">
-                                <input type="checkbox" name="checkbox">
-                                <span>Location Permission</span>
-                            </label>
-                        </li>
-                    </ul>
+                
 
-                    <a href="{{ route('logout') }}"
-                                onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();"  class="btn btn-block btn-primary"><i class="icon-power"></i>تسجيل الخروج
-                            </a>
-                    <a href="/profile" class="btn btn-block btn-secondary">View portfolio</a>
+            
                 </div>
 
 

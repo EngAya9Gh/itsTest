@@ -11,15 +11,23 @@ class SliderController extends Controller
     public function index()
     {
         $sliders=DB::table('sliders')->select('*')->orderBy('id', 'desc')->paginate(500);
-        return view('backend.slider.index', compact('sliders'));
+      $type='slide';
+        return view('backend.slider.index', compact('sliders','type'));
+    }
+    public function heroType($type)
+    {$sliders=[];
+      if($type=='slide')
+        $sliders=DB::table('sliders')->select('*')->where('is_news',0)->paginate(500);
+     
+      else if($type=='news')
+         $sliders=DB::table('sliders')->select('*')->where('is_news',1)->paginate(500);
+
+       return view('backend.slider.index', compact('sliders','type'));
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'title' => 'nullable|string|max:255',
-        ]);
+        
 
         $input = $request->all();
 
@@ -28,9 +36,9 @@ class SliderController extends Controller
             $name = 'slider'.time().$file->getClientOriginalName();
             $file->move('assets/images/sliders/', $name);
             $input['image'] = $name;
-            Slider::create($input);
+         
         }
-
+       Slider::create($input);
         return back()->with('message', 'تمت الاضافة بنجاح');
     }
 

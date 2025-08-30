@@ -10,9 +10,13 @@ class ApiTransferMoneyFirmController extends Controller
 {
     public function index()
     {
-        $transferMoneyFirms=DB::table('transfer_money_firms')->select('*')->orderBy('id', 'desc')->paginate(500);
-        foreach ($transferMoneyFirms as $trans) {
-            $trans->image_url = asset('assets/images/TransferMoneyFirm/' . $trans->image);  // إنشاء رابط للصورة
+$transferMoneyFirms = DB::table('transfer_money_firms')
+    ->select('*')
+    ->where('id', '!=', 0)  // إضافة فاصلة بين select و where
+    ->orderBy('id', 'desc')
+    ->paginate(500);        foreach ($transferMoneyFirms as $trans) {
+            $trans->image_url = asset('assets/images/transferMoneyFirm/' . $trans->image);  // إنشاء رابط للصورة
+          //  $trans->save();
         }
         
         return response()->json(['companies'=>$transferMoneyFirms]);

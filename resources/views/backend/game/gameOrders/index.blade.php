@@ -39,28 +39,40 @@
                                             <th>اسم لعبة</th>
                                             <th>اسم المستخدم</th>
                                             <th>رقم اللاعب</th>
-                                            <th>اسم</th>
+                                           
                                             <th>العدد</th>
                                             <th>السعر</th>
                                             <th>الوصف</th>
+                                            <th>الحالة</th>
                                             <th>العمليات</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($gameOrders as $key => $gameOrder)
+                                        @foreach ($orders as $key => $gameOrder)
                                         <tr>
                                             <td class="project-title">
-                                                <h6>{{$gameOrder->game_name}}</h6>
+                                                <h6>{{$gameOrder->service_name}}</h6>
                                             </td>
                                             <td>{{$gameOrder->user_name}}</td>
-                                            <td>{{$gameOrder->user_id_game}}</td>
+                                            <td>{{$gameOrder->player_no}}</td>
                                             <td>{{$gameOrder->count}}</td>
                                             <td>{{$gameOrder->price}}</td>
                                             <td>{{$gameOrder->note}}</td>
+                                            <td>{{$gameOrder->status}}</td>
                                             <td class="project-actions">
                                                 <a href="#defaultModal" data-toggle="modal" data-target="#defaultModal">
                                                 <a href="javascript:void(0);" data-toggle="modal" data-target="#editModal{{$gameOrder->id}}" class="btn btn-sm btn-outline-success"><i class="icon-pencil"></i></a>
                                                 <a href="javascript:void(0);" data-toggle="modal" data-target="#deleteModal{{$gameOrder->id}}" class="btn btn-sm btn-outline-danger" ><i class="icon-trash"></i></a>
+                                                @if($gameOrder->status=='قيد المراجعة')
+                                                <a href="/game-order/reject/{{$gameOrder->id}}" title="رفض الطلب"  class="btn btn-sm btn-danger"><i class="icon-close" style="font-size:19px"></i></a>
+                                                <a href="/game-order/accept/{{$gameOrder->id}}" title="قبول الطلب"  class="btn btn-sm btn-success"><i class="icon-check" style="font-size:19px"></i></a>
+                                               @elseif($gameOrder->status=='مرفوض')
+                                                    <a href="/game-order/accept/{{$gameOrder->id}}" title="قبول الطلب"  class="btn btn-sm btn-success"><i class="icon-check" style="font-size:19px"></i></a>
+                                            
+                                                @else
+                                                <a href="/game-order/reject/{{$gameOrder->id}}" title="رفض الطلب"  class="btn btn-sm btn-danger"><i class="icon-close" style="font-size:19px"></i></a>
+                                                                                        
+                                                @endif
                                             </td>
                                         </tr>
                                         @endforeach
@@ -145,7 +157,7 @@
 </div>
 
 <!--------------delete -------------->
-@foreach ($gameOrders as $key => $gameOrder)
+@foreach ($orders as $key => $gameOrder)
 <div class="modal fade" id="deleteModal{{$gameOrder->id}}" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -169,7 +181,7 @@
 @endforeach
 
 <!--------------edit -------------->
-@foreach ($gameOrders as $key => $gameOrder)
+@foreach ($orders as $key => $gameOrder)
 <div class="modal fade" id="editModal{{$gameOrder->id}}" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

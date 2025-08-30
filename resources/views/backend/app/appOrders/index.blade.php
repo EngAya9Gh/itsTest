@@ -62,16 +62,16 @@
                                                 <!-- <a href="javascript:void(0);" class="btn btn-sm btn-outline-primary"><i class="icon-eye"></i></a> -->
                                                  <a href="javascript:void(0);" data-toggle="modal" data-target="#editModal{{$appOrder->id}}" class="btn btn-sm btn-outline-success"><i class="icon-pencil"></i></a>
                                                 <a href="javascript:void(0);" data-toggle="modal" data-target="#deleteModal{{$appOrder->id}}" class="btn btn-sm btn-outline-danger" ><i class="icon-trash"></i></a>
-                                              @if($appOrder->status=='قيد المراجعة')
+                                               @if($appOrder->status=='قيد المراجعة')
                                                 <a href="/app-order/reject/{{$appOrder->id}}" title="رفض الطلب"  class="btn btn-sm btn-danger"><i class="icon-close" style="font-size:19px"></i></a>
                                                 <a href="/app-order/accept/{{$appOrder->id}}" title="قبول الطلب"  class="btn btn-sm btn-success"><i class="icon-check" style="font-size:19px"></i></a>
-                                              @elseif($appOrder->status=='مرفوض')
+                                               @elseif($appOrder->status=='مرفوض')
                                                     <a href="/app-order/accept/{{$appOrder->id}}" title="قبول الطلب"  class="btn btn-sm btn-success"><i class="icon-check" style="font-size:19px"></i></a>
-                                           
-@else
-<a href="/app-order/reject/{{$appOrder->id}}" title="رفض الطلب"  class="btn btn-sm btn-danger"><i class="icon-close" style="font-size:19px"></i></a>
-                                          
-@endif
+                                            
+                                                @else
+                                                <a href="/app-order/reject/{{$appOrder->id}}" title="رفض الطلب"  class="btn btn-sm btn-danger"><i class="icon-close" style="font-size:19px"></i></a>
+                                                                                        
+                                                @endif
                                             </td>
                                         </tr>
                                         @endforeach

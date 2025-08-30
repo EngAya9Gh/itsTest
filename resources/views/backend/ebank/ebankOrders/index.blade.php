@@ -38,11 +38,11 @@
                                         <tr> 
                                             <th>اسم البنك</th>
                                             <th>اسم المستخدم</th>
-                                            <th>اسم </th>
                                             <th>العدد</th>
                                             <th>السعر</th>
                                             <th>رقم الهاتف</th>
                                             <th>الوصف</th>
+                                            <th>الحالة</th>
                                             <th>العمليات</th>
                                         </tr>
                                     </thead>
@@ -53,15 +53,25 @@
                                                 <h6>{{$ebankOrder->ebank_name}}</h6>
                                             </td>
                                             <td>{{$ebankOrder->user_name}}</td>
-                                            <td>{{$ebankOrder->name}}</td>
                                             <td>{{$ebankOrder->count}}</td>
                                             <td>{{$ebankOrder->price}}</td>
                                             <td>{{$ebankOrder->mobile}}</td>
                                             <td>{{$ebankOrder->note}}</td>
+                                            <td>{{$ebankOrder->status}}</td>
                                             <td class="project-actions">
                                                 <a href="#defaultModal" data-toggle="modal" data-target="#defaultModal">
                                                 <a href="javascript:void(0);" data-toggle="modal" data-target="#editModal{{$ebankOrder->id}}" class="btn btn-sm btn-outline-success"><i class="icon-pencil"></i></a>
                                                 <a href="javascript:void(0);" data-toggle="modal" data-target="#deleteModal{{$ebankOrder->id}}" class="btn btn-sm btn-outline-danger" ><i class="icon-trash"></i></a>
+                                                @if($ebankOrder->status=='قيد المراجعة')
+                                                <a href="/ebank-order/reject/{{$ebankOrder->id}}" title="رفض الطلب"  class="btn btn-sm btn-danger"><i class="icon-close" style="font-size:19px"></i></a>
+                                                <a href="/ebank-order/accept/{{$ebankOrder->id}}" title="قبول الطلب"  class="btn btn-sm btn-success"><i class="icon-check" style="font-size:19px"></i></a>
+                                               @elseif($ebankOrder->status=='مرفوض')
+                                                    <a href="/ebank-order/accept/{{$ebankOrder->id}}" title="قبول الطلب"  class="btn btn-sm btn-success"><i class="icon-check" style="font-size:19px"></i></a>
+                                            
+                                                @else
+                                                <a href="/ebank-order/reject/{{$ebankOrder->id}}" title="رفض الطلب"  class="btn btn-sm btn-danger"><i class="icon-close" style="font-size:19px"></i></a>
+                                                                                        
+                                                @endif
                                             </td>
                                         </tr>
                                         @endforeach
@@ -188,12 +198,7 @@
                         </div>
                         <input type="text" class="form-control" value="{{$ebankOrder->user_name}}" required placeholder="اسم المستخدم" name="user_id" aria-label="user_id" aria-describedby="basic-addon2" readonly>
                     </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fa fa-edit"> </i></span>
-                        </div>
-                        <input type="text" class="form-control" value="{{$ebankOrder->name}}" required placeholder="اسم" name="name" aria-label="name" aria-describedby="basic-addon2">
-                    </div>
+                  
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-edit"> </i></span>

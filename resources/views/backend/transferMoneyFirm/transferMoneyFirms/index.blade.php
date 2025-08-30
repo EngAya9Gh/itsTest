@@ -20,7 +20,9 @@
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="d-flex flex-row-reverse">
                         <div class="page_action">
+                        @if(auth()->user()->role==1)
                             <a href="javascript:void(0);" data-toggle="modal" class="btn btn-primary" data-target="#createmodal" ><i class="fa fa-add">إضافة شركة شحن جديدة</i></a>
+                     @endif
                         </div>
                         <div class="p-2 d-flex">
                         </div>
@@ -56,11 +58,12 @@
                                             <td>{{$transferMoneyFirm->iban}}</td>
                                             <td>{{$transferMoneyFirm->account_name}}</td>
                                              <td class="project-actions">
-                                                <a href="#defaultModal" data-toggle="modal" data-target="#defaultModal">
+                                             @if(auth()->user()->role==1) <a href="#defaultModal" data-toggle="modal" data-target="#defaultModal">
                                                 <a href="javascript:void(0);" class="btn btn-sm btn-outline-primary"><i class="icon-eye"></i></a>
                                                 <a href="javascript:void(0);" data-toggle="modal" data-target="#editModal{{$transferMoneyFirm->id}}" class="btn btn-sm btn-outline-success"><i class="icon-pencil"></i></a>
                                                 <a  href="javascript:void(0);" data-toggle="modal" data-target="#deleteModal{{$transferMoneyFirm->id}}" class="btn btn-sm btn-outline-danger" ><i class="icon-trash"></i></a>
-                                            </td>
+                                           
+                                           @endif </td>
                                         </tr>
                                         @endforeach
                                     </tbody>

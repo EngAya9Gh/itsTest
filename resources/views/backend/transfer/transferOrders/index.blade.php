@@ -20,7 +20,6 @@
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="d-flex flex-row-reverse">
                         <div class="page_action">
-                            <a href="javascript:void(0);" data-toggle="modal" class="btn btn-primary" data-target="#createmodal" ><i class="fa fa-add">أضف طلب نقل جديد</i></a>
                         </div>
                         <div class="p-2 d-flex">
                         </div>
@@ -43,23 +42,33 @@
                                             <th>العدد</th>
                                             <th>الوصف</th>
                                             <th>رقم الهاتف</th>
+                                            <th> الحالة</th>
                                             <th>العمليات</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($transferOrders as $key => $transferOrder)
                                         <tr>
-                                            <td class="project-title">
-                                                <h6>{{$transferOrder->user()->name}}</h6>
-                                            </td>
+                                        <td>{{$transferOrder->user_name}}</td>
                                             <td>{{$transferOrder->price}}</td>
                                             <td>{{$transferOrder->count}}</td>
                                             <td>{{$transferOrder->mobile}}</td>
                                             <td>{{$transferOrder->note}}</td>
+                                            <td>{{$transferOrder->status}}</td>
                                             <td class="project-actions">
                                                 <a href="#defaultModal" data-toggle="modal" data-target="#defaultModal">
                                                 <a href="javascript:void(0);" data-toggle="modal" data-target="#editModal{{$transferOrder->id}}" class="btn btn-sm btn-outline-success"><i class="icon-pencil"></i></a>
                                                 <a href="javascript:void(0);" data-toggle="modal" data-target="#deleteModal{{$transferOrder->id}}" class="btn btn-sm btn-outline-danger" ><i class="icon-trash"></i></a>
+                                                @if($transferOrder->status=='قيد المراجعة')
+                                                <a href="/transfer-order/reject/{{$transferOrder->id}}" title="رفض الطلب"  class="btn btn-sm btn-danger"><i class="icon-close" style="font-size:19px"></i></a>
+                                                <a href="/transfer-order/accept/{{$transferOrder->id}}" title="قبول الطلب"  class="btn btn-sm btn-success"><i class="icon-check" style="font-size:19px"></i></a>
+                                               @elseif($transferOrder->status=='مرفوض')
+                                                    <a href="/transfer-order/accept/{{$transferOrder->id}}" title="قبول الطلب"  class="btn btn-sm btn-success"><i class="icon-check" style="font-size:19px"></i></a>
+                                            
+                                                @else
+                                                <a href="/transfer-order/reject/{{$transferOrder->id}}" title="رفض الطلب"  class="btn btn-sm btn-danger"><i class="icon-close" style="font-size:19px"></i></a>
+                                                                                        
+                                                @endif
                                             </td>
                                         </tr>
                                         @endforeach
@@ -159,7 +168,7 @@
                 <h4 class="title" >تعديل معلومات طلب التحويل </h4>
             </div>
             <div class="modal-body"> 
-                <form method="POST" action="{{ route('transfer-order.update', $transfer->id) }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('transfer-order.update', $transferOrder->id) }}" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     {{ method_field('PATCH') }}
 
@@ -167,7 +176,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-edit"> </i></span>
                         </div>
-                        <input type="text" class="form-control" value="{{$transferOrder->user()->name}}" required placeholder="اسم المستخدم" name="user_id" aria-label="user_id" aria-describedby="basic-addon2" readonly>
+                        <input type="text" class="form-control" value="{{$transferOrder->user_name}}" required placeholder="اسم المستخدم" name="user_id" aria-label="user_id" aria-describedby="basic-addon2" readonly>
                     </div>
 
                     <div class="input-group mb-3">

@@ -13,6 +13,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->string('image_url')->nullable();
             $table->string('title')->nullable();
+              $table->integer('is_news')->nullable();
             $table->timestamps();
         });
     }

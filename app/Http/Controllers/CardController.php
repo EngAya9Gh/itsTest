@@ -6,11 +6,19 @@ use Illuminate\Http\Request;
 
 use App\Models\Card;
 use Illuminate\Support\Facades\DB;
+use App\Utils\ProfitCalculationService;
 class CardController extends Controller
-{
+{    protected $profitService;
+    public function __construct(ProfitCalculationService $profitService)
+    {
+        $this->profitService = $profitService;
+    }
     public function index()
     { 
         $cards=DB::table('cards')->select('*')->orderBy('id', 'desc')->paginate(500);
+        foreach ($cards as $service) {
+            $service->price = $this->profitService->getPrice($service);    // إنشاء رابط 
+        }
         return view('backend.card.cards.index', compact('cards'));
     }
 

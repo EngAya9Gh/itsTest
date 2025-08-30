@@ -4,15 +4,33 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\DataCommunication;
+use App\Models\DataCommunicationSection;
 use Illuminate\Support\Facades\DB;
-
+use App\Utils\ProfitCalculationService;
 class DataCommunicationController extends Controller
 {
-    
+    protected $profitService;
+    public function __construct(ProfitCalculationService $profitService)
+    {
+        $this->profitService = $profitService;
+    }
     public function index()
     { 
         $datas=DB::table('data_communications')->select('*')->orderBy('id', 'desc')->paginate(500);
-        return view('backend.data.datas.index', compact('datas'));
+        $datCommunicationSections=DB::table('data_communication_sections')->select('*')->orderBy('id', 'desc')->paginate(500);
+       foreach ($datas as $service) {
+            $service->price = $this->profitService->getPrice($service);    // إنشاء رابط 
+        }
+        return view('backend.data.datas.index', compact('datas','datCommunicationSections'));
+
+        
+    } 
+    public function showData($id)
+    {
+        $datas=DB::table('data_communications')->select('*')->where('section_id',$id)->orderBy('id', 'desc')->paginate(500);
+   
+        $datCommunicationSections=DB::table('data_communication_sections')->select('*')->orderBy('id', 'desc')->paginate(500);
+        return view('backend.data.datas.index',compact('datas','datCommunicationSections'));
     }
 
     public function store(Request $request)

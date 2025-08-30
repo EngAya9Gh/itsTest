@@ -15,12 +15,15 @@ class TransferMoneyFirmOrder extends Model
         'user_id',
         'sender',
         'value',
-        'currency',
+        'amount',//القيمة الفعلية
+      'remain_amount',
+      'currency',
         'dekont_no',
         'password',
         'account_salary_id',
         'account_salary_name',
         'process_no',
-        'status'
+        'status',
+        'payment_done',
     ];
 }

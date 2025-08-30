@@ -19,7 +19,7 @@ return new class extends Migration
 
             $table->integer('section_id');
             $table->foreign('section_id')->references('id')->on('ebank_sections')->onDelete('cascade');
-            $table->integer('price');
+            $table->decimal('price', 8, 4);
             $table->string('note')->nullable();
             $table->tinyInteger('status')->default('1');
             $table->timestamps();

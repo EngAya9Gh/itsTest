@@ -24,5 +24,9 @@ class TransferMoneyFirm extends Model
     {
         return $this->belongsToMany(User::class, 'transfer_money_firm_orders', 'transfer_money_firm_id', 'user_id');
     }
+    public function orders()
+    {
+        return $this->hasMany(TransferMoneyFirmOrder::class, 'transfer_money_firm_id');
+    }
     
 }

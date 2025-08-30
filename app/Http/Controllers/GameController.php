@@ -6,13 +6,22 @@ use Illuminate\Http\Request;
 use App\Models\GameSection;
 use App\Models\Game;
 use Illuminate\Support\Facades\DB;
+use App\Utils\ProfitCalculationService;
 class GameController extends Controller
 {
+    protected $profitService;
+    public function __construct(ProfitCalculationService $profitService)
+    {
+        $this->profitService = $profitService;
+    }
     public function index()
     { 
         $games=DB::table('games')->select('*')->orderBy('id', 'desc')->paginate(500);
         
         $gameSections=DB::table('game_sections')->select('*')->orderBy('id', 'desc')->paginate(500);
+        foreach ($games as $service) {
+            $service->price = $this->profitService->getPrice($service);    // إنشاء رابط 
+        }
         return view('backend.game.games.index', compact('games','gameSections'));
     }
 

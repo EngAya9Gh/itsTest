@@ -20,7 +20,9 @@
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="d-flex flex-row-reverse">
                         <div class="page_action">
+                        @if(auth()->user()->role==1)
                             <a href="javascript:void(0);" data-toggle="modal" class="btn btn-primary" data-target="#createmodal" ><i class="fa fa-add">أضف شركة جديد</i></a>
+                      @endif
                         </div>
                         <div class="p-2 d-flex">
                         </div>
@@ -42,8 +44,10 @@
                                             <th> الصورة </th>
                                             <th> التصنيف </th> 
                                             <th> السعر </th>
+                                            @if(auth()->user()->role==1)
                                             <th>العمليات</th>
                                             <th>الحالة</th>
+                                            @endif
                                         </tr>
                                     </thead>
                                     
@@ -58,19 +62,22 @@
                                             <td><img src="{{asset('assets/images/data/'.$data->image)}}" data-toggle="tooltip" data-placement="top" title="Team Lead" alt="Avatar" class="width35 rounded"></td>
                                             <td class="project-title">
                                                 <h6>
-                                                  @if($data->type==1)
-                                                         فاتورة
-                                                      
-                                                  @else
-                                                    رصيد
-                                                  @endif
+                                           
+                                                @foreach ($datCommunicationSections as $key => $section)
+                                                      @if( $data->section_id==$section->id)
+                                                         {{$section->name}}
+                                                         @break
+                                                    
+                                                     @endif
 
+                                                    @endforeach
                                           
                                                 </h6>
                                              </td>
                                              <td class="project-title">
                                                 <h6>{{$data->price}}</h6>
                                             </td>
+                                            @if(auth()->user()->role==1)
                                             <td class="project-actions">
                                                 <a href="#defaultModal" data-toggle="modal" data-target="#defaultModal">
                                                 <a href="javascript:void(0);" class="btn btn-sm btn-outline-primary"><i class="icon-eye"></i></a>
@@ -85,6 +92,7 @@
 
                                                 @endif
                                             </td>
+                                            @endif
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -111,10 +119,12 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-edit"> </i></span>
                         </div>
-                        <select class="custom-select" required name="type" >
-                            <option value="" selected>اختر النوع</option>
-                            <option value="1" >فاتورة</option>
-                            <option value="2" >رصيد</option>
+                        <select class="custom-select" required name="section_id" >
+                            <option value="" selected>اختر التصنيف</option>
+                            @foreach ($datCommunicationSections as $key => $section)
+                            <option value="{{$section->id}}" >{{$section->name}}</option>
+
+                            @endforeach
                         </select> 
                     </div>
 
@@ -204,17 +214,17 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-edit"> </i></span>
                         </div>
-                        <select class="custom-select" required name="type" >
-                             @if( $data->type==1)
-                            <option value="1" selected >فاتورة</option>
-                            @else
-                            <option value="1"  >فاتورة</option>
-                            @endif
-                            @if( $data->type==2)
-                            <option value="2" selected >رصيد</option>
-                            @else
-                            <option value="2"  >رصيد</option>
-                            @endif
+                        <select class="custom-select" required name="section_id" >
+                    
+                            
+                           @foreach ($datCommunicationSections as $key => $section)
+                               @if( $data->section_id==$section->id)
+                            <option value="{{$section->id}}" selected>{{$section->name}}</option>
+                                @else
+                            <option value="{{$section->id}}" >{{$section->name}}</option>
+                                @endif
+
+                           @endforeach
                          </select> 
                     </div>
 

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreign('ecard_id')->references('id')->on('ecards')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('count')->nullable();
-            $table->integer('price');
+            $table->decimal('price', 8, 4);
             $table->string('note')->nullable();
             $table->string('mobile')->nullable();
             

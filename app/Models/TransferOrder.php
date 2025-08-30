@@ -17,7 +17,10 @@ class TransferOrder extends Model
         'note',
         'status'
     ];
-     
+    public function profits()
+    {
+        return $this->morphMany(Profit::class, 'profitable');
+    }
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

@@ -41,6 +41,7 @@
                                             <th>السعر</th>
                                             <th>العدد</th>
                                             <th>الوصف</th>
+                                            <th>الحالة</th>
                                             <th>العمليات</th>
                                         </tr>
                                     </thead>
@@ -55,10 +56,21 @@
                                             <td>{{$cardOrder->price}}</td>
                                             <td>{{$cardOrder->count}}</td>
                                             <td>{{$cardOrder->note}}</td>
+                                            <td>{{$cardOrder->status}}</td>
                                             <td class="project-actions">
                                                 <a href="#defaultModal" data-toggle="modal" data-target="#defaultModal">
                                                 <a href="javascript:void(0);" data-toggle="modal" data-target="#editModal{{$cardOrder->id}}" class="btn btn-sm btn-outline-success"><i class="icon-pencil"></i></a>
                                                 <a  href="javascript:void(0);" data-toggle="modal" data-target="#deleteModal{{$cardOrder->id}}" class="btn btn-sm btn-outline-danger" ><i class="icon-trash"></i></a>
+                                                @if($cardOrder->status=='قيد المراجعة')
+                                                <a href="/card-order/reject/{{$cardOrder->id}}" title="رفض الطلب"  class="btn btn-sm btn-danger"><i class="icon-close" style="font-size:19px"></i></a>
+                                                <a href="/card-order/accept/{{$cardOrder->id}}" title="قبول الطلب"  class="btn btn-sm btn-success"><i class="icon-check" style="font-size:19px"></i></a>
+                                               @elseif($cardOrder->status=='مرفوض')
+                                                    <a href="/card-order/accept/{{$cardOrder->id}}" title="قبول الطلب"  class="btn btn-sm btn-success"><i class="icon-check" style="font-size:19px"></i></a>
+                                           
+                                                @else
+                                                <a href="/card-order/reject/{{$cardOrder->id}}" title="رفض الطلب"  class="btn btn-sm btn-danger"><i class="icon-close" style="font-size:19px"></i></a>
+                                                                                        
+                                                @endif
                                             </td>
                                         </tr>
                                         @endforeach

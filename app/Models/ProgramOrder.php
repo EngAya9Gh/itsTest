@@ -16,4 +16,8 @@ class ProgramOrder extends Model
         'note',
         'status'
     ];
+    public function profits()
+    {
+        return $this->morphMany(Profit::class, 'profitable');
+    }
 }

@@ -10,11 +10,11 @@ return new class extends Migration
     {
         Schema::create('data_communication_orders', function (Blueprint $table) {
             $table->id();
-            $table->integer('data_id');
+            $table->unsignedBigInteger('data_communication_id');
             $table->integer('user_id');
-            $table->foreign('data_id')->references('id')->on('datas')->onDelete('cascade');
+            $table->foreign('data_communication_id')->references('id')->on('data_communications')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('price');
+            $table->decimal('price', 8, 4);
             $table->string('mobile');
             $table->integer('count');
             $table->string('note')->nullable();

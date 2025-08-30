@@ -10,17 +10,19 @@
         <div class="block-header">
             <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-12">
-                    <h2> خدمة تفعيل البرامج </h2>
+                    <h2>وكلاؤنا </h2>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.html"><i class="fa fa-dashboard"></i></a></li>                            
                         <li class="breadcrumb-item">لوحة التحكم</li>
-                        <li class="breadcrumb-item active">  تفعيل البرامج</li>
+                        <li class="breadcrumb-item active">  وكلاؤنا </li>
                     </ul>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="d-flex flex-row-reverse">
                         <div class="page_action">
-                            <a href="javascript:void(0);" data-toggle="modal" class="btn btn-primary" data-target="#createmodal" ><i class="fa fa-add">أضف برنامج جديد</i></a>
+                        @if(auth()->user()->role==1)
+                            <a href="javascript:void(0);" data-toggle="modal" class="btn btn-primary" data-target="#createmodal" ><i class="fa fa-add">أضف وكيل جديد</i></a>
+                       @endif
                         </div>
                         <div class="p-2 d-flex">
                         </div>
@@ -31,18 +33,17 @@
                 <div class="col-lg-12 col-md-12">
                     <div class="card">
                         <div class="header">
-                            <h2>تفعيل البرامج</h2>
+                            <h2>معلومات الوكلاء </h2>
                         </div>
                         <div class="body project_report">
                             <div class="table-responsive">
                                 <table class="table table-hover js-basic-example dataTable table-custom mb-0">
                                     <thead>
                                         <tr>                                            
-                                            <th>اسم  البرنامج</th>
-                                            <th> الصورة </th>
+                                            <th>معلومات الوكيل  </th>
                                          
                                             <th>العمليات</th>
-                                            <th>الحالة</th>
+                             
                                         </tr>
                                     </thead>
                                     
@@ -50,25 +51,18 @@
                                         @foreach ($programs as $key => $program)
                                         <tr>
                                             <td class="project-title">
-                                                <h6>{{$program->name}}</h6>
+                                                <h6>{{$program->note}}</h6>
                                             </td>
                                         
-
-                                            <td><img src="{{asset('assets/images/program/'.$program->image)}}" data-toggle="tooltip" data-placement="top" title="Team Lead" alt="Avatar" class="width35 rounded"></td>
                                            
+                                        
                                             <td class="project-actions">
                                                 <a href="#defaultModal" data-toggle="modal" data-target="#defaultModal">
                                                   <a href="javascript:void(0);" data-toggle="modal" data-target="#editModal{{$program->id}}" class="btn btn-sm btn-outline-success"><i class="icon-pencil"></i></a>
                                                 <a  href="javascript:void(0);" data-toggle="modal" data-target="#deleteModal{{$program->id}}" class="btn btn-sm btn-outline-danger" ><i class="icon-trash"></i></a>
                                             </td>
-                                            <td>
-                                            @if($program->status)
-                                            <a href="javascript:void(0);" data-toggle="modal" class="btn btn-primary" data-target="#enableModal{{$program->id}}"style="background-color:#22a191" ><i class="fa fa-add" >ايقاف </i></a>
-                                                @else
-                                            <a href="javascript:void(0);" data-toggle="modal" class="btn btn-primary" data-target="#enableModal{{$program->id}}" style="background-color:#23b5a7a1"><i class="fa fa-add" >  تفعيل </i></a>
-
-                                                @endif
-                                            </td>
+                                           
+                                              
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -87,40 +81,32 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="title" >إضافة  برنامج  جديد</h4>
+                <h4 class="title" >إضافة  وكيل  جديد</h4>
             </div>
             <div class="modal-body"> 
                 <form method="Post" action="{{ route('program.store') }}" enctype="multipart/form-data">
-                    <div class="input-group mb-3">
+                    <div class="input-group mb-3"  style="display:none">
+                        <div class="input-group-prepend" >
+                            <span class="input-group-text"><i class="fa fa-edit"> </i></span>
+                        </div>
+                        <input type="text" class="form-control" required placeholder="المعلومات"  value="****" name="name" aria-label="name" aria-describedby="basic-addon2">
+                    </div>
+
+                    <div class="input-group mb-3" style="display:none">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-edit"> </i></span>
                         </div>
-                        <input type="text" class="form-control" required placeholder="الاسم"  name="name" aria-label="name" aria-describedby="basic-addon2">
+                        <input type="text" class="form-control" value="0" required placeholder="السعر"  name="price" aria-label="price" aria-describedby="basic-addon2">
                     </div>
 
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-edit"> </i></span>
                         </div>
-                        <input type="text" class="form-control" required placeholder="السعر"  name="price" aria-label="price" aria-describedby="basic-addon2">
+                        <textarea class="form-control"  name="note" placeholder="المعلومات"></textarea>
                     </div>
 
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fa fa-edit"> </i></span>
-                        </div>
-                        <textarea class="form-control"  name="note" placeholder="الوصف"></textarea>
-                    </div>
-
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">الصورة</span>
-                        </div>
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="image">
-                            <label class="custom-file-label" for="inputGroupFile01">اختر الصورة</label>
-                        </div>
-                    </div>
+                
                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                     <div class="modal-footer">   
                         <button type="submit" class="btn btn-primary">حفظ</button>
@@ -162,20 +148,20 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="title" >تعديل معلومات البرنامج </h4>
+                <h4 class="title" >تعديل معلومات الوكيل </h4>
             </div>
             <div class="modal-body"> 
                 <form method="POST" action="{{ route('program.update', $program->id) }}" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     {{ method_field('PATCH') }}
-                    <div class="input-group mb-3">
+                    <div class="input-group mb-3" style="display:none">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-edit"> </i></span>
                         </div>
                         <input type="text" class="form-control" value="{{$program->name}}" required placeholder="الاسم" name="name" aria-label="name" aria-describedby="basic-addon2">
                     </div>
 
-                    <div class="input-group mb-3">
+                    <div class="input-group mb-3" style="display:none">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-edit"> </i></span>
                         </div>
@@ -186,18 +172,10 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-edit"> </i></span>
                         </div>
-                        <textarea class="form-control"  name="note" placeholder="الوصف"   >"{{$program->price}}</textarea>
+                        <textarea class="form-control"  name="note" placeholder="الوصف"   >{{$program->note}}</textarea>
                     </div>
 
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">الصورة</span>
-                        </div>
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="image">
-                            <label class="custom-file-label" for="inputGroupFile01">اختر الصورة </label>
-                        </div>
-                    </div>
+                  
                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                                
                     <div class="modal-footer"> 

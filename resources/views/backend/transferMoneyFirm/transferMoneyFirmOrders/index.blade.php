@@ -35,34 +35,49 @@
                                 <table class="table table-hover js-basic-example dataTable table-custom mb-0">
                                     <thead>
                                         <tr>                                            
+                                            <th>اسم الزبون</th>
                                             <th>اسم الشركة</th>
-                                            <th>اسم المستخدم</th>
-                                            <th>اسم المرسل</th>
-                                            <th>القيمة</th>
-                                            <th>العملة</th>
-                                            <th>رقم الوثيقة</th>
-                                            <th>كلمة المرور</th>
+                                            <th>المبلغ </th>
+                                            <th>القيمة الفعلية</th>
+                                            <th>الحالة</th>
                                             <th>العمليات</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($transferMoneyFirmOrders as $key => $transferMoneyFirmOrder)
+                                      @if($transferMoneyFirmOrder->status=='قيد المراجعة')
                                         <tr>
+                                            <td class="project-title">
+                                                <h6>{{$transferMoneyFirmOrder->user_name}}</h6>
+                                            </td>
                                             <td class="project-title">
                                                 <h6>{{$transferMoneyFirmOrder->transfer_money_firm_name}}</h6>
                                             </td>
-                                            <td>{{$transferMoneyFirmOrder->user_name}}</td>
-                                            <td>{{$transferMoneyFirmOrder->sender}}</td>
-                                            <td>{{$transferMoneyFirmOrder->value}}</td>
-                                            <td>{{$transferMoneyFirmOrder->currency}}</td>
-                                            <td>{{$transferMoneyFirmOrder->dekont_no}}</td>
-                                            <td>{{$transferMoneyFirmOrder->password}}</td>
+                                     
+                                            <td>{{$transferMoneyFirmOrder->value}}{{$transferMoneyFirmOrder->currency}}</td> 
+                                             <td>{{$transferMoneyFirmOrder->amount}}{{$baseCurrency->name}}</td>
+                                       
+                                            <td>{{$transferMoneyFirmOrder->status}}</td>
                                             <td class="project-actions">
                                                 <a href="#defaultModal" data-toggle="modal" data-target="#defaultModal">
+                                                <a href="javascript:void(0);" class="btn btn-sm btn-outline-primary"   data-toggle="modal" data-target="#balanceModal{{ $transferMoneyFirmOrder->user_id}}"><i class="icon-plus"></i></a>
+
                                                 <a href="javascript:void(0);" data-toggle="modal" data-target="#editModal{{$transferMoneyFirmOrder->id}}" class="btn btn-sm btn-outline-success"><i class="icon-pencil"></i></a>
                                                 <a  href="javascript:void(0);" data-toggle="modal" data-target="#deleteModal{{$transferMoneyFirmOrder->id}}" class="btn btn-sm btn-outline-danger" ><i class="icon-trash"></i></a>
+                                                @if($transferMoneyFirmOrder->status=='قيد المراجعة')
+                                                <a href="/transfer-money-firm-order/debt/{{$transferMoneyFirmOrder->id}}" title="قبول كدين "  class="btn btn-sm btn-outline-success"><i class="icon-check" style="font-size:19px"></i></a>
+                                                <a href="/transfer-money-firm-order/reject/{{$transferMoneyFirmOrder->id}}" title="الغاء  "  class="btn btn-sm btn-danger"><i class="icon-close" style="font-size:19px"></i></a>
+                                                <a href="/transfer-money-firm-order/accept/{{$transferMoneyFirmOrder->id}}" title="تم الدفع "  class="btn btn-sm btn-success"><i class="icon-check" style="font-size:19px"></i></a>
+                                               @elseif($transferMoneyFirmOrder->status=='دين')
+                                                    <a href="/transfer-money-firm-order/accept/{{$transferMoneyFirmOrder->id}}" title="تم الدفع "  class="btn btn-sm btn-success"><i class="icon-check" style="font-size:19px"></i></a>
+                                            
+                                                @else
+                                                <a href="/transfer-money-firm-order/reject/{{$transferMoneyFirmOrder->id}}" title="قبول كدين "  class="btn btn-sm btn-danger"><i class="icon-close" style="font-size:19px"></i></a>
+                                                                                        
+                                                @endif
                                             </td>
                                         </tr>
+                                       @endif
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -74,6 +89,9 @@
         </div>
     </div>
 </div>
+
+
+
 
 <!-------------create--------->
 <div class="modal fade" id="createmodal" tabindex="-1" role="dialog">
@@ -256,5 +274,50 @@
 </div>
 @endforeach
 
+
+@foreach ($transferMoneyFirmOrders as  $user)
+<div class="modal fade" id="balanceModal{{$user->user_id}}" tabindex="-1" role="dialog">
+ <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="title" id="defaultModalLabel"> اضافة رصيد   </h4>
+            </div>
+            <div class="modal-body"> 
+            <form method="POST" action="{{ route('users.balance') }}" enctype="multipart/form-data">
+            {{ csrf_field() }}
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">@</span>
+                        </div>
+                        <input type="text" class="form-control" required placeholder=" القيمة بدون كتابة TL"  aria-label=" "  name ="value" aria-describedby="basic-addon1">
+                    </div>
+                        <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">@</span>
+                        </div>
+
+                        <select class="custom-select" required name="payment_done" id="role">
+                                  <option selected value="1">  مدفوع </option>
+                                   <option value="0">دين</option>
+                               
+                                </select>  
+
+
+                    </div>
+                    <input class="form-control" require aria-label=" "  type="hidden"  name ="agent_id" value="{{$user->user_id}}" aria-describedby="basic-addon1">
+                 
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                    <div class="modal-footer"> 
+                        <button type="submit" class="btn btn-primary">حفظ</button>
+                        <a href="#"  data-dismiss="modal" class="btn btn-secondary">الغاء الأمر</a>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@endforeach
 
 @endsection

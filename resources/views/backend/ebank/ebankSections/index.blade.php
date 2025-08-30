@@ -20,7 +20,9 @@
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="d-flex flex-row-reverse">
                         <div class="page_action">
+                        @if(auth()->user()->role==1)
                             <a href="javascript:void(0);" data-toggle="modal" class="btn btn-primary" data-target="#createmodal" ><i class="fa fa-add">أضف تصنيف جديد</i></a>
+                       @endif
                         </div>
                         <div class="p-2 d-flex">
                         </div>
@@ -40,9 +42,10 @@
                                         <tr>                                            
                                             <th>اسم التصنيف</th>
                                             <th> الصورة </th>
-                                            
+                                            @if(auth()->user()->role==1)
                                             <th>العمليات</th>
                                             <th>الحالة</th>
+                                            @endif
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -51,8 +54,8 @@
                                             <td class="project-title">
                                                 <h6>{{$ebank->name}}</h6>
                                             </td>
-                                            <td><img src="{{asset('assets/images/ebankSection/'.$ebank->image)}}" data-toggle="tooltip" data-placement="top" title="Team Lead" alt="Avatar" class="width35 rounded"></td>
-                    
+                                            <td><img src="{{asset('assets/images/ebankSections/'.$ebank->image)}}" data-toggle="tooltip" data-placement="top" title="Team Lead" alt="Avatar" class="width35 rounded"></td>
+                                            @if(auth()->user()->role==1)
                                             <td class="project-actions">
                                                 <a href="#defaultModal" data-toggle="modal" data-target="#defaultModal">
                                                 <a href="/ebank/{{$ebank->id}}/category" class="btn btn-sm btn-outline-primary"><i class="icon-eye"></i></a>
@@ -68,6 +71,7 @@
 
                                                 @endif
                                             </td>
+                                            @endif
                                         </tr>
                                         @endforeach
                                     </tbody>

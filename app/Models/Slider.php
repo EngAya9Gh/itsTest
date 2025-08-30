@@ -12,5 +12,6 @@ class Slider extends Model
         'image',
         'image_url',
         'title',
+         'is_news',
     ];
 }

@@ -6,13 +6,22 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Models\App;
 use Illuminate\Support\Facades\DB;
-
+use App\Utils\ProfitCalculationService;
 class AppController extends Controller
-{
+{   protected $profitService;
+    public function __construct(ProfitCalculationService $profitService)
+    {
+        $this->profitService = $profitService;
+    }
+
+
     public function index()
     {
        $apps=DB::table('apps')->select('*')->orderBy('id', 'desc')->paginate(500);
        $appSections=DB::table('app_sections')->select('*')->orderBy('id', 'desc')->paginate(500);
+       foreach ($apps as $service) {
+        $service->price = $this->profitService->getPrice($service);    // إنشاء رابط 
+    }
        return view('backend.app.apps.index', compact('apps','appSections'));
     }
 
@@ -23,7 +32,7 @@ class AppController extends Controller
         {
             if ($file = $request->file('image')) {
                 $name = 'app'.time().$file->getClientOriginalName();
-                $file->move('images/apps/', $name);
+                $file->move('assets/images/apps/', $name);
                 $input['image'] = $name;
             }
        }

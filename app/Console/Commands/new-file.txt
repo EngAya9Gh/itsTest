@@ -1,0 +1,34 @@
+  $url = 'https://1kanal.pro/b2c-api/market/getPackages?phone=05534060015&password=0015aa&oprator=turktelekom';
+    
+       $response = Http::get($url);
+
+
+       if ($response->successful()) {
+           $data = $response->json();
+       // $games = $response->json()['result'];
+
+        // حفظ البيانات في ملف JSON
+        $filePath = storage_path('app/KONTOR_data.json');
+        File::put($filePath, json_encode($data));
+         
+         
+           $packages = TweetcellKontor::whereRaw("REPLACE(type, ' ', '') = ?", [str_replace(' ', '', $request->type)])
+                           ->get();
+
+          
+           // التأكد من وجود الحقل "packages"
+           if (isset($data['packages'])) {
+               // تحويل الأكواد إلى مصفوفة
+               $codes = array_column($data['packages'], 'code');
+             //dd($codes);
+               // البحث في قاعدة البيانات باستخدام الأكواد
+               $packages = TweetcellKontor::whereIn('amount', $codes)->where('type',intval($request->type))->get();
+       //   dd($packages);
+               // إرجاع البيانات (أو يمكن إرجاع نتائج معينة فقط)
+               return response()->json(["packeges"=>$packages]);
+           } else {
+               return response()->json(['error' => 'No packages found in the response.']);
+           }
+       } else {
+           return response()->json(['error' => 'Failed to fetch data from API.'], 500);
+       }

@@ -5,15 +5,22 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Ecard;
 use Illuminate\Support\Facades\DB;
-
+use App\Utils\ProfitCalculationService;
 class EcardController extends Controller
 {
-  
+    protected $profitService;
+    public function __construct(ProfitCalculationService $profitService)
+    {
+        $this->profitService = $profitService;
+    }
     public function index()
     { 
         $ecards=DB::table('ecards')->select('*')->orderBy('id', 'desc')->paginate(500);
-        $ecardsSections=DB::table('ecard_sections')->select('*')->orderBy('id', 'desc')->paginate(500);
-        return view('backend.ecard.ecards.index', compact('ecards','ecardsSections'));
+        $ecardSections=DB::table('ecard_sections')->select('*')->orderBy('id', 'desc')->paginate(500);
+        foreach ($ecards as $service) {
+            $service->price = $this->profitService->getPrice($service);    // إنشاء رابط 
+        }
+        return view('backend.ecard.ecards.index', compact('ecards','ecardSections'));
     }
 
     public function store(Request $request)

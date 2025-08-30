@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('image')->nullable();
             $table->string('image_url')->nullable();
-            $table->integer('price');
+            $table->decimal('price', 8, 4);
             $table->integer('section_id');
             $table->foreign('section_id')->references('id')->on('ecard_sections')->onDelete('cascade');
             $table->string('note')->nullable();

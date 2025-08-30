@@ -20,7 +20,9 @@
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="d-flex flex-row-reverse">
                         <div class="page_action">
+                        @if(auth()->user()->role==1)
                             <a href="javascript:void(0);" data-toggle="modal" class="btn btn-primary" data-target="#createmodal" ><i class="fa fa-add">أضف تصنيف جديد</i></a>
+                      @endif
                         </div>
                         <div class="p-2 d-flex">
                         </div>
@@ -40,8 +42,10 @@
                                         <tr>                                            
                                             <th>اسم الصنف</th>
                                             <th> الصورة </th>
+                                            @if(auth()->user()->role==1)
                                             <th>العمليات</th>
                                             <th>الحالة</th>
+                                            @endif
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -50,8 +54,8 @@
                                             <td class="project-title">
                                                 <h6>{{$app->name}}</h6>
                                             </td>
-                                            <td><img src="{{asset('assets/images/appSection/'.$app->image)}}" data-toggle="tooltip" data-placement="top" title="Team Lead" alt="Avatar" class="width35 rounded"></td>
-                    
+                                            <td><img src="{{asset('assets/images/appSections/'.$app->image)}}" data-toggle="tooltip" data-placement="top" title="Team Lead" alt="Avatar" class="width35 rounded"></td>
+                                            @if(auth()->user()->role==1)
                                             <td class="project-actions">
                                                 <a href="#defaultModal" data-toggle="modal" data-target="#defaultModal">
                                                 <a href="/app/{{$app->id}}/category" class="btn btn-sm btn-outline-primary"><i class="icon-eye"></i></a>
@@ -65,7 +69,12 @@
                                             <a href="javascript:void(0);" data-toggle="modal" class="btn btn-primary" data-target="#enableModal{{$app->id}}" style="background-color:#23b5a7a1"><i class="fa fa-add" >  تفعيل </i></a>
 
                                                 @endif
-                                            </td>
+                                              <a href="/move-app-to-game-section/{{$app->id}} " class="btn btn-primary" data-target="#enableModal97" style="background-color:#e14313"><i class="fa fa-add">  نقل الى الالعاب </i></a>
+                
+                                              <a href="/move-app-to-data-section/{{$app->id}} " class="btn btn-primary" data-target="#enableModal97" style="background-color:#e14313"><i class="fa fa-add">  نقل الى البيانات </i></a>
+
+                                          </td>
+                                            @endif
                                         </tr>
                                         @endforeach
                                     </tbody>

@@ -20,5 +20,10 @@ class Setting extends Model
     'instagram',
     'twitter',
     'telegram',
+    'tweetcell_password',
+    'tweetcell_user_name',  
+    'znet_password',
+    'znet_user_name',
+      
     ];
 }

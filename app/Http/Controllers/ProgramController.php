@@ -6,11 +6,18 @@ use Illuminate\Http\Request;
 
 use App\Models\Program;
 use Illuminate\Support\Facades\DB;
+use App\Utils\ProfitCalculationService;
 class ProgramController extends Controller
 {
+    protected $profitService;
+    public function __construct(ProfitCalculationService $profitService)
+    {
+        $this->profitService = $profitService;
+    }
     public function index()
     { 
         $programs=DB::table('programs')->select('*')->orderBy('id', 'desc')->paginate(500);
+      
         return view('backend.program.programs.index', compact('programs'));
     }
 

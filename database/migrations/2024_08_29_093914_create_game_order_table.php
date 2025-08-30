@@ -17,11 +17,12 @@ return new class extends Migration
             $table->integer('user_id');
             $table->foreign('game_id')->references('id')->on('games')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('user_id_game');//ايدية اليوزر باللعبة
             $table->string('name')->nullable();
+             $table->integer('game_user_id')->nullable();
+
             
             $table->string('status')->nullable()->default('قيد المراجعة');
-            $table->integer('price');
+            $table->decimal('price', 8, 4);
             $table->integer('count')->nullable();
             $table->string('note')->nullable();
             $table->timestamps();

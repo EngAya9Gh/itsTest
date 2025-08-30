@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->string('image_url')->nullable();
 
-            $table->integer('price');
+            $table->decimal('price', 8, 4);
             $table->string('note')->nullable();
             $table->tinyInteger('status')->default('1');
             $table->timestamps();

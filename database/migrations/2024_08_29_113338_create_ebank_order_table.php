@@ -21,7 +21,7 @@ return new class extends Migration
         
             $table->string('status')->nullable()->default('قيد المراجعة');
             $table->integer('count');
-            $table->integer('price');
+            $table->decimal('price', 8, 4);
             $table->string('mobile');
             $table->string('note')->nullable();
 

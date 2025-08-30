@@ -63,6 +63,7 @@
                                        <input type="text" class="form-control" required value="{{ $setting->app_name }}" aria-label="اسم المستخدم"  name ="app_name" aria-describedby="basic-addon1">
                                    
                                     </div>
+                                      
                                     <div class="input-group mb-3">
                                        
                                        <div class="input-group-prepend">
@@ -123,6 +124,42 @@
                                        <input type="text" class="form-control" required value="{{ $setting->telegram }}" aria-label="اسم المستخدم"  name ="telegram" aria-describedby="basic-addon1">
                                    
                                     </div>
+                                      
+                                      
+                                      <div class="input-group mb-3">
+
+                                        <div class="input-group-prepend">
+                                          <span class="input-group-text">  znet_name </span>
+                                        </div>
+                                        <input type="text" class="form-control" required value="{{ $setting->znet_user_name }}" aria-label="اسم المستخدم"  name ="znet_user_name" aria-describedby="basic-addon1">
+
+                                     </div> 
+                                      <div class="input-group mb-3">
+
+                                        <div class="input-group-prepend">
+                                          <span class="input-group-text">znet_password </span>
+                                        </div>
+                                        <input type="text" class="form-control" required value="{{ $setting->znet_password }}" aria-label="اسم المستخدم"  name ="znet_password" aria-describedby="basic-addon1">
+
+                                     </div> 
+                                      <div class="input-group mb-3">
+
+                                        <div class="input-group-prepend">
+                                          <span class="input-group-text">tweetcell_name </span>
+                                        </div>
+                                        <input type="text" class="form-control" required value="{{ $setting->tweetcell_user_name }}" aria-label="اسم المستخدم"  name ="tweetcell_user_name" aria-describedby="basic-addon1">
+
+                                     </div> 
+                                      <div class="input-group mb-3">
+
+                                        <div class="input-group-prepend">
+                                          <span class="input-group-text">tweetcell_password </span>
+                                        </div>
+                                        <input type="text" class="form-control" required value="{{ $setting->tweetcell_password }}" aria-label="اسم المستخدم"  name ="tweetcell_password" aria-describedby="basic-addon1">
+
+                                     </div>                                       
+                                      
+                                      
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">الصورة</span>
