@@ -12,7 +12,7 @@
                <div class="col-lg-6 col-md-6 col-sm-12">
                     <h2>قسم خدمات ITS</h2>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html"><i class="fa fa-dashboard"></i></a></li>                            
+                        <li class="breadcrumb-item"><a href="index.html"><i class="fa fa-dashboard"></i></a></li>
                         <li class="breadcrumb-item">لوحة التحكم</li>
                         <li class="breadcrumb-item active"> ITS</li>
                     </ul>
@@ -20,15 +20,16 @@
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="d-flex flex-row-reverse">
                         <div class="page_action">
-                        @if(auth()->user()->role==1)
-                            <a href="javascript:void(0);" data-toggle="modal" class="btn btn-primary" data-target="#createmodal" ><i class="fa fa-add">أضف خدمة جديد</i></a>
-                      @endif
+                        {{-- إضافة خدمة معطلة أثناء الاستيراد الآلي --}}
+{{-- @if(auth()->user()->role==1)
+    <a href="javascript:void(0);" data-toggle="modal" class="btn btn-primary" data-target="#createmodal" ><i class="fa fa-add">أضف خدمة جديد</i></a>
+@endif --}}
                         </div>
                         <div class="p-2 d-flex">
                         </div>
                     </div>
                 </div>
-            </div>    
+            </div>
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12">
                     <div class="card">
@@ -39,7 +40,7 @@
                             <div class="table-responsive">
                                 <table class="table table-hover js-basic-example dataTable table-custom mb-0">
                                     <thead>
-                                        <tr>                                            
+                                        <tr>
                                             <th>اسم الخدمة</th>
                                             <th>الصورة </th>
                                             <th>التصنيف </th>
@@ -58,30 +59,32 @@
                                                 <h6>{{$service->name}}</h6>
                                             </td>
                                             <td><img src="{{asset('assets/images/service/'.$service->image)}}" data-toggle="tooltip" data-placement="top" title="Team Lead" alt="Avatar" class="width35 rounded"></td>
-                
+
                                             <td class="project-title">
-                                                <h6>  
+                                                <h6>
                                                          {{$section->name}}
-                                                         
+
                                                 </h6>
                                             </td>
                                             <td>{{$service->basic_price}}TL</td>
                                             <td>{{$service->price}}TL</td>
-                                               @if(auth()->user()->role==1)
+                                            {{-- عمليات التعديل/الحذف معلّقة أثناء الاستيراد الآلي --}}
+
+                                             @if(auth()->user()->role==1)
                                             <td class="project-actions">
                                                 <a href="#defaultModal" data-toggle="modal" data-target="#defaultModal">
                                                 <a href="javascript:void(0);" data-toggle="modal" data-target="#editModal{{$service->id}}" class="btn btn-sm btn-outline-success"><i class="icon-pencil"></i></a>
-                                                <a href="javascript:void(0);" data-toggle="modal" data-target="#deleteModal{{$service->id}}" class="btn btn-sm btn-outline-danger" ><i class="icon-trash"></i></a>
+                                                {{-- <a href="javascript:void(0);" data-toggle="modal" data-target="#deleteModal{{$service->id}}" class="btn btn-sm btn-outline-danger" ><i class="icon-trash"></i></a> --}}
                                             </td>
+                                            @endif
+
                                             <td>
                                                 @if($service->status)
-                                            <a href="javascript:void(0);" data-toggle="modal" class="btn btn-primary" data-target="#enableModal{{$service->id}}"style="background-color:#22a191" ><i class="fa fa-add" >ايقاف </i></a>
+                                                    <a href="javascript:void(0);" data-toggle="modal" class="btn btn-primary" data-target="#enableModal{{$service->id}}" style="background-color:#22a191"><i class="fa fa-add">ايقاف</i></a>
                                                 @else
-                                            <a href="javascript:void(0);" data-toggle="modal" class="btn btn-primary" data-target="#enableModal{{$service->id}}" style="background-color:#23b5a7a1"><i class="fa fa-add" >  تفعيل </i></a>
-
+                                                    <a href="javascript:void(0);" data-toggle="modal" class="btn btn-primary" data-target="#enableModal{{$service->id}}" style="background-color:#23b5a7a1"><i class="fa fa-add">تفعيل</i></a>
                                                 @endif
                                             </td>
-                                          @endif
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -102,23 +105,23 @@
             <div class="modal-header">
                 <h4 class="title" id="defaultModalLabelcreate">إضافة خدمة جديد</h4>
             </div>
-            <div class="modal-body"> 
+            <div class="modal-body">
                 <form method="Post" action="{{ route('service.store') }}" enctype="multipart/form-data">
-                    
+
                 <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-edit"> </i></span>
                         </div>
                         <select class="custom-select" required name="section_id" >
-                           
-                          
+
+
                             <option value="{{$section->id}}" >{{$section->name}}</option>
 
-                            
-                        </select>  
+
+                        </select>
                     </div>
                     <div class="input-group mb-3">
-                        <div class="input-group-prepend">                
+                        <div class="input-group-prepend">
                           <span class="input-group-text"><i class="fa fa-edit"> </i></span>
                         </div>
                       @if($section->type==1)
@@ -129,21 +132,21 @@
                             <option value="3" >dft قديم</option>
                             <option value="5" >chimra</option>
                             <option value="4" >avatar </option>
-                       
-                        </select>  
+
+                        </select>
                       @else
-                      
+
                             <select class="custom-select" required name="type" >
                             <option value="" selected>اختر نوع البيانات المدخلة</option>
                             <option value="6" >صورة هوية + صورة الخط + ملاحظة  </option>
                             <option value="7" > + ملاحظة صورة هوية + صورة الخط + رقم الهاتف</option>
                             <option value="8" > عداد + ملاحظة</option>
-                       
-                        </select> 
-                      
+
+                        </select>
+
                       @endif
                     </div>
-              
+
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-edit"> </i></span>
@@ -180,9 +183,9 @@
                             <label class="custom-file-label" for="inputGroupFile01">اختر الصورة</label>
                         </div>
                     </div>
-                 
+
                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                    <div class="modal-footer">   
+                    <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">حفظ</button>
                         <a href="#" class="btn btn-secondary" data-dismiss="modal">الغاء الأمر</a>
                     </div>
@@ -200,7 +203,7 @@
             <div class="modal-header">
                 <h4 class="title" id="defaultModalLabeldelete">هل أنت بالتاكيد تريد الحذف </h4>
             </div>
-            <div class="modal-body"> 
+            <div class="modal-body">
               <form action="{{ route('service.destroy', $service->id) }}" method="POST">
                @csrf
                @method('DELETE')
@@ -224,7 +227,7 @@
             <div class="modal-header">
                 <h4 class="title" id="defaultModalLabeledit">تعديل معلومات الخدمة </h4>
             </div>
-            <div class="modal-body"> 
+            <div class="modal-body">
                 <form method="POST" action="{{ route('service.update', ['service' => $service->id]) }}" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     {{ method_field('PATCH') }}
@@ -233,18 +236,18 @@
                             <span class="input-group-text"><i class="fa fa-edit"> </i></span>
                         </div>
                         <select class="custom-select" required name="section_id" >
-                 
-                         
+
+
                                 <option value="{{$section->id}}" >{{$section->name}}</option>
 
-                          
-                        </select> 
+
+                        </select>
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-edit"> </i></span>
                         </div>
-                      
+
                       @if($section->type==1)
                         <select class="custom-select" required name="type" >
                             <option value="{{$service->type}}" selected>اختر نوع البيانات المدخلة</option>
@@ -253,27 +256,27 @@
                             <option value="3" >dft قديم</option>
                             <option value="5" >chimra</option>
                             <option value="4" >avatar </option>
-                       
-                        </select>  
+
+                        </select>
                       @else
-                      
+
                             <select class="custom-select" required name="type" >
                             <option value="{{$service->type}}" selected>اختر نوع البيانات المدخلة</option>
                             <option value="6" >صورة هوية + صورة الخط + ملاحظة  </option>
                             <option value="7" > + ملاحظة صورة هوية + صورة الخط + رقم الهاتف</option>
                             <option value="8" > عداد + ملاحظة</option>
-                       
-                        </select> 
-                      
+
+                        </select>
+
                       @endif
 
                     </div>
-                    
+
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-edit"> </i></span>
                         </div>
-                        <input type="text" class="form-control" value="{{$service->name}}" required placeholder="الاسم" name="name" aria-label="name" aria-describedby="basic-addon2">
+                        <input type="text" class="form-control" value="{{$service->name}}" required placeholder="الاسم" name="name" aria-label="name" aria-describedby="basic-addon2" readonly>
                     </div>
 
                     <div class="input-group mb-3">
@@ -305,8 +308,8 @@
                         </div>
                     </div>
                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                               
-                    <div class="modal-footer"> 
+
+                    <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">حفظ</button>
                         <a href="#" class="btn btn-secondary" data-dismiss="modal">الغاء الأمر</a>
                     </div>
@@ -327,11 +330,11 @@
                 @if($service->status)
                 <h4 class="title" id="defaultModalLabeldelete">هل أنت بالتاكيد تريد الغاء تفعيل الخدمة ؟ </h4>
                 @else
-                
+
                 <h4 class="title" id="defaultModalLabeldelete">هل أنت بالتاكيد تريد تفعيل الخدمة؟  </h4>
                 @endif
             </div>
-            <div class="modal-body"> 
+            <div class="modal-body">
               <form action="/service/{{$service->id}}/status" method="POST">
                @csrf
                <input type="hidden" name="_token" value="{{ csrf_token() }}" />

@@ -22,13 +22,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        
-    //$schedule->command('tweetcell:update')->everyMinute();
-      
-   // $schedule->command('tweetcellKontor:update')->everyMinute();
-      
-  //  $schedule->job(new UpdateOrderStatus())->everyMinute(); // هنا يتم تنفيذ الكود يوميًا
+        // تحدّث قائمة خدمات Dhru كل 5 دقائق
+        $schedule->command('dhru:sync-services --type=1')->everyFiveMinutes();
 
-        
+        // أمثلة موجودة مسبقًا (معلّقة)
+        // $schedule->command('tweetcell:update')->everyMinute();
+        // $schedule->command('tweetcellKontor:update')->everyMinute();
+        // $schedule->job(new UpdateOrderStatus())->everyMinute();
     }
 }

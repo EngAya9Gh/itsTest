@@ -1,0 +1,62 @@
+{
+  "info": {
+    "_postman_id": "8f5f7df6-3b79-4fef-93db-3c8a8e1c0a99",
+    "name": "ITS Dhru Integration",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Dhru: IMEI Service List (direct)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Accept", "value": "application/json" },
+          { "key": "Content-Type", "value": "application/x-www-form-urlencoded" }
+        ],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            { "key": "username", "value": "{{DHRU_USERNAME}}", "type": "text" },
+            { "key": "apiaccesskey", "value": "{{DHRU_API_KEY}}", "type": "text" },
+            { "key": "action", "value": "imeiservicelist", "type": "text" },
+            { "key": "parameters", "value": "{{DHRU_PARAMETERS}}", "type": "text" }
+          ]
+        },
+        "url": {
+          "raw": "{{DHRU_BASE_URL}}",
+          "host": ["{{DHRU_BASE_URL}}"]
+        }
+      }
+    },
+    {
+      "name": "Artisan: Sync Dhru (via HTTP route)",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8082/test",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8082",
+          "path": ["test"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// إذا أردت ربط هذه الطلبية بتشغيل مخصص، سنضيف لاحقاً route خاصة لتشغيل المزامنة"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    { "key": "DHRU_BASE_URL", "value": "https://your-dhru-endpoint/api/index.php" },
+    { "key": "DHRU_USERNAME", "value": "abdalkadr777352" },
+    { "key": "DHRU_API_KEY", "value": "AWK-TT6-AT0-ZN1-IVH-BX3-LXH-NCO" },
+    { "key": "DHRU_PARAMETERS", "value": "" }
+  ]
+}

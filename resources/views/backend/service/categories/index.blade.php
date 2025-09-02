@@ -12,7 +12,7 @@
                <div class="col-lg-6 col-md-6 col-sm-12">
                     <h2>قسم خدمات ITS</h2>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html"><i class="fa fa-dashboard"></i></a></li>                            
+                        <li class="breadcrumb-item"><a href="index.html"><i class="fa fa-dashboard"></i></a></li>
                         <li class="breadcrumb-item">لوحة التحكم</li>
                         <li class="breadcrumb-item active"> ITS</li>
                     </ul>
@@ -20,15 +20,16 @@
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="d-flex flex-row-reverse">
                         <div class="page_action">
-                        @if(auth()->user()->role==1)
-                            <a href="javascript:void(0);" data-toggle="modal" class="btn btn-primary" data-target="#createmodal" ><i class="fa fa-add">أضف خدمة جديد</i></a>
-                       @endif
+                        {{-- إضافة تصنيف معلّقة أثناء الاستيراد الآلي --}}
+{{-- @if(auth()->user()->role==1)
+    <a href="javascript:void(0);" data-toggle="modal" class="btn btn-primary" data-target="#createmodal" ><i class="fa fa-add">أضف خدمة جديد</i></a>
+@endif --}}
                         </div>
                         <div class="p-2 d-flex">
                         </div>
                     </div>
                 </div>
-            </div>    
+            </div>
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12">
                     <div class="card">
@@ -39,12 +40,12 @@
                             <div class="table-responsive">
                                 <table class="table table-hover js-basic-example dataTable table-custom mb-0">
                                     <thead>
-                                        <tr>                                            
-                                            <th>اسم الخدمة</th>
+                                        <tr>
+                                            <th>صنف الخدمة</th>
                                             <th>الصورة </th>
                                           @if(auth()->user()->role==1)
                                             <th>نسبة الربح </th>
-                                            
+
                                             <th>العمليات</th>
                                             <th>الحالة</th>
                                           @endif
@@ -61,15 +62,18 @@
                                             <td class="project-title">
                                                 <h6>{{$service->increase_percentage}}%</h6>
                                             </td>
-                                           @endif     
+                                           @endif
                                             <td class="project-actions">
-                                                <a href="#defaultModal" data-toggle="modal" data-target="#defaultModal">
+                                                <a href="#defaultModal" data-toggle="modal" data-target="#defaultModal"></a>
                                                 <a href="/service/{{$service->id}}/category " class="btn btn-sm btn-outline-primary"><i class="icon-eye"></i></a>
-                                               @if(auth()->user()->role==1)
+                                                {{-- إخفاء أزرار التعديل والحذف أثناء الاستيراد الآلي --}}
+
+                                                @if(auth()->user()->role==1)
                                                   <a href="javascript:void(0);" data-toggle="modal" data-target="#editModal{{$service->id}}" class="btn btn-sm btn-outline-success"><i class="icon-pencil"></i></a>
-                                                  <a href="javascript:void(0);" data-toggle="modal" data-target="#deleteModal{{$service->id}}" class="btn btn-sm btn-outline-danger" ><i class="icon-trash"></i></a>
-                                               @endif      
-                                                  </td>
+                                                  {{-- <a href="javascript:void(0);" data-toggle="modal" data-target="#deleteModal{{$service->id}}" class="btn btn-sm btn-outline-danger" ><i class="icon-trash"></i></a> --}}
+                                                @endif
+
+                                            </td>
                                             <td>
                                                @if(auth()->user()->role==1)
                                                 @if($service->status)
@@ -80,7 +84,7 @@
                                                 @endif
                                             </td>
                                            @endif
-                                         
+
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -101,10 +105,10 @@
             <div class="modal-header">
                 <h4 class="title" id="defaultModalLabelcreate">إضافة تصنيف  جديد</h4>
             </div>
-            <div class="modal-body"> 
+            <div class="modal-body">
                 <form method="Post" action="{{ route('service-category.store') }}" enctype="multipart/form-data">
-                    
-              
+
+
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-edit"> </i></span>
@@ -114,7 +118,7 @@
                       <input type="hidden" class="form-control" required value="{{$type}}"  name="type" aria-label="name" aria-describedby="basic-addon2">
 
 
-              
+
 
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -140,7 +144,7 @@
                         </div>
                     </div>
                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                    <div class="modal-footer">   
+                    <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">حفظ</button>
                         <a href="#" class="btn btn-secondary" data-dismiss="modal">الغاء الأمر</a>
                     </div>
@@ -158,7 +162,7 @@
             <div class="modal-header">
                 <h4 class="title" id="defaultModalLabeldelete">هل أنت بالتاكيد تريد الحذف </h4>
             </div>
-            <div class="modal-body"> 
+            <div class="modal-body">
               <form action="{{ route('service-category.destroy', $service->id) }}" method="POST">
                @csrf
                @method('DELETE')
@@ -182,11 +186,11 @@
             <div class="modal-header">
                 <h4 class="title" id="defaultModalLabeledit">تعديل معلومات الخدمة </h4>
             </div>
-            <div class="modal-body"> 
+            <div class="modal-body">
                 <form method="POST" action="{{ route('service-category.update',  $service->id) }}" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     {{ method_field('PATCH') }}
-                   
+
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-edit"> </i></span>
@@ -220,8 +224,8 @@
                         </div>
                     </div>
                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                               
-                    <div class="modal-footer"> 
+
+                    <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">حفظ</button>
                         <a href="#" class="btn btn-secondary" data-dismiss="modal">الغاء الأمر</a>
                     </div>
@@ -242,11 +246,11 @@
                 @if($service->status)
                 <h4 class="title" id="defaultModalLabeldelete">هل أنت بالتاكيد تريد الغاء تفعيل الخدمة ؟ </h4>
                 @else
-                
+
                 <h4 class="title" id="defaultModalLabeldelete">هل أنت بالتاكيد تريد تفعيل الخدمة؟  </h4>
                 @endif
             </div>
-            <div class="modal-body"> 
+            <div class="modal-body">
               <form action="/service-category/{{$service->id}}/status" method="POST">
                @csrf
                <input type="hidden" name="_token" value="{{ csrf_token() }}" />
