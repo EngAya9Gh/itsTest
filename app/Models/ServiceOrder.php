@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 class ServiceOrder extends Model
 {
-   
+
    /* 1: imei
   2:  dfth new   username ,password,email, note
     3:  dfth old   username,note
@@ -16,7 +16,7 @@ class ServiceOrder extends Model
   7:kimlik ,line_photo,mobile note
   8:count
 */
-    protected $fillable = ['user_id','reject_reason', 'service_id', 'price', 'basic_price', 'status', 'count','username'
+    protected $fillable = ['user_id','reject_reason', 'service_id', 'price', 'basic_price', 'status', 'provider_reference', 'count','username'
                            ,'note','email','password','ime',
                            'kimlik','line_photo','mobile','last_mobile'];
    public function user()
@@ -31,8 +31,8 @@ class ServiceOrder extends Model
     {
         return $this->belongsTo(Service::class);
     }
-  
-  
+
+
    protected static function booted()
     {
         static::creating(function ($model) {

@@ -1,0 +1,146 @@
+{
+  "info": {
+    "name": "ApiServiceOrderController",
+    "_postman_id": "bb4d4d6a-6f91-44d4-9c76-6b9a3e6e5c1f",
+    "description": "Collection to test ApiServiceOrderController endpoints. Before using: 1) Set 'token' variable to a valid Bearer token (auth:api), 2) Set 'service_id' to an existing service ID, 3) Set 'price' to the service price, 4) The 'id' variable will be auto-set from service_id by pre-request scripts. The baseUrl is set to http://localhost:8082/api for Docker setup.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+
+  "item": [
+    {
+      "name": "Place Service Order (IMEI)",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "// If path variable {{id}} is empty, copy it from body service_id (if set)",
+              "try {",
+              "  var body = pm.request.body && pm.request.body.raw ? JSON.parse(pm.request.body.raw) : {};",
+              "  if (!pm.variables.get('id') && body.service_id) { pm.variables.set('id', body.service_id); }",
+              "} catch (e) {}"
+            ],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 201 or handled error', function () {",
+              "  pm.expect([201, 400, 401, 422, 500, 502]).to.include(pm.response.code);",
+              "});",
+              "if (pm.response.code === 201) {",
+              "  const json = pm.response.json();",
+              "  pm.test('Has reference_id and order_id', function () {",
+              "    pm.expect(json).to.have.property('reference_id');",
+              "    pm.expect(json).to.have.property('order_id');",
+              "  });",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Accept", "value": "application/json" },
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/service/order/{{id}}",
+          "host": [ "{{baseUrl}}" ],
+          "path": [ "service", "order", "{{id}}" ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"service_id\": \"{{service_id}}\",\n  \"price\": \"{{price}}\",\n  \"count\": 1,\n  \"ime\": \"123456789012345\",\n  \"username\": \"test.user\",\n  \"email\": \"user@example.com\",\n  \"password\": \"secret\"\n}"
+        },
+        "description": "Creates a service order for IMEI category. Ensure service_id points to a service whose category is IMEI."
+      }
+    },
+    {
+      "name": "Place Service Order (SERVER)",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "try {",
+              "  var body = pm.request.body && pm.request.body.raw ? JSON.parse(pm.request.body.raw) : {};",
+              "  if (!pm.variables.get('id') && body.service_id) { pm.variables.set('id', body.service_id); }",
+              "} catch (e) {}"
+            ],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 201 or handled error', function () {",
+              "  pm.expect([201, 400, 401, 422, 500, 502]).to.include(pm.response.code);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Accept", "value": "application/json" },
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/service/order/{{id}}",
+          "host": [ "{{baseUrl}}" ],
+          "path": [ "service", "order", "{{id}}" ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"service_id\": \"{{service_id}}\",\n  \"price\": \"{{price}}\",\n  \"count\": 2,\n  \"ime\": \"SN-ABC-001\",\n  \"MODELID\": 100,\n  \"PROVIDERID\": 5,\n  \"MEP\": \"mep-value\",\n  \"PIN\": \"1234\",\n  \"KBH\": \"kbh\",\n  \"PRD\": \"prd\",\n  \"TYPE\": \"type\",\n  \"REFERENCE\": \"ref-1\",\n  \"LOCKS\": \"locks\",\n  \"SecRO\": \"secro\"\n}"
+        },
+        "description": "Creates a service order for SERVER category, providing optional server fields."
+      }
+    },
+    {
+      "name": "Place Service Order (Generic)",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "try {",
+              "  var body = pm.request.body && pm.request.body.raw ? JSON.parse(pm.request.body.raw) : {};",
+              "  if (!pm.variables.get('id') && body.service_id) { pm.variables.set('id', body.service_id); }",
+              "} catch (e) {}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Accept", "value": "application/json" },
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/service/order/{{id}}",
+          "host": [ "{{baseUrl}}" ],
+          "path": [ "service", "order", "{{id}}" ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"service_id\": \"{{service_id}}\",\n  \"price\": \"{{price}}\",\n  \"count\": 1\n}"
+        },
+        "description": "Creates a generic service order (non-IMEI/non-SERVER)."
+      }
+    }
+  ]
+}

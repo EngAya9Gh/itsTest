@@ -9,8 +9,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('services', function (Blueprint $table) {
-            // External provider service identifier (string to be safe; providers may use non-numeric)
-            $table->string('external_id', 191)->nullable()->after('name');
+            // External provider service identifier (integer)
+            $table->integer('external_id')->nullable()->after('name');
             $table->index('external_id');
             $table->unique(['section_id', 'external_id']);
         });

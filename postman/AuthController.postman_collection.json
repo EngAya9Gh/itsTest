@@ -1,0 +1,217 @@
+{
+  "info": {
+    "name": "AuthController - Login & Registration",
+    "_postman_id": "auth-collection-2024",
+    "description": "Collection for user authentication (login/register) to get Bearer tokens. After successful login, the token will be automatically set in the environment variable 'token'.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8082/api" },
+    { "key": "token", "value": "" },
+    { "key": "email", "value": "test@example.com" },
+    { "key": "password", "value": "password123" },
+    { "key": "name", "value": "Test User" }
+  ],
+  "item": [
+    {
+      "name": "Register New User",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if (pm.response.code === 201) {",
+              "  var json = pm.response.json();",
+              "  if (json.token) {",
+              "    pm.collectionVariables.set('token', json.token);",
+              "    pm.environment.set('token', json.token);",
+              "    console.log('Token saved:', json.token);",
+              "  }",
+              "  pm.test('Registration successful', function () {",
+              "    pm.expect(json).to.have.property('token');",
+              "    pm.expect(json).to.have.property('user');",
+              "  });",
+              "} else {",
+              "  pm.test('Registration failed', function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([422, 400]);",
+              "  });",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Accept", "value": "application/json" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/register",
+          "host": [ "{{baseUrl}}" ],
+          "path": [ "register" ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"{{name}}\",\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\",\n  \"password_confirmation\": \"{{password}}\",\n  \"code\": \"+90\",\n  \"mobile\": \"5551234567\"\n}"
+        },
+        "description": "Register a new user account. On success, automatically saves the token to environment."
+      }
+    },
+    {
+      "name": "Login User",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if (pm.response.code === 200) {",
+              "  var json = pm.response.json();",
+              "  if (json.token) {",
+              "    pm.collectionVariables.set('token', json.token);",
+              "    pm.environment.set('token', json.token);",
+              "    console.log('Token saved:', json.token);",
+              "  }",
+              "  pm.test('Login successful', function () {",
+              "    pm.expect(json).to.have.property('token');",
+              "    pm.expect(json).to.have.property('user');",
+              "  });",
+              "} else {",
+              "  pm.test('Login failed', function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([401, 422]);",
+              "  });",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Accept", "value": "application/json" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/login",
+          "host": [ "{{baseUrl}}" ],
+          "path": [ "login" ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\"\n}"
+        },
+        "description": "Login with email and password. On success, automatically saves the token to environment."
+      }
+    },
+    {
+      "name": "Check Auth Status",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Auth check response', function () {",
+              "  pm.expect(pm.response.code).to.be.oneOf([200, 401]);",
+              "});",
+              "",
+              "if (pm.response.code === 200) {",
+              "  var json = pm.response.json();",
+              "  pm.test('User is authenticated', function () {",
+              "    pm.expect(json).to.have.property('user');",
+              "  });",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Accept", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/auth-check",
+          "host": [ "{{baseUrl}}" ],
+          "path": [ "auth-check" ]
+        },
+        "description": "Check if the current token is valid and user is authenticated."
+      }
+    },
+    {
+      "name": "Get Logged In User",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Get user response', function () {",
+              "  pm.expect(pm.response.code).to.be.oneOf([200, 401]);",
+              "});",
+              "",
+              "if (pm.response.code === 200) {",
+              "  var json = pm.response.json();",
+              "  pm.test('User data retrieved', function () {",
+              "    pm.expect(json).to.have.property('id');",
+              "    pm.expect(json).to.have.property('email');",
+              "    pm.expect(json).to.have.property('name');",
+              "  });",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Accept", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/logged-in-user",
+          "host": [ "{{baseUrl}}" ],
+          "path": [ "logged-in-user" ]
+        },
+        "description": "Get the currently logged in user details. Requires authentication."
+      }
+    },
+    {
+      "name": "Logout User",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if (pm.response.code === 200) {",
+              "  pm.collectionVariables.set('token', '');",
+              "  pm.environment.set('token', '');",
+              "  console.log('Token cleared after logout');",
+              "  pm.test('Logout successful', function () {",
+              "    pm.expect(pm.response.code).to.equal(200);",
+              "  });",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Accept", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/logout",
+          "host": [ "{{baseUrl}}" ],
+          "path": [ "logout" ]
+        },
+        "description": "Logout the current user and invalidate the token. Automatically clears the token from environment."
+      }
+    }
+  ]
+}

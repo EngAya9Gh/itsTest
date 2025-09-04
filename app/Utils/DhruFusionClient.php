@@ -30,6 +30,7 @@ class DhruFusionClient
             'username' => $this->username,
             'apiaccesskey' => $this->apiKey,
             'action' => $action,
+            'requestformat'=> 'JSON',
             'parameters' => base64_encode(json_encode($parameters)),
         ];
 

@@ -1,0 +1,182 @@
+{
+  "info": {
+    "name": "DhruFusion Mock API (Local)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Collection to test /dhru_github.php mock API locally. Set baseUrl, username, and apiaccesskey as needed."
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost/dhru_github.php" },
+    { "key": "username", "value": "demo" },
+    { "key": "apiaccesskey", "value": "demo_key" }
+  ],
+  "item": [
+    {
+      "name": "Account Info",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/x-www-form-urlencoded" }
+        ],
+        "url": { "raw": "{{baseUrl}}", "host": ["{{baseUrl}}"] },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            { "key": "username", "value": "{{username}}", "type": "text" },
+            { "key": "apiaccesskey", "value": "{{apiaccesskey}}", "type": "text" },
+            { "key": "action", "value": "accountinfo", "type": "text" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "IMEI Service List",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/x-www-form-urlencoded" }
+        ],
+        "url": { "raw": "{{baseUrl}}", "host": ["{{baseUrl}}"] },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            { "key": "username", "value": "{{username}}", "type": "text" },
+            { "key": "apiaccesskey", "value": "{{apiaccesskey}}", "type": "text" },
+            { "key": "action", "value": "imeiservicelist", "type": "text" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Place IMEI Order (single)",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "function b64(str){ return Buffer.from(str, 'utf-8').toString('base64'); }",
+              "var cf = { USERNAME: 'tester', USERTYPE: 'New' };",
+              "var params = { ID: 1, customfield: b64(JSON.stringify(cf)) };",
+              "pm.variables.set('parameters', b64(JSON.stringify(params)));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/x-www-form-urlencoded" }
+        ],
+        "url": { "raw": "{{baseUrl}}", "host": ["{{baseUrl}}"] },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            { "key": "username", "value": "{{username}}", "type": "text" },
+            { "key": "apiaccesskey", "value": "{{apiaccesskey}}", "type": "text" },
+            { "key": "action", "value": "placeimeiorder", "type": "text" },
+            { "key": "credit", "value": "10", "type": "text" },
+            { "key": "parameters", "value": "{{parameters}}", "type": "text" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Place IMEI Order (bulk)",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "function b64(str){ return Buffer.from(str, 'utf-8').toString('base64'); }",
+              "function makeOrder(id){ var cf = { USERNAME: 'tester', USERTYPE: 'New' }; return { ID: id, customfield: b64(JSON.stringify(cf)) }; }",
+              "var params = { req1: makeOrder(1), req2: makeOrder(2) };",
+              "pm.variables.set('parameters', b64(JSON.stringify(params)));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/x-www-form-urlencoded" }
+        ],
+        "url": { "raw": "{{baseUrl}}", "host": ["{{baseUrl}}"] },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            { "key": "username", "value": "{{username}}", "type": "text" },
+            { "key": "apiaccesskey", "value": "{{apiaccesskey}}", "type": "text" },
+            { "key": "action", "value": "placeimeiorderbulk", "type": "text" },
+            { "key": "credit", "value": "20", "type": "text" },
+            { "key": "parameters", "value": "{{parameters}}", "type": "text" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get IMEI Order",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "function b64(str){ return Buffer.from(str, 'utf-8').toString('base64'); }",
+              "var params = { ID: 2323 };",
+              "pm.variables.set('parameters', b64(JSON.stringify(params)));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/x-www-form-urlencoded" }
+        ],
+        "url": { "raw": "{{baseUrl}}", "host": ["{{baseUrl}}"] },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            { "key": "username", "value": "{{username}}", "type": "text" },
+            { "key": "apiaccesskey", "value": "{{apiaccesskey}}", "type": "text" },
+            { "key": "action", "value": "getimeiorder", "type": "text" },
+            { "key": "parameters", "value": "{{parameters}}", "type": "text" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get IMEI Order (bulk)",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "function b64(str){ return Buffer.from(str, 'utf-8').toString('base64'); }",
+              "var params = { req1: { ID: 2323 }, req2: { ID: 2324 } };",
+              "pm.variables.set('parameters', b64(JSON.stringify(params)));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/x-www-form-urlencoded" }
+        ],
+        "url": { "raw": "{{baseUrl}}", "host": ["{{baseUrl}}"] },
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            { "key": "username", "value": "{{username}}", "type": "text" },
+            { "key": "apiaccesskey", "value": "{{apiaccesskey}}", "type": "text" },
+            { "key": "action", "value": "getimeiorderbulk", "type": "text" },
+            { "key": "parameters", "value": "{{parameters}}", "type": "text" }
+          ]
+        }
+      }
+    }
+  ]
+}

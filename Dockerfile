@@ -29,5 +29,3 @@ RUN composer install --no-interaction --optimize-autoloader
 # RUN php artisan key:generate
 
 CMD ["php-fpm"]
-############################
-

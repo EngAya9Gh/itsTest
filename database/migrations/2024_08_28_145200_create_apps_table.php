@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->decimal('price', 8, 4);
-            $table->integer('section_id');
+            $table->unsignedBigInteger('section_id');
             $table->foreign('section_id')->references('id')->on('app_sections')->onDelete('cascade');
             $table->string('image')->nullable();
             $table->string('note')->nullable();

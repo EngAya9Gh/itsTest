@@ -92,12 +92,16 @@ class SyncDhruServices extends Command
                     $name = is_string($srv['SERVICENAME'] ?? null) ? $srv['SERVICENAME'] : ('Service '.($externalId ?? ''));
                     $credit = $srv['CREDIT'] ?? ($srv['PRICE'] ?? 0);
                     $info = $srv['INFO'] ?? ($srv['DESCRIPTION'] ?? null);
-                    $note = is_string($info) ? $info : (is_array($info) ? json_encode($info, JSON_UNESCAPED_UNICODE) : null);
+                    $note = is_string($info) ?
+                    $info : "";
+                    // (is_array($info) ?
+                    //  json_encode($info, JSON_UNESCAPED_UNICODE)
+                    //  : null);
 
                     // Find existing by external_id when available, else by (section_id, name)
                     $query = Service::where('section_id', $category->id);
                     if ($externalId) {
-                        $query = $query->where('external_id', (string)$externalId);
+                        $query = $query->where('external_id', (int)$externalId);
                     } else {
                         $query = $query->where('name', $name);
                     }
@@ -106,7 +110,7 @@ class SyncDhruServices extends Command
                     if ($existing) {
                         $existing->update([
                             'name' => $name,
-                            'external_id' => $externalId ? (string)$externalId : $existing->external_id,
+                            'external_id' => $externalId ? (int)$externalId : $existing->external_id,
                             'basic_price' => $credit,
                             'price' => $credit,
                             'note' => $note,
@@ -119,7 +123,7 @@ class SyncDhruServices extends Command
                         Service::create([
                             'section_id' => $category->id,
                             'name' => $name,
-                            'external_id' => $externalId ? (string)$externalId : null,
+                            'external_id' => $externalId ? (int)$externalId : null,
                             'basic_price' => $credit,
                             'sale_price' => $credit,
                             'price' => $credit,

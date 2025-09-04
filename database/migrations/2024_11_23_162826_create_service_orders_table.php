@@ -19,6 +19,10 @@ return new class extends Migration
     */
     public function up(): void
     {
+             // Skip if table already exists (e.g., created manually or by an earlier deployment)
+        if (Schema::hasTable('service_orders')) {
+            return;
+        }
         Schema::create('service_orders', function (Blueprint $table) {
             $table->id();
 

@@ -276,7 +276,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-edit"> </i></span>
                         </div>
-                        <input type="text" class="form-control" value="{{$service->name}}" required placeholder="الاسم" name="name" aria-label="name" aria-describedby="basic-addon2" readonly>
+                        <input type="text" class="form-control" value="{{$service->name}}" required placeholder="الاسم" name="name" aria-label="name" aria-describedby="basic-addon2" >
                     </div>
 
                     <div class="input-group mb-3">

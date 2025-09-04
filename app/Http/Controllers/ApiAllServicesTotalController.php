@@ -28,20 +28,20 @@ class ApiAllServicesTotalController extends Controller
        $gameRecords = Tweetcell::whereHas('tweetcellSection', function ($query) {
         $query->where('type', 1);
          })->count();
-       
+
         $ecardRecords = Tweetcell::whereHas('tweetcellSection', function ($query) {
         $query->where('type', 3);
          })->count();
-      
+
        $serviceRecords = Service::whereHas('category', function ($query) {
         $query->where('type',1);
          })->count();
-      
+
         $itsRecords = Service::whereHas('category', function ($query) {
         $query->where('type',2);
          })->count();
        $programRecords = Program::count();
-      
+
        $faturaRecords = Fatura::count();
        $tweetcellKontorRecords=TweetcellKontor::count();
        $tweetcellRecords=Tweetcell::count();
@@ -60,9 +60,9 @@ class ApiAllServicesTotalController extends Controller
     }
     public function  myWallet()
     {
-       $financials = $this->profitService->calculateUserFinancials( auth()->user()->id); 
+       $financials = $this->profitService->calculateUserFinancials( auth()->user()->id);
        return response()->json(['financials'=>$financials]);
-       
+
     }
 
     function getServiceList()
@@ -75,12 +75,12 @@ class ApiAllServicesTotalController extends Controller
         $data = [
             'action' => 'imeiservicelist', // العملية المطلوبة
             'username' => 'abdalkadr777352',      // اسم المستخدم
-            'apiaccesskey' => 'AWK-TT6-AT0-ZN1-IVH-BX3-LXH-NCO',   // مفتاح الوصول
+            'apiaccesskey' => 'QMG-U3B-MNS-J23-AAP-YKM-AG8-1SL',   // مفتاح الوصول
         ];
-    
+
         // إرسال طلب POST إلى API
         $response = Http::asForm()->post('https://server.halabtech.com', $data);
-    
+
         // التحقق من حالة الاستجابة
         if ($response->successful()) {
             // جلب البيانات إذا كانت الاستجابة ناجحة
@@ -95,7 +95,7 @@ class ApiAllServicesTotalController extends Controller
             ];
         }
     }
-    
+
 
     /*<?php
 $ch = curl_init("https://server.halabtech.com/api.php");
