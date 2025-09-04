@@ -25,6 +25,9 @@ class Kernel extends ConsoleKernel
         // تحدّث قائمة خدمات Dhru كل 5 دقائق
         $schedule->command('dhru:sync-services --type=1')->everyFiveMinutes();
 
+        // تحديث حالة الطلبات من المزود الخارجي كل 3 دقائق
+        $schedule->command('orders:update-status')->everyThreeMinutes();
+
         // أمثلة موجودة مسبقًا (معلّقة)
         // $schedule->command('tweetcell:update')->everyMinute();
         // $schedule->command('tweetcellKontor:update')->everyMinute();

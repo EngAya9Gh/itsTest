@@ -123,15 +123,16 @@ class ApiServiceOrderController extends Controller
             } else { // jsonb64
                 $parameters = $this->buildDhruParametersJsonB64($request, $order, $service);
             }
-             Log::info('DHRU parameters11 (mode='.$paramsMode.')', ['parameters' => $parameters]);
-        } catch (\Throwable $e) {
+         } catch (\Throwable $e) {
             // On building error: refund and reject
             $this->refundAndReject($authUser->id, $order, $totalPrice, 'خطأ في إنشاء الباراميترات: '.$e->getMessage());
+            Log::error('DHRU parameters11 (mode='.$paramsMode.')', ['parameters' => $parameters]);
+
             return response()->json(['message' => 'فشل إنشاء باراميترات الطلب'], 422);
         }
 
         // Log parameters exactly as sent
-        Log::info('DHRU parameters (mode='.$paramsMode.')', ['parameters' => $parameters]);
+         Log::info('DHRU parameters (mode='.$paramsMode.')', ['parameters' => $parameters]);
         if ($paramsMode === 'jsonb64' && is_string($parameters) && preg_match('~^[A-Za-z0-9+/=]+$~', $parameters)) {
             Log::info('DHRU parameters decoded (JSON)', [
                 'decoded' => json_decode(base64_decode($parameters), true)
@@ -277,6 +278,7 @@ class ApiServiceOrderController extends Controller
         if ($request->filled('password')) { $cf['Password'] = (string)$request->input('password'); }
         if ($request->filled('ime'))      { $cf['Mobile']   = (string)$request->input('ime'); }
         //
+        //  Log::info('customfield : '.cf);
         $customFieldB64 = empty($cf) ? null : base64_encode(json_encode($cf, JSON_UNESCAPED_UNICODE));
 
         $xml = new \SimpleXMLElement('<PARAMETERS/>');
