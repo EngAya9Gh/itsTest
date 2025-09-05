@@ -21,9 +21,9 @@
                     <div class="d-flex flex-row-reverse">
                         <div class="page_action">
                         {{-- إضافة تصنيف معلّقة أثناء الاستيراد الآلي --}}
-{{-- @if(auth()->user()->role==1)
+@if(auth()->user()->role==1 && ($type==2))
     <a href="javascript:void(0);" data-toggle="modal" class="btn btn-primary" data-target="#createmodal" ><i class="fa fa-add">أضف خدمة جديد</i></a>
-@endif --}}
+@endif
                         </div>
                         <div class="p-2 d-flex">
                         </div>
@@ -47,7 +47,9 @@
                                             <th>نسبة الربح </th>
 
                                             <th>العمليات</th>
+                                            @if($type==2)
                                             <th>الحالة</th>
+                                               @endif
                                           @endif
                                         </tr>
                                     </thead>
@@ -74,7 +76,9 @@
                                                 @endif
 
                                             </td>
+                                            @if($type==2)
                                             <td>
+
                                                @if(auth()->user()->role==1)
                                                 @if($service->status)
                                             <a href="javascript:void(0);" data-toggle="modal" class="btn btn-primary" data-target="#enableModal{{$service->id}}"style="background-color:#22a191" ><i class="fa fa-add" >ايقاف </i></a>
@@ -83,6 +87,7 @@
 
                                                 @endif
                                             </td>
+                                             @endif
                                            @endif
 
                                         </tr>

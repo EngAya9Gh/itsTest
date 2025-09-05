@@ -21,9 +21,9 @@
                     <div class="d-flex flex-row-reverse">
                         <div class="page_action">
                         {{-- إضافة خدمة معطلة أثناء الاستيراد الآلي --}}
-{{-- @if(auth()->user()->role==1)
+@if(auth()->user()->role==1 && ($section->type==2) )
     <a href="javascript:void(0);" data-toggle="modal" class="btn btn-primary" data-target="#createmodal" ><i class="fa fa-add">أضف خدمة جديد</i></a>
-@endif --}}
+@endif
                         </div>
                         <div class="p-2 d-flex">
                         </div>
@@ -70,20 +70,22 @@
                                             <td>{{$service->price}}TL</td>
                                             {{-- عمليات التعديل/الحذف معلّقة أثناء الاستيراد الآلي --}}
 
-                                             @if(auth()->user()->role==1)
+                                             @if(auth()->user()->role==1 )
                                             <td class="project-actions">
                                                 <a href="#defaultModal" data-toggle="modal" data-target="#defaultModal">
                                                 <a href="javascript:void(0);" data-toggle="modal" data-target="#editModal{{$service->id}}" class="btn btn-sm btn-outline-success"><i class="icon-pencil"></i></a>
-                                                {{-- <a href="javascript:void(0);" data-toggle="modal" data-target="#deleteModal{{$service->id}}" class="btn btn-sm btn-outline-danger" ><i class="icon-trash"></i></a> --}}
+                                                <a href="javascript:void(0);" data-toggle="modal" data-target="#deleteModal{{$service->id}}" class="btn btn-sm btn-outline-danger" ><i class="icon-trash"></i></a>
                                             </td>
                                             @endif
 
                                             <td>
-                                                @if($service->status)
+                                                @if($section->type==2)
+                                                @if($service->status )
                                                     <a href="javascript:void(0);" data-toggle="modal" class="btn btn-primary" data-target="#enableModal{{$service->id}}" style="background-color:#22a191"><i class="fa fa-add">ايقاف</i></a>
                                                 @else
                                                     <a href="javascript:void(0);" data-toggle="modal" class="btn btn-primary" data-target="#enableModal{{$service->id}}" style="background-color:#23b5a7a1"><i class="fa fa-add">تفعيل</i></a>
                                                 @endif
+                                                 @endif
                                             </td>
                                         </tr>
                                         @endforeach

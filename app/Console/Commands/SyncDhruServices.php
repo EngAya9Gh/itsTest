@@ -112,7 +112,7 @@ class SyncDhruServices extends Command
                             'name' => $name,
                             'external_id' => $externalId ? (int)$externalId : $existing->external_id,
                             'basic_price' => $credit,
-                            'price' => $credit,
+                            'price' =>  round(( $credit + ($credit * $category->increase_percentage / 100)),4),
                             'note' => $note,
                             'status' => $existing->status ?? 1,
                             'type' => $existing->type ?? '1',
@@ -126,7 +126,8 @@ class SyncDhruServices extends Command
                             'external_id' => $externalId ? (int)$externalId : null,
                             'basic_price' => $credit,
                             'sale_price' => $credit,
-                            'price' => $credit,
+                            'price' =>
+                            round(( $credit + ($credit * $category->increase_percentage / 100)),4),
                             'note' => $note,
                             'status' => 1,
                             'type' => '1',
