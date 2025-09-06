@@ -72,6 +72,7 @@ use App\Http\Controllers\NotificationController;
   Route::post('/verifyOtpLogin', [ApiUserController::class, 'verifyOtpLogin']);
   Route::post('/forgot-password', [ApiUserController::class, 'forgotPassword']);
   Route::post('/check-email-for-reset', [ApiUserController::class, 'checkEmailForReset']);
+  Route::post('/reset-password', [ApiUserController::class, 'resetPassword']);
 
 
 
@@ -126,7 +127,7 @@ Route::get('totalRecords',[ApiAllServicesTotalController::class, 'index']);
   Route::get('logged-in-user', [ApiUserController::class, 'getLoggedInUser']);
   Route::get('logout', [ApiUserController::class, 'logout']);
   Route::patch('users/{id}', [ApiUserController::class, 'update']);
-  Route::get('/agents', [ApiUserController::class, 'getAgents']);    
+  Route::get('/agents', [ApiUserController::class, 'getAgents']);
   Route::post('/verifyOtp', [ApiUserController::class, 'verifyOtp']);
 
 
@@ -159,10 +160,10 @@ Route::get('totalRecords',[ApiAllServicesTotalController::class, 'index']);
 
 
   Route::get('ecard/{id}',[ApiTweetcellController::class, 'show']);
-  Route::get('myRequests/{id}', [ApiTweetcellOrderController::class, 'myRequests']);   
-  Route::get('myRequest/uuid/{uuid}', [ApiTweetcellOrderController::class, 'myRequestUuid']);   
+  Route::get('myRequests/{id}', [ApiTweetcellOrderController::class, 'myRequests']);
+  Route::get('myRequest/uuid/{uuid}', [ApiTweetcellOrderController::class, 'myRequestUuid']);
 
-  Route::get('myRequests/{id}/type/{type}', [ApiTweetcellOrderController::class, 'myRequestsByType']);   
+  Route::get('myRequests/{id}/type/{type}', [ApiTweetcellOrderController::class, 'myRequestsByType']);
 
 
   Route::get('myPayments/{id}', [ApiTransferMoneyFirmOrderController::class, 'myPayments']);
@@ -170,7 +171,7 @@ Route::get('totalRecords',[ApiAllServicesTotalController::class, 'index']);
   Route::post('kontor/order/{id}',[ApiTweetcellKontorOrderController::class, 'store']);
   Route::get('getpackegesmobile',[ApiTweetcellKontorController::class, 'getPackagesMobile']);
   Route::get('/order-detail/{uuid}', [ApiUserController::class, 'findOrderByUuid']);
-    
+
 
   Route::get('fatura-sections/{id}',[ApiFaturaSectionController::class, 'getFaturas']);
   Route::get('fatura/{id}',[ApiFaturaController::class, 'show']);
@@ -191,7 +192,7 @@ Route::get('totalRecords',[ApiAllServicesTotalController::class, 'index']);
 
 
 
-  Route::get('updateStatus/{id}', [ApiTweetcellOrderController::class, 'updateStatus']);    
+  Route::get('updateStatus/{id}', [ApiTweetcellOrderController::class, 'updateStatus']);
 
   Route::get('service-sections',[ApiServiceCategoryController::class, 'index']);
 

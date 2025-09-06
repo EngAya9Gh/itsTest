@@ -27,25 +27,76 @@ class ApiUserController extends Controller
 {
    public function forgotPassword(Request $request)
 {
-    $request->validate([
-        'email' => 'required|email|exists:users,email',
-    ]);
+    try {
+        $request->validate([
+            'email' => 'required|email|exists:users,email',
+        ], [
+            'email.required' => 'البريد الإلكتروني مطلوب.',
+            'email.email' => 'يرجى إدخال عنوان بريد إلكتروني صالح.',
+            'email.exists' => 'البريد الإلكتروني غير مسجل في النظام.',
+        ]);
 
-    $user = User::where('email', $request->email)->first();
+        $user = User::where('email', $request->email)->first();
 
-    // إنشاء رابط إعادة تعيين كلمة المرور
-    $token = Str::random(60);
-    DB::table('password_resets')->updateOrInsert(
-        ['email' => $user->email],
-        ['token' => $token, 'created_at' => now()]
-    );
+        // إنشاء رابط إعادة تعيين كلمة المرور
+        $token = Str::random(60);
 
-    $resetLink = url('/reset-password?token=' . $token);
+        // استخدام الجدول الصحيح password_reset_tokens
+        DB::table('password_reset_tokens')->updateOrInsert(
+            ['email' => $user->email],
+            ['token' => bcrypt($token), 'created_at' => now()]
+        );
 
-    // إرسال البريد الإلكتروني
-    Mail::to($user->email)->send(new PasswordReset($resetLink));
+        $resetLink = url('/reset-password?token=' . $token . '&email=' . urlencode($user->email));
 
-    return response()->json(['success' => true, 'message' => 'تم إرسال رابط استعادة كلمة المرور.']);
+        // إرسال البريد الإلكتروني مع معالجة الأخطاء
+        try {
+            Mail::to($user->email)->send(new \App\Mail\PasswordReset($resetLink, $user->name));
+        } catch (\Exception $mailException) {
+            // في حالة فشل إرسال البريد، نسجل الخطأ ونحذف الـ token
+            \Log::error('Failed to send password reset email: ' . $mailException->getMessage());
+            DB::table('password_reset_tokens')->where('email', $user->email)->delete();
+
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'حدث خطأ في إرسال البريد الإلكتروني. يرجى التحقق من إعدادات البريد أو المحاولة لاحقاً.'
+                ], 500);
+            } else {
+                return back()->withErrors(['email' => 'حدث خطأ في إرسال البريد الإلكتروني. يرجى التحقق من إعدادات البريد أو المحاولة لاحقاً.']);
+            }
+        }
+
+        // إذا كان الطلب من web، إرجاع redirect
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'تم إرسال رابط استعادة كلمة المرور إلى بريدك الإلكتروني.'
+            ]);
+        } else {
+            return back()->with('status', 'تم إرسال رابط استعادة كلمة المرور إلى بريدك الإلكتروني.');
+        }
+
+    } catch (\Illuminate\Validation\ValidationException $e) {
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $e->errors(),
+            ], 422);
+        } else {
+            return back()->withErrors($e->errors());
+        }
+    } catch (\Exception $e) {
+        // إذا كان الطلب من web، إرجاع redirect
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'حدث خطأ أثناء إرسال البريد الإلكتروني. يرجى المحاولة مرة أخرى.'
+            ], 500);
+        } else {
+            return back()->withErrors(['email' => 'حدث خطأ أثناء إرسال البريد الإلكتروني. يرجى المحاولة مرة أخرى.']);
+        }
+    }
 }
     public function checkEmailForReset(Request $request)
 {
@@ -62,6 +113,86 @@ class ApiUserController extends Controller
           return response()->json([
             'user' => false,
         ]);
+    }
+
+    /**
+     * إعادة تعيين كلمة المرور
+     */
+    public function resetPassword(Request $request)
+    {
+        try {
+            $request->validate([
+                'token' => 'required|string',
+                'email' => 'required|email|exists:users,email',
+                'password' => 'required|string|min:8|confirmed',
+            ], [
+                'token.required' => 'رمز التحقق مطلوب.',
+                'email.required' => 'البريد الإلكتروني مطلوب.',
+                'email.email' => 'يرجى إدخال عنوان بريد إلكتروني صالح.',
+                'email.exists' => 'البريد الإلكتروني غير مسجل في النظام.',
+                'password.required' => 'كلمة المرور مطلوبة.',
+                'password.min' => 'يجب ألا تقل كلمة المرور عن 8 أحرف.',
+                'password.confirmed' => 'تأكيد كلمة المرور غير متطابق.',
+            ]);
+
+            // البحث عن token في قاعدة البيانات
+            $passwordReset = DB::table('password_reset_tokens')
+                ->where('email', $request->email)
+                ->first();
+
+            if (!$passwordReset) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'رابط إعادة تعيين كلمة المرور غير صالح.'
+                ], 400);
+            }
+
+            // التحقق من صحة الـ token
+            if (!password_verify($request->token, $passwordReset->token)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'رابط إعادة تعيين كلمة المرور غير صالح.'
+                ], 400);
+            }
+
+            // التحقق من انتهاء صلاحية الـ token (60 دقيقة)
+            if (Carbon::parse($passwordReset->created_at)->addMinutes(60)->isPast()) {
+                // حذف الـ token المنتهي الصلاحية
+                DB::table('password_reset_tokens')->where('email', $request->email)->delete();
+
+                return response()->json([
+                    'success' => false,
+                    'message' => 'انتهت صلاحية رابط إعادة تعيين كلمة المرور. يرجى طلب رابط جديد.'
+                ], 400);
+            }
+
+            // تحديث كلمة المرور
+            $user = User::where('email', $request->email)->first();
+            $user->password = bcrypt($request->password);
+            $user->save();
+
+            // حذف الـ token بعد الاستخدام
+            DB::table('password_reset_tokens')->where('email', $request->email)->delete();
+
+            // إبطال جميع الرموز المميزة الحالية للمستخدم
+            $user->tokens()->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'تم تغيير كلمة المرور بنجاح. يرجى تسجيل الدخول مرة أخرى.'
+            ]);
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'errors' => $e->errors(),
+            ], 422);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'حدث خطأ أثناء إعادة تعيين كلمة المرور. يرجى المحاولة مرة أخرى.'
+            ], 500);
+        }
     }
     public function status(Request $request)
     {

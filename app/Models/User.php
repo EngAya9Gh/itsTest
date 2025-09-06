@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Laravel\Passport\HasApiTokens;
+use App\Mail\PasswordReset;
+use Illuminate\Support\Facades\Mail;
 
 class User extends Authenticatable
 {
@@ -49,8 +51,8 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-  
-  
+
+
     protected function casts(): array
     {
         return [
@@ -66,7 +68,7 @@ class User extends Authenticatable
     {
         return $this->BelongsToMany(Service::class, 'service_orders', 'user_id', 'service_id');
     }
-    
+
     public function favorites()
     {
         return $this->hasMany(Favorite::class);
@@ -80,19 +82,19 @@ class User extends Authenticatable
     {
         return $this->hasMany(TurkificationOrder::class);
     }
-    
+
     public function transferOrders(): HasMany
     {
         return $this->hasMany(TransferOrder::class);
     }
 
- 
-    
+
+
     public function cards(): BelongsToMany
     {
         return $this->belongsToMany(Card::class, 'card_orders', 'card_id', 'user_id');
     }
-    
+
   */
     public function tweetcells(): BelongsToMany
     {
@@ -102,7 +104,7 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(TweetcellKontor::class, 'tweetcell_kontor_orders', 'tweetcell_kontor_id', 'user_id');
     }
- 
+
 /*
    public function apps(): BelongsToMany
     {
@@ -112,8 +114,8 @@ class User extends Authenticatable
     {
         return $this->BelongsToMany(Ebank::class, 'ebank_orders', 'user_id', 'ebank_id');
     }
-  
-  
+
+
 
     public function ecards(): BelongsToMany
     {
@@ -145,12 +147,26 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Program::class, 'program_orders', 'program_id', 'user_id');
     }*/
-       
+
     public function transferMoneyFirms(): BelongsToMany
     {
         return $this->belongsToMany(TransferMoneyFirm::class, 'transfer_money_firm_orders', 'transfer_money_firm_id', 'user_id');
     }
 
-   
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $resetLink = url(route('password.reset', [
+            'token' => $token,
+            'email' => $this->getEmailForPasswordReset(),
+        ], false));
+
+        Mail::to($this->email)->send(new PasswordReset($resetLink, $this->name ?? $this->first_name));
+    }
 
 }

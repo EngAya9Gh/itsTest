@@ -77,10 +77,10 @@ Mail::raw('This is a test email using MailerSender', function ($message) {
             ->subject('Test MailerSender Email');
 });
       });
-    Route::get('test', [UserController::class, 'test']);  
+    Route::get('test', [UserController::class, 'test']);
     Route::get('test1', [UserController::class, 'test1']);
 
-    
+
 Route::middleware([LoadSettings::class])->group(function () {
 
 
@@ -100,15 +100,15 @@ Route::group(['middleware'=> 'auth'], function(){
    Route::post('/admin/mark-as-read/{notification}', [NotificationController::class, 'markAsRead']);
     Route::get('/admin/notifications', [NotificationController::class, 'getNotifications']);
 
-  
+
   Route::get('/dashboard', [AllServicesTotalController::class, 'index']);
-    
+
     Route::get('/', [AllServicesTotalController::class, 'index']);
     Route::get('/home', [AllServicesTotalController::class, 'index']);
     Route::resource( 'user', UserController::class,);
-    
+
     Route::get('users/{id}/category', [UserController::class, 'showCategory']);
-    
+
     Route::post('users/balance', [UserController::class, 'addBalanceToAgent'])->name('users.balance');
 
 
@@ -116,58 +116,58 @@ Route::group(['middleware'=> 'auth'], function(){
 
     Route::get('users/agents', [UserController::class, 'getAgents']);
     Route::get('users/other/agent/{id}', [UserController::class, 'getOtherAgents']);
-  
+
     Route::get('users/wallets', [UserController::class, 'getAgentWallets']);
-    
+
     Route::get('users/transactions/{id}', [TransactionController::class, 'getUserTransactions']);
-    
+
     Route::get('users/transactions/all/done/{id}', [TransactionController::class, 'getUserTransactionsDone']);
-    
+
     Route::get('users/transactions/all/debts/{id}', [TransactionController::class, 'getUserTransactionsDebts']);
     Route::get('users/transactions/all/mydebts/{id}', [TransactionController::class, 'getUserTransactionsMyDebts']);
-    
+
     Route::get('users/transactions/done/{id}', [TransactionController::class, 'setPaymentDone']);
 
     Route::post('users/transactions/partial/done/{id}', [TransactionController::class, 'setPartialPaymentDone']);
     Route::get('/profile', function () {  return view('backend.users.profile');});
- 
+
     Route::resource('setting', SettingController::class);
-    
+
     Route::resource('service-category', ServiceCategoryController::class);
-  
+
     Route::get('service-category/{type}/type',[  ServiceCategoryController::class,'getType']);
-  
-    
+
+
     Route::post('/service-category/{id}/status',[ ServiceCategoryController::class,'changeStatus']);
-    
+
     Route::get('/service/{id}/category',[ ServiceController::class,'showServices']);
 
     Route::resource('service', ServiceController::class);
     Route::resource('service-order',ServiceOrderController::class);
     Route::get('service-order/{type}/type',[ServiceOrderController::class,'getOrder']);
-    Route::post('/service/{id}/status',[ ServiceController::class,'changeStatus']);   
+    Route::post('/service/{id}/status',[ ServiceController::class,'changeStatus']);
     Route::post('service-order/reject/{id}',[ ServiceOrderController::class,'reject'])->name('service-order.reject');
     Route::get('service-order/accept/{id}',[ ServiceOrderController::class,'accept']);
 
 
-  
+
    Route::resource('fatura-section', FaturaSectionController::class);
-  
-  
-    
+
+
+
     Route::post('/fatura-section/{id}/status',[FaturaSectionController::class,'changeStatus']);
-    
+
     Route::get('/fatura/{id}/section',[ FaturaController::class,'showFaturas']);
 
     Route::resource('fatura', FaturaController::class);
-    
+
 
        Route::resource('fatura-order',FaturaOrderController::class);
-  
+
        Route::get('fatura-order/{type}/type',[FaturaOrderController::class,'getOrder']);
-  
+
        Route::post('/fatura/{id}/status',[ FaturaController::class,'changeStatus']);
-       
+
     Route::post('fatura-order/reject/{id}',[ FaturaOrderController::class,'reject'])->name('fatura-order.reject');
     Route::get('fatura-order/accept/{id}',[ FaturaOrderController::class,'accept']);
 
@@ -182,20 +182,20 @@ Route::group(['middleware'=> 'auth'], function(){
     Route::get('/app/{id}/category',[ AppController::class,'showApps']);
     Route::post('/app/{id}/status',[ AppController::class,'changeStatus']);
     Route::post('/app-section/{id}/status',[ AppSectionContoller::class,'changeStatus']);
-    
+
     Route::resource('card' , CardController::class);
     Route::post('/card/{id}/status' , [CardController::class,'changeStatus']);
     Route::resource('card-order' , CardOrderController::class);
-    
+
     Route::get('card-order/reject/{id}',[ CardOrderController::class,'reject']);
     Route::get('card-order/accept/{id}',[ CardOrderController::class,'accept']);
-    
+
     Route::resource('data-communication' , DataCommunicationController::class);
     Route::resource('data-communication-section' , DataCommunicationSectionController::class);
     Route::get('/data-communication/{id}/category'  ,[ DataCommunicationController::class,'showData']);
     Route::resource('data-communication-order' , DataCommunicationOrderController::class);
     Route::post('/data-communication/{id}/status',[ DataCommunicationController::class,'changeStatus']);
-    
+
     Route::get('data-communication-order/reject/{id}',[ DataCommunicationOrderController::class,'reject']);
     Route::get('data-communication-order/accept/{id}',[ DataCommunicationOrderController::class,'accept']);
 
@@ -205,7 +205,7 @@ Route::group(['middleware'=> 'auth'], function(){
     Route::get('/ebank/{id}/category',[ EbankController::class,'showEbanks']);
     Route::resource('ebank-order' , EbankOrderController::class);
     Route::post('/ebank/{id}/status',[ EbankController::class,'changeStatus']);
-    Route::post('/ebank-section/{id}/status',[ EbankSectionController::class,'changeStatus']);    
+    Route::post('/ebank-section/{id}/status',[ EbankSectionController::class,'changeStatus']);
     Route::get('ebank-order/reject/{id}',[ EbankOrderController::class,'reject']);
     Route::get('ebank-order/accept/{id}',[ EbankOrderController::class,'accept']);
 
@@ -232,7 +232,7 @@ Route::group(['middleware'=> 'auth'], function(){
     Route::post('oyun-order/reject/{id}',[ TweetcellOrderController::class,'reject'])->name('oyun-order.reject');
     Route::get('oyun-order/accept/{id}',[TweetcellOrderController::class,'accept']);
 
-    
+
     Route::resource('kontor' , TweetcellKontorController::class);
     Route::resource('kontor-section' , TweetcellKontorSectionController::class);
     Route::get('/kontor/{id}/category',[ TweetcellKontorController::class,'showGames']);
@@ -245,42 +245,53 @@ Route::group(['middleware'=> 'auth'], function(){
       Route::get('kontor/firsat/{id}',[TweetcellKontorController::class,'firsat']);
 
 
-    
+
     Route::resource('program' , ProgramController::class);
     Route::post('/program/{id}/status',[ProgramController::class,'changeStatus']);
     Route::resource('program-order' , ProgramOrderController::class);
-    
+
     Route::get('program-order/reject/{id}',[ ProgramOrderController::class,'reject']);
     Route::get('program-order/accept/{id}',[ ProgramOrderController::class,'accept']);
 
     Route::resource('slider', SliderController::class);
     Route::get('hero/{type}',[ SliderController::class,'heroType']);//slider Or News
 
-  
-  
+
+
     Route::resource('transfer-money-firm' , TransferMoneyFirmController::class);
     Route::post('/transfer-money-firm/{id}/status',[TransferMoneyFirmController::class,'changeStatus']);
     Route::resource('transfer-money-firm-order' , TransferMoneyFirmOrderController::class);
-    
+
     Route::get('transfer-money-firm-order/reject/{id}',[ TransferMoneyFirmOrderController::class,'reject']);
     Route::get('transfer-money-firm-order/accept/{id}',[ TransferMoneyFirmOrderController::class,'accept']);
     Route::get('transfer-money-firm-order/debt/{id}',[ TransferMoneyFirmOrderController::class,'debt']);
     Route::post('transfer-money-firm-payment-amount-done/debt/{id}',[ TransferMoneyFirmOrderController::class,'paymentDone']);
 
     Route::resource('transfer-order' , TransferOrderController::class);
-    
+
     Route::get('transfer-order/reject/{id}',[ TransferOrderController::class,'reject']);
     Route::get('transfer-order/accept/{id}',[ TransferOrderController::class,'accept']);
-    
+
     Route::resource('turkification-order' , TurkificationOrderController::class);
-    
+
     Route::get('turkification-order/reject/{id}',[ TurkificationOrderController::class,'reject']);
     Route::get('turkification-order/accept/{id}',[ TurkificationOrderController::class,'accept']);
-    
+
     Route::resource('vip', VipController::class,);
-    
 
-}); 
 
-}); 
+});
+
+});
+
+// Password Reset Routes
+Route::get('/forgot-password', function () {
+    return view('auth.passwords.email');
+})->name('password.request');
+
+Route::post('/forgot-password', [App\Http\Controllers\ApiUserController::class, 'forgotPassword'])->name('password.email');
+
+Route::get('/reset-password', [App\Http\Controllers\PasswordResetController::class, 'showResetForm'])->name('password.reset');
+Route::post('/reset-password', [App\Http\Controllers\PasswordResetController::class, 'reset'])->name('password.update');
+
 Auth::routes();
