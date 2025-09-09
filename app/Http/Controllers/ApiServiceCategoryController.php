@@ -25,10 +25,10 @@ class ApiServiceCategoryController extends Controller
        foreach ($categories as $app) {
          $app->image_url = asset('assets/images/service/' . $app->image);  // إنشاء رابط للصورة
      }
-     
+
        return response()->json(['categories'=> $categories ]);
     }
-  
+
       public function getIts()
     {
        $categories=DB::table('service_categories')->select('*')->where('type',2)->where('status',1)->orderBy('id', 'desc')->paginate(500);
@@ -36,27 +36,66 @@ class ApiServiceCategoryController extends Controller
        foreach ($categories as $app) {
          $app->image_url = asset('assets/images/service/' . $app->image);  // إنشاء رابط للصورة
      }
-     
+
        return response()->json(['categories'=> $categories ]);
     }
 
-    public function getServices (string $section_id)
+    public function getServices (Request $request, string $section_id)
     {
        $cat = ServiceCategories::where('id',$section_id)->where('status',1)->first();
-       $services = $cat->services()->where('status', 1)->get();
+
+       if (!$cat) {
+           return response()->json(['error' => 'الصنف غير موجود'], 404);
+       }
+
+       // إعداد الاستعلام مع البحث
+       $query = $cat->services()->where('status', 1);
+
+       // إضافة البحث إذا تم توفير كلمة بحث
+       if ($request->has('search') && !empty($request->search)) {
+           $searchTerm = $request->search;
+           $query->where(function($q) use ($searchTerm) {
+               $q->where('name', 'LIKE', "%{$searchTerm}%")
+                 ->orWhere('note', 'LIKE', "%{$searchTerm}%");
+           });
+       }
+
+       // تطبيق pagination مع تحديد الحد الأقصى
+       $perPage = $request->get('per_page', 12); // 12 عنصر افتراضياً
+
+       // تحديد الحد الأدنى والأقصى لعدد العناصر في كل صفحة
+       $minPerPage = 6;
+       $maxPerPage = 50;
+
+       // التأكد من أن القيمة ضمن النطاق المسموح
+       if ($perPage < $minPerPage) {
+           $perPage = $minPerPage;
+       } elseif ($perPage > $maxPerPage) {
+           $perPage = $maxPerPage;
+       }
+
+       $services = $query->paginate($perPage);
 
        foreach ($services as $app) {
          $app->image_url = asset('assets/images/service/' . $app->image);  // إنشاء رابط للصورة
-           
+
         $user=Auth::user();
          if($user && $user->role!=4)
           $app->sale_price =$this->profitService->getSalePrice($app->price);
          else
            $app->sale_price =0;
-        $app->price = $this->profitService->getPrice($app);    // إنشاء رابطe($app);
+        $app->price = $this->profitService->getPrice($app);    // إنشاء رابط
      }
-       return response()->json(['services'=> $services ]);
+
+       return response()->json([
+           'services' => $services,
+           'category' => [
+               'id' => $cat->id,
+               'name' => $cat->name,
+               'description' => $cat->description
+           ]
+       ]);
     }
 
-  
+
 }

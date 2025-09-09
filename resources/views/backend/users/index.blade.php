@@ -1,4 +1,4 @@
-    
+
 @extends('backend.layout.app')
 
 @section('content')
@@ -12,21 +12,21 @@
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <h2>المستخدمين</h2>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html"><i class="fa fa-dashboard"></i></a></li>                            
+                        <li class="breadcrumb-item"><a href="index.html"><i class="fa fa-dashboard"></i></a></li>
                         <li class="breadcrumb-item">لوحة التحكم</li>
                         <li class="breadcrumb-item active">المستخدمين </li>
                     </ul>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="d-flex flex-row-reverse">
-                        <div class="page_action"> 
+                        <div class="page_action">
  <!--      <a href="javascript:void(0);" data-toggle="modal"  class="btn btn-primary" data-target="#createmodal" ><i class="fa fa-add">أضف مستخدمًا</i></a>
 -->     </div>
                         <div class="p-2 d-flex">
                         </div>
                     </div>
                 </div>
-            </div>    
+            </div>
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12">
                     <div class="card">
@@ -37,12 +37,12 @@
                             <div class="table-responsive">
                                 <table class="table table-hover js-basic-example dataTable table-custom mb-0">
                                     <thead>
-                                        <tr>                                            
+                                        <tr>
                                             <th>اسم المستخدم</th>
                                             <th> الهاتف</th>
                                             <th>الرصيد الحالي</th>
                                             <th>البريد الالكتروني</th>
-                                       
+
                                             <th>النوع</th>
                                             <th>العمليات</th>
                                         </tr>
@@ -61,12 +61,12 @@
                                                <span>
                                             </td>
                                             <td>{{$user->email}}</td>
-                                      
+
                                             <td>
                                                 <span class="badge badge-success">
                                                     @if($user->role==4)
                                                     زبون عادي
-                                                        @elseif   ($user->role==2) 
+                                                        @elseif   ($user->role==2)
                                                             وكيل
                                                             @elseif   ($user->role==3)
                                                             صاحب محل
@@ -103,7 +103,7 @@
             <div class="modal-header">
                 <h4 class="title" id="defaultModalLabel"></h4>
             </div>
-            <div class="modal-body"> 
+            <div class="modal-body">
                 <form method="Post"  action="{{ route('user.store') }}" enctype="multipart/form-data">
                     <div class="input-group mb-3">
                                 <div class="input-group-prepend">
@@ -125,7 +125,7 @@
                                    <option value="2">وكيل</option>
                                    <option value="3">صاحب محل</option>
                                   <option value="4">زبون عادي</option>
-                                </select>   
+                                </select>
                                     @error('role')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -141,7 +141,7 @@
                                   @foreach ($vips as $key => $vip)
                                     <option value="{{$key}}" selected>{{$vip->role_name}}</option>
                                   @endforeach
-                                </select>   
+                                </select>
                                     @error('role')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -180,7 +180,7 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                          
+
                             </div>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
@@ -191,7 +191,7 @@
                                   <label class="custom-file-label" for="inputGroupFile01">  </label>
                                 </div>
                             </div>
-                           
+
                             <div class="input-group mb-3">
                                   الجنس:
                                     <label class="fancy-radio custom-color-green"><input name="gender" value="0" type="radio" ><span><i></i>Male</span></label>
@@ -314,577 +314,577 @@
                                             COOK ISLANDS</option>
                                                         <option value="COSTA RICA">
                                             COSTA RICA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="COTE D'IVOIRE">
                                             COTE D'IVOIRE</option>
-                                                                                                                                                                      
+
                                                                                    <option value="CROATIA">
                                             CROATIA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="CUBA">
                                             CUBA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="CYPRUS">
                                             CYPRUS</option>
-                                                                                                                                                                      
+
                                                                                    <option value="CZECH REPUBLIC">
                                             CZECH REPUBLIC</option>
-                                                                                                                                                                      
+
                                                                                    <option value="DENMARK">
                                             DENMARK</option>
-                                                                                                                                                                      
+
                                                                                    <option value="DJIBOUTI">
                                             DJIBOUTI</option>
-                                                                                                                                                                      
+
                                                                                    <option value="DOMINICA">
                                             DOMINICA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="DOMINICAN REPUBLIC">
                                             DOMINICAN REPUBLIC</option>
-                                                                                                                                                                      
+
                                                                                    <option value="ECUADOR">
                                             ECUADOR</option>
-                                                                                                                                                                      
+
                                                                                    <option value="EGYPT">
                                             EGYPT</option>
-                                                                                                                                                                      
+
                                                                                    <option value="EL SALVADOR">
                                             EL SALVADOR</option>
-                                                                                                                                                                      
+
                                                                                    <option value="EQUATORIAL GUINEA">
                                             EQUATORIAL GUINEA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="ERITREA">
                                             ERITREA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="ESTONIA">
                                             ESTONIA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="ETHIOPIA">
                                             ETHIOPIA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="FALKLAND ISLANDS (MALVINAS)">
                                             FALKLAND ISLANDS (MALVINAS)</option>
-                                                                                                                                                                      
+
                                                                                    <option value="FAROE ISLANDS">
                                             FAROE ISLANDS</option>
-                                                                                                                                                                      
+
                                                                                    <option value="FIJI">
                                             FIJI</option>
-                                                                                                                                                                      
+
                                                                                    <option value="FINLAND">
                                             FINLAND</option>
-                                                                                                                                                                      
+
                                                                                    <option value="FRANCE">
                                             FRANCE</option>
-                                                                                                                                                                      
+
                                                                                    <option value="FRENCH GUIANA">
                                             FRENCH GUIANA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="FRENCH POLYNESIA">
                                             FRENCH POLYNESIA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="FRENCH SOUTHERN TERRITORIES">
                                             FRENCH SOUTHERN TERRITORIES</option>
-                                                                                                                                                                      
+
                                                                                    <option value="GABON">
                                             GABON</option>
-                                                                                                                                                                      
+
                                                                                    <option value="GAMBIA">
                                             GAMBIA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="GEORGIA">
                                             GEORGIA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="GERMANY">
                                             GERMANY</option>
-                                                                                                                                                                      
+
                                                                                    <option value="GHANA">
                                             GHANA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="GIBRALTAR">
                                             GIBRALTAR</option>
-                                                                                                                                                                      
+
                                                                                    <option value="GREECE">
                                             GREECE</option>
-                                                                                                                                                                      
+
                                                                                    <option value="GREENLAND">
                                             GREENLAND</option>
-                                                                                                                                                                      
+
                                                                                    <option value="GRENADA">
                                             GRENADA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="GUADELOUPE">
                                             GUADELOUPE</option>
-                                                                                                                                                                      
+
                                                                                    <option value="GUAM">
                                             GUAM</option>
-                                                                                                                                                                      
+
                                                                                    <option value="GUATEMALA">
                                             GUATEMALA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="GUINEA">
                                             GUINEA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="GUINEA-BISSAU">
                                             GUINEA-BISSAU</option>
-                                                                                                                                                                      
+
                                                                                    <option value="GUYANA">
                                             GUYANA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="HAITI">
                                             HAITI</option>
-                                                                                                                                                                      
+
                                                                                    <option value="HEARD ISLAND AND MCDONALD ISLANDS">
                                             HEARD ISLAND AND MCDONALD ISLANDS</option>
-                                                                                                                                                                      
+
                                                                                    <option value="HOLY SEE (VATICAN CITY STATE)">
                                             HOLY SEE (VATICAN CITY STATE)</option>
-                                                                                                                                                                      
+
                                                                                    <option value="HONDURAS">
                                             HONDURAS</option>
-                                                                                                                                                                      
+
                                                                                    <option value="HONG KONG">
                                             HONG KONG</option>
-                                                                                                                                                                      
+
                                                                                    <option value="HUNGARY">
                                             HUNGARY</option>
-                                                                                                                                                                      
+
                                                                                    <option value="ICELAND">
                                             ICELAND</option>
-                                                                                                                                                                      
+
                                                                                    <option value="INDIA">
                                             INDIA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="INDONESIA">
                                             INDONESIA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="IRAN, ISLAMIC REPUBLIC OF">
                                             IRAN, ISLAMIC REPUBLIC OF</option>
-                                                                                                                                                                      
+
                                                                                    <option value="IRAQ">
                                             IRAQ</option>
-                                                                                                                                                                      
+
                                                                                    <option value="IRELAND">
                                             IRELAND</option>
-                                                                                                                                                                      
+
                                                                                    <option value="ISRAEL">
                                             ISRAEL</option>
-                                                                                                                                                                      
+
                                                                                    <option value="ITALY">
                                             ITALY</option>
-                                                                                                                                                                      
+
                                                                                    <option value="JAMAICA">
                                             JAMAICA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="JAPAN">
                                             JAPAN</option>
-                                                                                                                                                                      
+
                                                                                    <option value="JORDAN">
                                             JORDAN</option>
-                                                                                                                                                                      
+
                                                                                    <option value="KAZAKHSTAN">
                                             KAZAKHSTAN</option>
-                                                                                                                                                                      
+
                                                                                    <option value="KENYA">
                                             KENYA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="KIRIBATI">
                                             KIRIBATI</option>
-                                                                                                                                                                      
+
                                                                                    <option value="KOREA, DEMOCRATIC PEOPLE'S REPUBLIC OF">
                                             KOREA, DEMOCRATIC PEOPLE'S REPUBLIC OF</option>
-                                                                                                                                                                      
+
                                                                                    <option value="KOREA, REPUBLIC OF">
                                             KOREA, REPUBLIC OF</option>
-                                                                                                                                                                      
+
                                                                                    <option value="KUWAIT">
                                             KUWAIT</option>
-                                                                                                                                                                      
+
                                                                                    <option value="KYRGYZSTAN">
                                             KYRGYZSTAN</option>
-                                                                                                                                                                      
+
                                                                                    <option value="LAO PEOPLE'S DEMOCRATIC REPUBLIC">
                                             LAO PEOPLE'S DEMOCRATIC REPUBLIC</option>
-                                                                                                                                                                      
+
                                                                                    <option value="LATVIA">
                                             LATVIA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="LEBANON">
                                             LEBANON</option>
-                                                                                                                                                                      
+
                                                                                    <option value="LESOTHO">
                                             LESOTHO</option>
-                                                                                                                                                                      
+
                                                                                    <option value="LIBERIA">
                                             LIBERIA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="LIBYAN ARAB JAMAHIRIYA">
                                             LIBYAN ARAB JAMAHIRIYA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="LIECHTENSTEIN">
                                             LIECHTENSTEIN</option>
-                                                                                                                                                                      
+
                                                                                    <option value="LITHUANIA">
                                             LITHUANIA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="LUXEMBOURG">
                                             LUXEMBOURG</option>
-                                                                                                                                                                      
+
                                                                                    <option value="MACAO">
                                             MACAO</option>
-                                                                                                                                                                      
+
                                                                                    <option value="MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF">
                                             MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF</option>
-                                                                                                                                                                      
+
                                                                                    <option value="MADAGASCAR">
                                             MADAGASCAR</option>
-                                                                                                                                                                      
+
                                                                                    <option value="MALAWI">
                                             MALAWI</option>
-                                                                                                                                                                      
+
                                                                                    <option value="MALAYSIA">
                                             MALAYSIA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="MALDIVES">
                                             MALDIVES</option>
-                                                                                                                                                                      
+
                                                                                    <option value="MALI">
                                             MALI</option>
-                                                                                                                                                                      
+
                                                                                    <option value="MALTA">
                                             MALTA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="MARSHALL ISLANDS">
                                             MARSHALL ISLANDS</option>
-                                                                                                                                                                      
+
                                                                                    <option value="MARTINIQUE">
                                             MARTINIQUE</option>
-                                                                                                                                                                      
+
                                                                                    <option value="MAURITANIA">
                                             MAURITANIA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="MAURITIUS">
                                             MAURITIUS</option>
-                                                                                                                                                                      
+
                                                                                    <option value="MAYOTTE">
                                             MAYOTTE</option>
-                                                                                                                                                                      
+
                                                                                    <option value="MEXICO">
                                             MEXICO</option>
-                                                                                                                                                                      
+
                                                                                    <option value="MICRONESIA, FEDERATED STATES OF">
                                             MICRONESIA, FEDERATED STATES OF</option>
-                                                                                                                                                                      
+
                                                                                    <option value="MOLDOVA, REPUBLIC OF">
                                             MOLDOVA, REPUBLIC OF</option>
-                                                                                                                                                                      
+
                                                                                    <option value="MONACO">
                                             MONACO</option>
-                                                                                                                                                                      
+
                                                                                    <option value="MONGOLIA">
                                             MONGOLIA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="MONTSERRAT">
                                             MONTSERRAT</option>
-                                                                                                                                                                      
+
                                                                                    <option value="MOROCCO">
                                             MOROCCO</option>
-                                                                                                                                                                      
+
                                                                                    <option value="MOZAMBIQUE">
                                             MOZAMBIQUE</option>
-                                                                                                                                                                      
+
                                                                                    <option value="MYANMAR">
                                             MYANMAR</option>
-                                                                                                                                                                      
+
                                                                                    <option value="NAMIBIA">
                                             NAMIBIA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="NAURU">
                                             NAURU</option>
-                                                                                                                                                                      
+
                                                                                    <option value="NEPAL">
                                             NEPAL</option>
-                                                                                                                                                                      
+
                                                                                    <option value="NETHERLANDS">
                                             NETHERLANDS</option>
-                                                                                                                                                                      
+
                                                                                    <option value="NETHERLANDS ANTILLES">
                                             NETHERLANDS ANTILLES</option>
-                                                                                                                                                                      
+
                                                                                    <option value="NEW CALEDONIA">
                                             NEW CALEDONIA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="NEW ZEALAND">
                                             NEW ZEALAND</option>
-                                                                                                                                                                      
+
                                                                                    <option value="NICARAGUA">
                                             NICARAGUA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="NIGER">
                                             NIGER</option>
-                                                                                                                                                                      
+
                                                                                    <option value="NIGERIA">
                                             NIGERIA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="NIUE">
                                             NIUE</option>
-                                                                                                                                                                      
+
                                                                                    <option value="NORFOLK ISLAND">
                                             NORFOLK ISLAND</option>
-                                                                                                                                                                      
+
                                                                                    <option value="NORTHERN MARIANA ISLANDS">
                                             NORTHERN MARIANA ISLANDS</option>
-                                                                                                                                                                      
+
                                                                                    <option value="NORWAY">
                                             NORWAY</option>
-                                                                                                                                                                      
+
                                                                                    <option value="OMAN">
                                             OMAN</option>
-                                                                                                                                                                      
+
                                                                                    <option value="PAKISTAN">
                                             PAKISTAN</option>
-                                                                                                                                                                      
+
                                                                                    <option value="PALAU">
                                             PALAU</option>
-                                                                                                                                                                      
+
                                                                                    <option value="PALESTINIAN TERRITORY, OCCUPIED">
                                             PALESTINIAN TERRITORY, OCCUPIED</option>
-                                                                                                                                                                      
+
                                                                                    <option value="PANAMA">
                                             PANAMA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="PAPUA NEW GUINEA">
                                             PAPUA NEW GUINEA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="PARAGUAY">
                                             PARAGUAY</option>
-                                                                                                                                                                      
+
                                                                                    <option value="PERU">
                                             PERU</option>
-                                                                                                                                                                      
+
                                                                                    <option value="PHILIPPINES">
                                             PHILIPPINES</option>
-                                                                                                                                                                      
+
                                                                                    <option value="PITCAIRN">
                                             PITCAIRN</option>
-                                                                                                                                                                      
+
                                                                                    <option value="POLAND">
                                             POLAND</option>
-                                                                                                                                                                      
+
                                                                                    <option value="PORTUGAL">
                                             PORTUGAL</option>
-                                                                                                                                                                      
+
                                                                                    <option value="PUERTO RICO">
                                             PUERTO RICO</option>
-                                                                                                                                                                      
+
                                                                                    <option value="QATAR">
                                             QATAR</option>
-                                                                                                                                                                      
+
                                                                                    <option value="REUNION">
                                             REUNION</option>
-                                                                                                                                                                      
+
                                                                                    <option value="ROMANIA">
                                             ROMANIA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="RUSSIAN FEDERATION">
                                             RUSSIAN FEDERATION</option>
-                                                                                                                                                                      
+
                                                                                    <option value="RWANDA">
                                             RWANDA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="SAINT HELENA">
                                             SAINT HELENA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="SAINT KITTS AND NEVIS">
                                             SAINT KITTS AND NEVIS</option>
-                                                                                                                                                                      
+
                                                                                    <option value="SAINT LUCIA">
                                             SAINT LUCIA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="SAINT PIERRE AND MIQUELON">
                                             SAINT PIERRE AND MIQUELON</option>
-                                                                                                                                                                      
+
                                                                                    <option value="SAINT VINCENT AND THE GRENADINES">
                                             SAINT VINCENT AND THE GRENADINES</option>
-                                                                                                                                                                      
+
                                                                                    <option value="SAMOA">
                                             SAMOA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="SAN MARINO">
                                             SAN MARINO</option>
-                                                                                                                                                                      
+
                                                                                    <option value="SAO TOME AND PRINCIPE">
                                             SAO TOME AND PRINCIPE</option>
-                                                                                                                                                                      
+
                                                                                    <option value="SAUDI ARABIA">
                                             SAUDI ARABIA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="SENEGAL">
                                             SENEGAL</option>
-                                                                                                                                                                      
+
                                                                                    <option value="SERBIA AND MONTENEGRO">
                                             SERBIA AND MONTENEGRO</option>
-                                                                                                                                                                      
+
                                                                                    <option value="SEYCHELLES">
                                             SEYCHELLES</option>
-                                                                                                                                                                      
+
                                                                                    <option value="SIERRA LEONE">
                                             SIERRA LEONE</option>
-                                                                                                                                                                      
+
                                                                                    <option value="SINGAPORE">
                                             SINGAPORE</option>
-                                                                                                                                                                      
+
                                                                                    <option value="SLOVAKIA">
                                             SLOVAKIA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="SLOVENIA">
                                             SLOVENIA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="SOLOMON ISLANDS">
                                             SOLOMON ISLANDS</option>
-                                                                                                                                                                      
+
                                                                                    <option value="SOMALIA">
                                             SOMALIA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="SOUTH AFRICA">
                                             SOUTH AFRICA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS">
                                             SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS</option>
-                                                                                                                                                                      
+
                                                                                    <option value="SPAIN">
                                             SPAIN</option>
-                                                                                                                                                                      
+
                                                                                    <option value="SRI LANKA">
                                             SRI LANKA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="SUDAN">
                                             SUDAN</option>
-                                                                                                                                                                      
+
                                                                                    <option value="SURINAME">
                                             SURINAME</option>
-                                                                                                                                                                      
+
                                                                                    <option value="SVALBARD AND JAN MAYEN">
                                             SVALBARD AND JAN MAYEN</option>
-                                                                                                                                                                      
+
                                                                                    <option value="SWAZILAND">
                                             SWAZILAND</option>
-                                                                                                                                                                      
+
                                                                                    <option value="SWEDEN">
                                             SWEDEN</option>
-                                                                                                                                                                      
+
                                                                                    <option value="SWITZERLAND">
                                             SWITZERLAND</option>
-                                                                                                                                                                      
+
                                                                                    <option value="SYRIAN">
                                             SYRIAN</option>
-                                                                                                                                                                      
+
                                                                                    <option value="TAIWAN, PROVINCE OF CHINA">
                                             TAIWAN, PROVINCE OF CHINA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="TAJIKISTAN">
                                             TAJIKISTAN</option>
-                                                                                                                                                                      
+
                                                                                    <option value="TANZANIA, UNITED REPUBLIC OF">
                                             TANZANIA, UNITED REPUBLIC OF</option>
-                                                                                                                                                                      
+
                                                                                    <option value="THAILAND">
                                             THAILAND</option>
-                                                                                                                                                                      
+
                                                                                    <option value="TIMOR-LESTE">
                                             TIMOR-LESTE</option>
-                                                                                                                                                                      
+
                                                                                    <option value="TOGO">
                                             TOGO</option>
-                                                                                                                                                                      
+
                                                                                    <option value="TOKELAU">
                                             TOKELAU</option>
-                                                                                                                                                                      
+
                                                                                    <option value="TONGA">
                                             TONGA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="TRINIDAD AND TOBAGO">
                                             TRINIDAD AND TOBAGO</option>
-                                                                                                                                                                      
+
                                                                                    <option value="TUNISIA">
                                             TUNISIA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="TURKEY">
                                             TURKEY</option>
-                                                                                                                                                                      
+
                                                                                    <option value="TURKMENISTAN">
                                             TURKMENISTAN</option>
-                                                                                                                                                                      
+
                                                                                    <option value="TURKS AND CAICOS ISLANDS">
                                             TURKS AND CAICOS ISLANDS</option>
-                                                                                                                                                                      
+
                                                                                    <option value="TUVALU">
                                             TUVALU</option>
-                                                                                                                                                                      
+
                                                                                    <option value="UGANDA">
                                             UGANDA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="UKRAINE">
                                             UKRAINE</option>
-                                                                                                                                                                      
+
                                                                                    <option value="UNITED ARAB EMIRATES">
                                             UNITED ARAB EMIRATES</option>
-                                                                                                                                                                      
+
                                                                                    <option value="UNITED KINGDOM">
                                             UNITED KINGDOM</option>
-                                                                                                                                                                      
+
                                                                                    <option value="UNITED STATES">
                                             UNITED STATES</option>
-                                                                                                                                                                      
+
                                                                                    <option value="UNITED STATES MINOR OUTLYING ISLANDS">
                                             UNITED STATES MINOR OUTLYING ISLANDS</option>
-                                                                                                                                                                      
+
                                                                                    <option value="URUGUAY">
                                             URUGUAY</option>
-                                                                                                                                                                      
+
                                                                                    <option value="UZBEKISTAN">
                                             UZBEKISTAN</option>
-                                                                                                                                                                      
+
                                                                                    <option value="VANUATU">
                                             VANUATU</option>
-                                                                                                                                                                      
+
                                                                                    <option value="VENEZUELA">
                                             VENEZUELA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="VIET NAM">
                                             VIET NAM</option>
-                                                                                                                                                                      
+
                                                                                    <option value="VIRGIN ISLANDS, BRITISH">
                                             VIRGIN ISLANDS, BRITISH</option>
-                                                                                                                                                                      
+
                                                                                    <option value="VIRGIN ISLANDS, U.S.">
                                             VIRGIN ISLANDS, U.S.</option>
-                                                                                                                                                                      
+
                                                                                    <option value="WALLIS AND FUTUNA">
                                             WALLIS AND FUTUNA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="WESTERN SAHARA">
                                             WESTERN SAHARA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="YEMEN">
                                             YEMEN</option>
-                                                                                                                                                                      
+
                                                                                    <option value="ZAMBIA">
                                             ZAMBIA</option>
-                                                                                                                                                                      
+
                                                                                    <option value="ZIMBABWE">
                                             ZIMBABWE</option>
-                                                                                                                                            
+
                                 </select>
                                     @error('nationality')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
-                           
+
                                 </div>
-                        
+
                             <div class="input-group mb-3">
                                <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fa fa-edit"> </i></span>
@@ -895,14 +895,14 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                   @enderror
-                            </div>  
-                            
+                            </div>
+
 
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fa fa-edit"> </i></span>
                                 </div>
-                          
+
                               <input  type="password" class="form-control" name="password_confirmation" placeholder="  تأكيد كلمة السر" required autocomplete="new-password">
                                 @error('password_confirmation')
                                     <span class="invalid-feedback" role="alert">
@@ -910,13 +910,13 @@
                                     </span>
                                 @enderror
                             </div>
-                            
+
                             <div class="input-group mb-3">
                                   <div class="input-group-prepend">
                                       <input type="text" class="form-control" required style="direction:ltr" placeholder=" 538 9899 096" aria-label=" رقم الهاتف"name="mobile" describedby="basic-addon1">
-                                  </div>                    
+                                  </div>
                             <select  class="custom-select" required  name="code" >
-                            
+
                                <option value="">اختر البلد   </option>
                                <option value="+93">
                                  (+93) AFGHANISTAN</option>
@@ -980,7 +980,7 @@
                                  (+55) BRAZIL</option>
                                   <option value="+246">
                                  (+246) BRITISH INDIAN OCEAN TERRITORY</option>
-                                                                       
+
                                  <option value="+673">
                                    (+673) BRUNEI DARUSSALAM</option>
                                    <option value="+359">
@@ -1005,615 +1005,615 @@
                                  (+235) CHAD</option>
                                  <option value="+56">
                                  (+56) CHILE</option>
-                                                                                                                                                            
+
                                                                          <option value="+86">
                                  (+86) CHINA</option>
-                                                                                                                                                            
+
                                                                          <option value="+61">
                                  (+61) CHRISTMAS ISLAND</option>
-                                                                                                                                                            
+
                                                                          <option value="+672">
                                  (+672) COCOS (KEELING) ISLANDS</option>
-                                                                                                                                                            
+
                                                                          <option value="+57">
                                  (+57) COLOMBIA</option>
-                                                                                                                                                            
+
                                                                          <option value="+269">
                                  (+269) COMOROS</option>
-                                                                                                                                                            
+
                                                                          <option value="+242">
                                  (+242) CONGO</option>
-                                                                                                                                                            
+
                                                                          <option value="+242">
                                  (+242) CONGO, THE DEMOCRATIC REPUBLIC OF THE</option>
-                                                                                                                                                            
+
                                                                          <option value="+682">
                                  (+682) COOK ISLANDS</option>
-                                                                                                                                                            
+
                                                                          <option value="+506">
                                  (+506) COSTA RICA</option>
-                                                                                                                                                            
+
                                                                          <option value="+225">
                                  (+225) COTE D'IVOIRE</option>
-                                                                                                                                                            
+
                                                                          <option value="+385">
                                  (+385) CROATIA</option>
-                                                                                                                                                            
+
                                                                          <option value="+53">
                                  (+53) CUBA</option>
-                                                                                                                                                            
+
                                                                          <option value="+357">
                                  (+357) CYPRUS</option>
-                                                                                                                                                            
+
                                                                          <option value="+420">
                                  (+420) CZECH REPUBLIC</option>
-                                                                                                                                                            
+
                                                                          <option value="+45">
                                  (+45) DENMARK</option>
-                                                                                                                                                            
+
                                                                          <option value="+253">
                                  (+253) DJIBOUTI</option>
-                                                                                                                                                            
+
                                                                          <option value="+1767">
                                  (+1767) DOMINICA</option>
-                                                                                                                                                            
+
                                                                          <option value="+1809">
                                  (+1809) DOMINICAN REPUBLIC</option>
-                                                                                                                                                            
+
                                                                          <option value="+593">
                                  (+593) ECUADOR</option>
-                                                                                                                                                            
+
                                                                          <option value="+20">
                                  (+20) EGYPT</option>
-                                                                                                                                                            
+
                                                                          <option value="+503">
                                  (+503) EL SALVADOR</option>
-                                                                                                                                                            
+
                                                                          <option value="+240">
                                  (+240) EQUATORIAL GUINEA</option>
-                                                                                                                                                            
+
                                                                          <option value="+291">
                                  (+291) ERITREA</option>
-                                                                                                                                                            
+
                                                                          <option value="+372">
                                  (+372) ESTONIA</option>
-                                                                                                                                                            
+
                                                                          <option value="+251">
                                  (+251) ETHIOPIA</option>
-                                                                                                                                                            
+
                                                                          <option value="+500">
                                  (+500) FALKLAND ISLANDS (MALVINAS)</option>
-                                                                                                                                                            
+
                                                                          <option value="+298">
                                  (+298) FAROE ISLANDS</option>
-                                                                                                                                                            
+
                                                                          <option value="+679">
                                  (+679) FIJI</option>
-                                                                                                                                                            
+
                                                                          <option value="+358">
                                  (+358) FINLAND</option>
-                                                                                                                                                            
+
                                                                          <option value="+33">
                                  (+33) FRANCE</option>
-                                                                                                                                                            
+
                                                                          <option value="+594">
                                  (+594) FRENCH GUIANA</option>
-                                                                                                                                                            
+
                                                                          <option value="+689">
                                  (+689) FRENCH POLYNESIA</option>
-                                                                                                                                                            
+
                                                                          <option value="+0">
                                  (+0) FRENCH SOUTHERN TERRITORIES</option>
-                                                                                                                                                            
+
                                                                          <option value="+241">
                                  (+241) GABON</option>
-                                                                                                                                                            
+
                                                                          <option value="+220">
                                  (+220) GAMBIA</option>
-                                                                                                                                                            
+
                                                                          <option value="+995">
                                  (+995) GEORGIA</option>
-                                                                                                                                                            
+
                                                                          <option value="+49">
                                  (+49) GERMANY</option>
-                                                                                                                                                            
+
                                                                          <option value="+233">
                                  (+233) GHANA</option>
-                                                                                                                                                            
+
                                                                          <option value="+350">
                                  (+350) GIBRALTAR</option>
-                                                                                                                                                            
+
                                                                          <option value="+30">
                                  (+30) GREECE</option>
-                                                                                                                                                            
+
                                                                          <option value="+299">
                                  (+299) GREENLAND</option>
-                                                                                                                                                            
+
                                                                          <option value="+1473">
                                  (+1473) GRENADA</option>
-                                                                                                                                                            
+
                                                                          <option value="+590">
                                  (+590) GUADELOUPE</option>
-                                                                                                                                                            
+
                                                                          <option value="+1671">
                                  (+1671) GUAM</option>
-                                                                                                                                                            
+
                                                                          <option value="+502">
                                  (+502) GUATEMALA</option>
-                                                                                                                                                            
+
                                                                          <option value="+224">
                                  (+224) GUINEA</option>
-                                                                                                                                                            
+
                                                                          <option value="+245">
                                  (+245) GUINEA-BISSAU</option>
-                                                                                                                                                            
+
                                                                          <option value="+592">
                                  (+592) GUYANA</option>
-                                                                                                                                                            
+
                                                                          <option value="+509">
                                  (+509) HAITI</option>
-                                                                                                                                                            
+
                                                                          <option value="+0">
                                  (+0) HEARD ISLAND AND MCDONALD ISLANDS</option>
-                                                                                                                                                            
+
                                                                          <option value="+39">
                                  (+39) HOLY SEE (VATICAN CITY STATE)</option>
-                                                                                                                                                            
+
                                                                          <option value="+504">
                                  (+504) HONDURAS</option>
-                                                                                                                                                            
+
                                                                          <option value="+852">
                                  (+852) HONG KONG</option>
-                                                                                                                                                            
+
                                                                          <option value="+36">
                                  (+36) HUNGARY</option>
-                                                                                                                                                            
+
                                                                          <option value="+354">
                                  (+354) ICELAND</option>
-                                                                                                                                                            
+
                                                                          <option value="+91">
                                  (+91) INDIA</option>
-                                                                                                                                                            
+
                                                                          <option value="+62">
                                  (+62) INDONESIA</option>
-                                                                                                                                                            
+
                                                                          <option value="+98">
                                  (+98) IRAN, ISLAMIC REPUBLIC OF</option>
-                                                                                                                                                            
+
                                                                          <option value="+964">
                                  (+964) IRAQ</option>
-                                                                                                                                                            
+
                                                                          <option value="+353">
                                  (+353) IRELAND</option>
-                                                                                                                                                            
+
                                                                          <option value="+972">
                                  (+972) ISRAEL</option>
-                                                                                                                                                            
+
                                                                          <option value="+39">
                                  (+39) ITALY</option>
-                                                                                                                                                            
+
                                                                          <option value="+1876">
                                  (+1876) JAMAICA</option>
-                                                                                                                                                            
+
                                                                          <option value="+81">
                                  (+81) JAPAN</option>
-                                                                                                                                                            
+
                                                                          <option value="+962">
                                  (+962) JORDAN</option>
-                                                                                                                                                            
+
                                                                          <option value="+7">
                                  (+7) KAZAKHSTAN</option>
-                                                                                                                                                            
+
                                                                          <option value="+254">
                                  (+254) KENYA</option>
-                                                                                                                                                            
+
                                                                          <option value="+686">
                                  (+686) KIRIBATI</option>
-                                                                                                                                                            
+
                                                                          <option value="+850">
                                  (+850) KOREA, DEMOCRATIC PEOPLE'S REPUBLIC OF</option>
-                                                                                                                                                            
+
                                                                          <option value="+82">
                                  (+82) KOREA, REPUBLIC OF</option>
-                                                                                                                                                            
+
                                                                          <option value="+965">
                                  (+965) KUWAIT</option>
-                                                                                                                                                            
+
                                                                          <option value="+996">
                                  (+996) KYRGYZSTAN</option>
-                                                                                                                                                            
+
                                                                          <option value="+856">
                                  (+856) LAO PEOPLE'S DEMOCRATIC REPUBLIC</option>
-                                                                                                                                                            
+
                                                                          <option value="+371">
                                  (+371) LATVIA</option>
-                                                                                                                                                            
+
                                                                          <option value="+961">
                                  (+961) LEBANON</option>
-                                                                                                                                                            
+
                                                                          <option value="+266">
                                  (+266) LESOTHO</option>
-                                                                                                                                                            
+
                                                                          <option value="+231">
                                  (+231) LIBERIA</option>
-                                                                                                                                                            
+
                                                                          <option value="+218">
                                  (+218) LIBYAN ARAB JAMAHIRIYA</option>
-                                                                                                                                                            
+
                                                                          <option value="+423">
                                  (+423) LIECHTENSTEIN</option>
-                                                                                                                                                            
+
                                                                          <option value="+370">
                                  (+370) LITHUANIA</option>
-                                                                                                                                                            
+
                                                                          <option value="+352">
                                  (+352) LUXEMBOURG</option>
-                                                                                                                                                            
+
                                                                          <option value="+853">
                                  (+853) MACAO</option>
-                                                                                                                                                            
+
                                                                          <option value="+389">
                                  (+389) MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF</option>
-                                                                                                                                                            
+
                                                                          <option value="+261">
                                  (+261) MADAGASCAR</option>
-                                                                                                                                                            
+
                                                                          <option value="+265">
                                  (+265) MALAWI</option>
-                                                                                                                                                            
+
                                                                          <option value="+60">
                                  (+60) MALAYSIA</option>
-                                                                                                                                                            
+
                                                                          <option value="+960">
                                  (+960) MALDIVES</option>
-                                                                                                                                                            
+
                                                                          <option value="+223">
                                  (+223) MALI</option>
-                                                                                                                                                            
+
                                                                          <option value="+356">
                                  (+356) MALTA</option>
-                                                                                                                                                            
+
                                                                          <option value="+692">
                                  (+692) MARSHALL ISLANDS</option>
-                                                                                                                                                            
+
                                                                          <option value="+596">
                                  (+596) MARTINIQUE</option>
-                                                                                                                                                            
+
                                                                          <option value="+222">
                                  (+222) MAURITANIA</option>
-                                                                                                                                                            
+
                                                                          <option value="+230">
                                  (+230) MAURITIUS</option>
-                                                                                                                                                            
+
                                                                          <option value="+269">
                                  (+269) MAYOTTE</option>
-                                                                                                                                                            
+
                                                                          <option value="+52">
                                  (+52) MEXICO</option>
-                                                                                                                                                            
+
                                                                          <option value="+691">
                                  (+691) MICRONESIA, FEDERATED STATES OF</option>
-                                                                                                                                                            
+
                                                                          <option value="+373">
                                  (+373) MOLDOVA, REPUBLIC OF</option>
-                                                                                                                                                            
+
                                                                          <option value="+377">
                                  (+377) MONACO</option>
-                                                                                                                                                            
+
                                                                          <option value="+976">
                                  (+976) MONGOLIA</option>
-                                                                                                                                                            
+
                                                                          <option value="+1664">
                                  (+1664) MONTSERRAT</option>
-                                                                                                                                                            
+
                                                                          <option value="+212">
                                  (+212) MOROCCO</option>
-                                                                                                                                                            
+
                                                                          <option value="+258">
                                  (+258) MOZAMBIQUE</option>
-                                                                                                                                                            
+
                                                                          <option value="+95">
                                  (+95) MYANMAR</option>
-                                                                                                                                                            
+
                                                                          <option value="+264">
                                  (+264) NAMIBIA</option>
-                                                                                                                                                            
+
                                                                          <option value="+674">
                                  (+674) NAURU</option>
-                                                                                                                                                            
+
                                                                          <option value="+977">
                                  (+977) NEPAL</option>
-                                                                                                                                                            
+
                                                                          <option value="+31">
                                  (+31) NETHERLANDS</option>
-                                                                                                                                                            
+
                                                                          <option value="+599">
                                  (+599) NETHERLANDS ANTILLES</option>
-                                                                                                                                                            
+
                                                                          <option value="+687">
                                  (+687) NEW CALEDONIA</option>
-                                                                                                                                                            
+
                                                                          <option value="+64">
                                  (+64) NEW ZEALAND</option>
-                                                                                                                                                            
+
                                                                          <option value="+505">
                                  (+505) NICARAGUA</option>
-                                                                                                                                                            
+
                                                                          <option value="+227">
                                  (+227) NIGER</option>
-                                                                                                                                                            
+
                                                                          <option value="+234">
                                  (+234) NIGERIA</option>
-                                                                                                                                                            
+
                                                                          <option value="+683">
                                  (+683) NIUE</option>
-                                                                                                                                                            
+
                                                                          <option value="+672">
                                  (+672) NORFOLK ISLAND</option>
-                                                                                                                                                            
+
                                                                          <option value="+1670">
                                  (+1670) NORTHERN MARIANA ISLANDS</option>
-                                                                                                                                                            
+
                                                                          <option value="+47">
                                  (+47) NORWAY</option>
-                                                                                                                                                            
+
                                                                          <option value="+968">
                                  (+968) OMAN</option>
-                                                                                                                                                            
+
                                                                          <option value="+92">
                                  (+92) PAKISTAN</option>
-                                                                                                                                                            
+
                                                                          <option value="+680">
                                  (+680) PALAU</option>
-                                                                                                                                                            
+
                                                                          <option value="+970">
                                  (+970) PALESTINIAN TERRITORY, OCCUPIED</option>
-                                                                                                                                                            
+
                                                                          <option value="+507">
                                  (+507) PANAMA</option>
-                                                                                                                                                            
+
                                                                          <option value="+675">
                                  (+675) PAPUA NEW GUINEA</option>
-                                                                                                                                                            
+
                                                                          <option value="+595">
                                  (+595) PARAGUAY</option>
-                                                                                                                                                            
+
                                                                          <option value="+51">
                                  (+51) PERU</option>
-                                                                                                                                                            
+
                                                                          <option value="+63">
                                  (+63) PHILIPPINES</option>
-                                                                                                                                                            
+
                                                                          <option value="+0">
                                  (+0) PITCAIRN</option>
-                                                                                                                                                            
+
                                                                          <option value="+48">
                                  (+48) POLAND</option>
-                                                                                                                                                            
+
                                                                          <option value="+351">
                                  (+351) PORTUGAL</option>
-                                                                                                                                                            
+
                                                                          <option value="+1787">
                                  (+1787) PUERTO RICO</option>
-                                                                                                                                                            
+
                                                                          <option value="+974">
                                  (+974) QATAR</option>
-                                                                                                                                                            
+
                                                                          <option value="+262">
                                  (+262) REUNION</option>
-                                                                                                                                                            
+
                                                                          <option value="+40">
                                  (+40) ROMANIA</option>
-                                                                                                                                                            
+
                                                                          <option value="+70">
                                  (+70) RUSSIAN FEDERATION</option>
-                                                                                                                                                            
+
                                                                          <option value="+250">
                                  (+250) RWANDA</option>
-                                                                                                                                                            
+
                                                                          <option value="+290">
                                  (+290) SAINT HELENA</option>
-                                                                                                                                                            
+
                                                                          <option value="+1869">
                                  (+1869) SAINT KITTS AND NEVIS</option>
-                                                                                                                                                            
+
                                                                          <option value="+1758">
                                  (+1758) SAINT LUCIA</option>
-                                                                                                                                                            
+
                                                                          <option value="+508">
                                  (+508) SAINT PIERRE AND MIQUELON</option>
-                                                                                                                                                            
+
                                                                          <option value="+1784">
                                  (+1784) SAINT VINCENT AND THE GRENADINES</option>
-                                                                                                                                                            
+
                                                                          <option value="+684">
                                  (+684) SAMOA</option>
-                                                                                                                                                            
+
                                                                          <option value="+378">
                                  (+378) SAN MARINO</option>
-                                                                                                                                                            
+
                                                                          <option value="+239">
                                  (+239) SAO TOME AND PRINCIPE</option>
-                                                                                                                                                            
+
                                                                          <option value="+966">
                                  (+966) SAUDI ARABIA</option>
-                                                                                                                                                            
+
                                                                          <option value="+221">
                                  (+221) SENEGAL</option>
-                                                                                                                                                            
+
                                                                          <option value="+381">
                                  (+381) SERBIA AND MONTENEGRO</option>
-                                                                                                                                                            
+
                                                                          <option value="+248">
                                  (+248) SEYCHELLES</option>
-                                                                                                                                                            
+
                                                                          <option value="+232">
                                  (+232) SIERRA LEONE</option>
-                                                                                                                                                            
+
                                                                          <option value="+65">
                                  (+65) SINGAPORE</option>
-                                                                                                                                                            
+
                                                                          <option value="+421">
                                  (+421) SLOVAKIA</option>
-                                                                                                                                                            
+
                                                                          <option value="+386">
                                  (+386) SLOVENIA</option>
-                                                                                                                                                            
+
                                                                          <option value="+677">
                                  (+677) SOLOMON ISLANDS</option>
-                                                                                                                                                            
+
                                                                          <option value="+252">
                                  (+252) SOMALIA</option>
-                                                                                                                                                            
+
                                                                          <option value="+27">
                                  (+27) SOUTH AFRICA</option>
-                                                                                                                                                            
+
                                                                          <option value="+0">
                                  (+0) SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS</option>
-                                                                                                                                                            
+
                                                                          <option value="+34">
                                  (+34) SPAIN</option>
-                                                                                                                                                            
+
                                                                          <option value="+94">
                                  (+94) SRI LANKA</option>
-                                                                                                                                                            
+
                                                                          <option value="+249">
                                  (+249) SUDAN</option>
-                                                                                                                                                            
+
                                                                          <option value="+597">
                                  (+597) SURINAME</option>
-                                                                                                                                                            
+
                                                                          <option value="+47">
                                  (+47) SVALBARD AND JAN MAYEN</option>
-                                                                                                                                                            
+
                                                                          <option value="+268">
                                  (+268) SWAZILAND</option>
-                                                                                                                                                            
+
                                                                          <option value="+46">
                                  (+46) SWEDEN</option>
-                                                                                                                                                            
+
                                                                          <option value="+41">
                                  (+41) SWITZERLAND</option>
-                                                                                                                                                            
+
                                                                          <option value="+963">
                                  (+963) SYRIAN</option>
-                                                                                                                                                            
+
                                                                          <option value="+886">
                                  (+886) TAIWAN, PROVINCE OF CHINA</option>
-                                                                                                                                                            
+
                                                                          <option value="+992">
                                  (+992) TAJIKISTAN</option>
-                                                                                                                                                            
+
                                                                          <option value="+255">
                                  (+255) TANZANIA, UNITED REPUBLIC OF</option>
-                                                                                                                                                            
+
                                                                          <option value="+66">
                                  (+66) THAILAND</option>
-                                                                                                                                                            
+
                                                                          <option value="+670">
                                  (+670) TIMOR-LESTE</option>
-                                                                                                                                                            
+
                                                                          <option value="+228">
                                  (+228) TOGO</option>
-                                                                                                                                                            
+
                                                                          <option value="+690">
                                  (+690) TOKELAU</option>
-                                                                                                                                                            
+
                                                                          <option value="+676">
                                  (+676) TONGA</option>
-                                                                                                                                                            
+
                                                                          <option value="+1868">
                                  (+1868) TRINIDAD AND TOBAGO</option>
-                                                                                                                                                            
+
                                                                          <option value="+216">
                                  (+216) TUNISIA</option>
-                                                                                                                                                            
+
                                                                          <option value="+90">
                                  (+90) TURKEY</option>
-                                                                                                                                                            
+
                                                                          <option value="+7370">
                                  (+7370) TURKMENISTAN</option>
-                                                                                                                                                            
+
                                                                          <option value="+1649">
                                  (+1649) TURKS AND CAICOS ISLANDS</option>
-                                                                                                                                                            
+
                                                                          <option value="+688">
                                  (+688) TUVALU</option>
-                                                                                                                                                            
+
                                                                          <option value="+256">
                                  (+256) UGANDA</option>
-                                                                                                                                                            
+
                                                                          <option value="+380">
                                  (+380) UKRAINE</option>
-                                                                                                                                                            
+
                                                                          <option value="+971">
                                  (+971) UNITED ARAB EMIRATES</option>
-                                                                                                                                                            
+
                                                                          <option value="+44">
                                  (+44) UNITED KINGDOM</option>
-                                                                                                                                                            
+
                                                                          <option value="+1">
                                  (+1) UNITED STATES</option>
-                                                                                                                                                            
+
                                                                          <option value="+1">
                                  (+1) UNITED STATES MINOR OUTLYING ISLANDS</option>
-                                                                                                                                                            
+
                                                                          <option value="+598">
                                  (+598) URUGUAY</option>
-                                                                                                                                                            
+
                                                                          <option value="+998">
                                  (+998) UZBEKISTAN</option>
-                                                                                                                                                            
+
                                                                          <option value="+678">
                                  (+678) VANUATU</option>
-                                                                                                                                                            
+
                                                                          <option value="+58">
                                  (+58) VENEZUELA</option>
-                                                                                                                                                            
+
                                                                          <option value="+84">
                                  (+84) VIET NAM</option>
-                                                                                                                                                            
+
                                                                          <option value="+1284">
                                  (+1284) VIRGIN ISLANDS, BRITISH</option>
-                                                                                                                                                            
+
                                                                          <option value="+1340">
                                  (+1340) VIRGIN ISLANDS, U.S.</option>
-                                                                                                                                                            
+
                                                                          <option value="+681">
                                  (+681) WALLIS AND FUTUNA</option>
-                                                                                                                                                            
+
                                                                          <option value="+212">
                                  (+212) WESTERN SAHARA</option>
-                                                                                                                                                            
+
                                                                          <option value="+967">
                                  (+967) YEMEN</option>
-                                                                                                                                                            
+
                                                                          <option value="+260">
                                  (+260) ZAMBIA</option>
-                                                                                                                                                            
+
                                                                          <option value="+263">
                                  (+263) ZIMBABWE</option>
-                                                                                                                                                                                   
-                          
-                                  
+
+
+
                             </select>
                             @error('mobile')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
-                            
+
                              </div>
-                               
-                           
+
+
                             </div>
-                            
+
                           <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                           
-                         <div class="modal-footer">  
+
+                         <div class="modal-footer">
                                <button type="submit" class="btn btn-primary">حفظ</button>
                                <a href="#"  data-dismiss="modal" class="btn btn-secondary">الغاء الأمر</a>
-                         </div>   
+                         </div>
                 </form>
             </div>
         </div>
@@ -1628,7 +1628,7 @@
             <div class="modal-header">
                 <h4 class="title" id="defaultModalLabel"> اضافة رصيد الى  {{$user->name}}</h4>
             </div>
-            <div class="modal-body"> 
+            <div class="modal-body">
             <form method="POST" action="{{ route('users.balance') }}" enctype="multipart/form-data">
             {{ csrf_field() }}
                     <div class="input-group mb-3">
@@ -1645,15 +1645,15 @@
                         <select class="custom-select" required name="payment_done" id="role">
                                   <option selected value="1">  مدفوع </option>
                                    <option value="0">دين</option>
-                               
-                                </select>  
+
+                                </select>
 
 
                     </div>
                     <input class="form-control" require aria-label=" "  type="hidden"  name ="agent_id" value="{{$user->id}}" aria-describedby="basic-addon1">
-                 
+
                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                    <div class="modal-footer"> 
+                    <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">حفظ</button>
                         <a href="#"  data-dismiss="modal" class="btn btn-secondary">الغاء الأمر</a>
                     </div>
@@ -1675,7 +1675,7 @@
             <div class="modal-header">
                 <h4 class="title" id="defaultModalLabel"> تغيير كلمة المرور  {{$user->name}}</h4>
             </div>
-            <div class="modal-body"> 
+            <div class="modal-body">
               <form method="POST" action="{{ route('user.change-password', $user->id) }}" enctype="multipart/form-data">
 
             {{ csrf_field() }}
@@ -1686,7 +1686,7 @@
                         <input type="text" class="form-control" required placeholder=" لدخل كلمة المرور "   aria-label="اسم المستخدم"  name ="password" aria-describedby="basic-addon1">
                     </div>
                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                    <div class="modal-footer"> 
+                    <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">حفظ</button>
                         <a href="#"  data-dismiss="modal" class="btn btn-secondary">الغاء الأمر</a>
                     </div>
@@ -1708,12 +1708,12 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="title" id="defaultModalLabel">
-                    هل انت بالتاكيد تريد حذف العميل 
+                    هل انت بالتاكيد تريد حذف العميل
                     {{$user->name}}
                     ؟
                 </h4>
             </div>
-            <div class="modal-body"> 
+            <div class="modal-body">
               <form action="{{ route('user.destroy', $user->id) }}" method="POST">
                @csrf
                @method('DELETE')
@@ -1723,8 +1723,8 @@
                    <a href="#"  data-dismiss="modal" class="btn btn-secondary">الغاء الأمر</a>
                </div>
               </form>
-            
-             </div>     
+
+             </div>
         </div>
     </div>
 
@@ -1739,7 +1739,7 @@
             <div class="modal-header">
                 <h4 class="title" id="defaultModalLabel"> {{$user->name}}</h4>
             </div>
-            <div class="modal-body"> 
+            <div class="modal-body">
                 <form method="POST"  action="{{ route('user.update', ['user' => $user->id]) }}" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     {{ method_field('PATCH') }}
@@ -1755,7 +1755,7 @@
                                   <span class="input-group-text"><i class="fa fa-edit"> </i></span>
                             </div>
                         <select class="custom-select" required name="role" id="role{{$user->id}}">
-                          
+
                             @if($user->role==2)
                             <option value="2" selected>وكيل</option>
                             @else
@@ -1780,7 +1780,7 @@
                                 <select class="custom-select"  name="vip_id" id="role">
                                   <option  value="{{$user->role}}">  العمولة </option>
                                   @foreach ($vips as $key => $vip)
-                                    
+
                                        @if($user->vip_id== $vip->id)
                                       <option value="{{$vip->id}}" selected>{{$vip->role_name}}</option>
                                       @else
@@ -1789,8 +1789,8 @@
 
 
                                   @endforeach
-                             
-                                </select>   
+
+                                </select>
                                     @error('role')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -1816,15 +1816,15 @@
                                     <span class="input-group-text">الرصيد</span>
                             </div>
                         <input type="text" class="form-control"value="{{$user->balance}}" required placeholder="البريد الالكتروني"  name="balance" aria-label="'البريد الالكتروني " aria-describedby="basic-addon2">
-                     
-                    </div> 
+
+                    </div>
                   @endif
                   <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fa fa-edit"> </i></span>
                             </div>
                         <input type="text" class="form-control"value="{{$user->email}}" required placeholder="البريد الالكتروني"  name="email" aria-label="'البريد الالكتروني " aria-describedby="basic-addon2">
-                     
+
                     </div>
                    <div class="input-group mb-3">
                                 <div class="input-group-prepend">
@@ -1832,19 +1832,21 @@
                                 </div>
                                 <select class="custom-select"  name="preferred_currency_id" id="role">
                                   <option  value="{{$user->preferred_currency_id}}">  العملة </option>
-                                  @foreach ($currencies as $key => $c)
-                                    
-                                       @if($user->preferred_currency_id== $c->id)
-                                      <option value="{{$c->id}}" selected>{{$c->name}}</option>
-                                      @else
-                                      <option value="{{$c->id}}" >{{$c->name}}</option>
-                                      @endif
 
+                                  @if(isset($currencies) && !empty($currencies))
+                                      @foreach ($currencies as $key => $c)
+                                           @if($user->preferred_currency_id== $c->id)
+                                          <option value="{{$c->id}}" selected>{{$c->name}}</option>
+                                          @else
+                                          <option value="{{$c->id}}" >{{$c->name}}</option>
+                                          @endif
+                                      @endforeach
+                                  @else
+                                      <option value="">لا توجد عملات متاحة</option>
+                                  @endif
 
-                                  @endforeach
-                             
-                                </select>   
-                                   
+                                </select>
+
                            </div>
                  <div class="col-lg-6 col-md-12">
                     <div class="input-group mb-3">
@@ -1870,24 +1872,24 @@
                                     <span class="input-group-text"><i class="fa fa-edit"> </i></span>
                                 </div>
                                 <input type="text" value="{{$user->nationality}}" class="form-control" required placeholder="  " aria-label=" كلمة السر"name="nationality" -describedby="basic-addon1">
-               
+
                                     @error('nationality')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
-                        </div>    
-             
-    
+                        </div>
+
+
                     <div class="input-group mb-3">
                        <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fa fa-edit"> </i></span>
                                 </div>
                             <input type="text" class="form-control" style="direction:ltr" value="{{$user->mobile}}" required placeholder=" رقم الهاتف" aria-label=" رقم الهاتف"name="mobile" -describedby="basic-addon1">
-                    
+
                     </div>
                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                    <div class="modal-footer"> 
+                    <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">حفظ</button>
                         <a href="#"   data-dismiss="modal"class="btn btn-secondary">الغاء الأمر</a>
                     </div>

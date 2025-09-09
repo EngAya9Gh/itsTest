@@ -21,7 +21,7 @@ class UserController extends Controller
     }
     public function test()
     {
-     
+
 $response = Http::withHeaders([
     'api-token' => 'b74d86453d879b6fb9582b12dba2a9eb2519949b4f0fed7c',
 ])->get('https://api.masar-card.com/client/api/products?products_id=1332');
@@ -31,16 +31,16 @@ $data = $response->json(); // تحويل الاستجابة إلى مصفوفة
     }
         public function test1()
     {
-     
+
 $response = Http::withHeaders([
     'api-token' => 'b74d86453d879b6fb9582b12dba2a9eb2519949b4f0fed7c',
 ])->get('https://api.masar-card.com/client/api/newOrder/581/params?qty=1&playerId=8209802&order_uuid=73ffd5e-b465-4bba-902a-713c38f76326');
 
 $data = $response->json(); // تحويل الاستجابة إلى مصفوفة
       dd($data);
-    } 
+    }
     public function index()
-    { 
+    {
         $users=DB::table('users')->select('*')->orderBy('id', 'desc')->paginate(500);
         $vips=DB::table('vips')->select('*')->orderBy('id', 'desc')->get();
         $currencies=DB::table('currencies')->select('*')->orderBy('id', 'desc')->get();
@@ -64,7 +64,7 @@ $data = $response->json(); // تحويل الاستجابة إلى مصفوفة
         }
         $input['mobile']= $input['code']. $input['mobile'];
         User::create($input);
-        return back()->with('message', 'تمت الاضافة بنجاح');        
+        return back()->with('message', 'تمت الاضافة بنجاح');
     }
 
   public function getAgentWallets()
@@ -85,19 +85,20 @@ $data = $response->json(); // تحويل الاستجابة إلى مصفوفة
             $userItem->financials = $financials;
         }
  return view('backend.users.wallets',compact('users'));
-    
+
   }
     public function showCategory($id)
     {
         $users=DB::table('users')->select('*')->where('role',$id)->orderBy('id', 'desc')->paginate(500);
         $vips=DB::table('vips')->select('*')->orderBy('id', 'desc')->get();
-        return view('backend.users.index',compact('users','vips'));
+        $currencies=DB::table('currencies')->select('*')->orderBy('id', 'desc')->get();
+        return view('backend.users.index',compact('users','vips','currencies'));
     }
     public function getAgents()
     {   $user=Auth::user();
         $users=DB::table('users')->select('*')->where('agent_id',$user->id)->orderBy('id', 'desc')->paginate(500);
         $vips=DB::table('vips')->select('*')->orderBy('id', 'desc')->get();
-     
+
         $currencies=DB::table('currencies')->select('*')->orderBy('id', 'desc')->get();
         return view('backend.users.index',compact('users','vips','currencies'));
     }
@@ -106,7 +107,7 @@ $data = $response->json(); // تحويل الاستجابة إلى مصفوفة
         if($user->role==1)
         { $users=DB::table('users')->select('*')->where('agent_id',$id)->orderBy('id', 'desc')->paginate(500);
         $vips=DB::table('vips')->select('*')->orderBy('id', 'desc')->get();
-         
+
         $currencies=DB::table('currencies')->select('*')->orderBy('id', 'desc')->get();
         return view('backend.users.index',compact('users','vips','currencies'));
         }
@@ -124,14 +125,14 @@ $data = $response->json(); // تحويل الاستجابة إلى مصفوفة
         $user->save();
         $agent->balance=$agent->balance+floatval($request->value);
         $agent->save();
-          
+
        $order= TransferMoneyFirmOrder::create([
             'user_id' =>$agent->id,
             'value' => floatval($request->value),
             'amount' => floatval($request->value),
             'currency'=>"TRY",
            'status'=>$request->payment_done? "مقبول":"دين" ,
-         
+
         ]);
         Transaction::create([
             'from_user_id' => $user->id,
@@ -139,23 +140,23 @@ $data = $response->json(); // تحويل الاستجابة إلى مصفوفة
             'amount' => floatval($request->value),
             'payment_done'=>$request->payment_done,
             'order_id'=>$order->id
-          
-         
+
+
         ]);
         return back()->with('message', 'تم اضافة الرصيد بنجاح');
           }
            return back()->with('message', 'رصيدك غير كافي  ');
     }
 
-    
+
     public function changePassword(Request $request,  $id)
     {
         $user = User::findOrFail($id);
         $input = $request->all();
         $user->password =bcrypt($input['password']);;
-      
+
         $user->save();
-        
+
         return back()->with('message', 'تم التعديل بنجاح');
     }
 
@@ -165,7 +166,7 @@ $data = $response->json(); // تحويل الاستجابة إلى مصفوفة
         $input = $request->all();
         if($request->file('image')!="")
         {
-      
+
         if ($file = $request->file('image')) {
             $name = 'user_'.time().$file->getClientOriginalName();
             $file->move('images/users/', $name);
@@ -177,7 +178,7 @@ $data = $response->json(); // تحويل الاستجابة إلى مصفوفة
             $input['image'] =$user['image'];
         }
         $user->update($input);
-        
+
         return back()->with('message', 'تم التعديل بنجاح');
     }
 
