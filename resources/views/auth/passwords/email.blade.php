@@ -290,6 +290,7 @@
 
                 <form method="POST" action="{{ route('password.email') }}" id="forgotForm">
                     @csrf
+                    <input type="hidden" name="user_type" value="admin">
 
                     <div class="form-group">
                         <label for="email" class="form-label">

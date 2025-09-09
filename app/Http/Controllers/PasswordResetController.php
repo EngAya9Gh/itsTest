@@ -17,6 +17,8 @@ class PasswordResetController extends Controller
     {
         $token = $request->query('token');
         $email = $request->query('email');
+        $type  = $request->query('type', 'admin'); // تمييز المصدر (admin | user)
+        $redirect = $request->query('redirect_to'); // مسار اختياري للعودة بعد الإكمال
 
         if (!$token || !$email) {
             return redirect('/')->with('error', 'رابط إعادة تعيين كلمة المرور غير صالح.');
@@ -32,7 +34,7 @@ class PasswordResetController extends Controller
         }
 
         // التحقق من صحة الـ token
-        if (!password_verify($token, $passwordReset->token)) {
+        if (!Hash::check($token, $passwordReset->token)) {
             return redirect('/')->with('error', 'رابط إعادة تعيين كلمة المرور غير صالح.');
         }
 
@@ -44,7 +46,7 @@ class PasswordResetController extends Controller
             return redirect('/')->with('error', 'انتهت صلاحية رابط إعادة تعيين كلمة المرور. يرجى طلب رابط جديد.');
         }
 
-        return view('auth.passwords.reset', compact('token', 'email'));
+        return view('auth.passwords.reset', compact('token', 'email', 'type', 'redirect'));
     }
 
     /**
@@ -76,7 +78,7 @@ class PasswordResetController extends Controller
         }
 
         // التحقق من صحة الـ token
-        if (!password_verify($request->token, $passwordReset->token)) {
+        if (!Hash::check($request->token, $passwordReset->token)) {
             return back()->withErrors(['email' => 'رابط إعادة تعيين كلمة المرور غير صالح.']);
         }
 
@@ -99,6 +101,16 @@ class PasswordResetController extends Controller
         // إبطال جميع الرموز المميزة الحالية للمستخدم
         $user->tokens()->delete();
 
-        return redirect('/')->with('status', 'تم تغيير كلمة المرور بنجاح. يرجى تسجيل الدخول مرة أخرى.');
+        // توجيه بحسب المصدر
+        $type = $request->input('type', 'admin');
+        if ($type === 'user') {
+            $frontendBase = rtrim(env('FRONTEND_URL', config('app.url')), '/');
+            // أولوية: redirect_to -> /login
+            $redirectTo = $request->input('redirect_to');
+            $url = $redirectTo ?: $frontendBase . '/login?reset=done';
+            return redirect()->away($url)->with('status', 'تم تغيير كلمة المرور بنجاح. يرجى تسجيل الدخول مرة أخرى.');
+        }
+
+        return redirect('/login')->with('status', 'تم تغيير كلمة المرور بنجاح. يرجى تسجيل الدخول مرة أخرى.');
     }
 }

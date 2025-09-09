@@ -11,6 +11,7 @@ use App\Models\AppOrder;
 use Illuminate\Support\Facades\DB;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
   use App\Mail\LoginEbank;
 use Illuminate\Support\Facades\Mail;
 use BaconQrCode\Renderer\ImageRenderer;
@@ -30,6 +31,7 @@ class ApiUserController extends Controller
     try {
         $request->validate([
             'email' => 'required|email|exists:users,email',
+            'user_type' => 'nullable|string|in:admin,user', // إضافة user_type
         ], [
             'email.required' => 'البريد الإلكتروني مطلوب.',
             'email.email' => 'يرجى إدخال عنوان بريد إلكتروني صالح.',
@@ -37,17 +39,36 @@ class ApiUserController extends Controller
         ]);
 
         $user = User::where('email', $request->email)->first();
+        $userType = $request->input('user_type', 'user'); // افتراضي user
 
         // إنشاء رابط إعادة تعيين كلمة المرور
         $token = Str::random(60);
 
-        // استخدام الجدول الصحيح password_reset_tokens
+        // استخدام الجدول الصحيح password_reset_tokens مع إضافة user_type
         DB::table('password_reset_tokens')->updateOrInsert(
             ['email' => $user->email],
-            ['token' => bcrypt($token), 'created_at' => now()]
+            [
+                'token' => Hash::make($token),
+                'created_at' => now(),
+                'user_type' => $userType // حفظ نوع المستخدم
+            ]
         );
 
-        $resetLink = url('/reset-password?token=' . $token . '&email=' . urlencode($user->email));
+        $frontendBase = env('FRONTEND_URL', config('app.url'));
+        $redirect = $request->input('redirect_to'); // optional redirect to return user where they were
+
+        if ($userType === 'user') {
+            // Send users to the frontend reset page
+            $resetLink = rtrim($frontendBase, '/') . '/reset-password?token=' . $token . '&email=' . urlencode($user->email) . '&type=user';
+        } else {
+            // Admins use the backend (Laravel) reset page
+            $resetLink = url('/reset-password?token=' . $token . '&email=' . urlencode($user->email) . '&type=admin');
+        }
+
+        // append redirect if provided
+        if (!empty($redirect)) {
+            $resetLink .= '&redirect_to=' . urlencode($redirect);
+        }
 
         // إرسال البريد الإلكتروني مع معالجة الأخطاء
         try {
@@ -74,7 +95,10 @@ class ApiUserController extends Controller
                 'message' => 'تم إرسال رابط استعادة كلمة المرور إلى بريدك الإلكتروني.'
             ]);
         } else {
-            return back()->with('status', 'تم إرسال رابط استعادة كلمة المرور إلى بريدك الإلكتروني.');
+            return back()->with([
+                'status' => 'تم إرسال رابط استعادة كلمة المرور إلى بريدك الإلكتروني.',
+                'email' => $user->email
+            ]);
         }
 
     } catch (\Illuminate\Validation\ValidationException $e) {
@@ -147,6 +171,9 @@ class ApiUserController extends Controller
                 ], 400);
             }
 
+            // الحصول على user_type من قاعدة البيانات
+            $userType = $passwordReset->user_type ?? 'user';
+
             // التحقق من صحة الـ token
             if (!password_verify($request->token, $passwordReset->token)) {
                 return response()->json([
@@ -179,7 +206,8 @@ class ApiUserController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'تم تغيير كلمة المرور بنجاح. يرجى تسجيل الدخول مرة أخرى.'
+                'message' => 'تم تغيير كلمة المرور بنجاح. يرجى تسجيل الدخول مرة أخرى.',
+                'user_type' => $userType // إرجاع نوع المستخدم للتوجيه الصحيح
             ]);
 
         } catch (\Illuminate\Validation\ValidationException $e) {

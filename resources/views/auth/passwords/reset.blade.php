@@ -150,6 +150,9 @@
 
                     <input type="hidden" name="token" value="{{ $token }}">
                     <input type="hidden" name="email" value="{{ $email }}">
+                    <input type="hidden" name="type" value="{{ $type ?? 'admin' }}">
+                    <input type="hidden" name="redirect" value="{{ request()->query('redirect') }}">
+                    <input type="hidden" name="redirect_to" value="{{ request()->query('redirect_to') }}">
 
                     <div class="form-group">
                         <label for="email" class="form-label">

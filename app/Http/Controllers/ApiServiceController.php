@@ -15,23 +15,23 @@ class ApiServiceController extends Controller
     {
         $this->profitService = $profitService;
     }
-    
+
 
     public function index()
     {
-       $services=Service::where('status',1)->get();
+       $services=Service::with('category')->where('status',1)->get();
        foreach ($services as $s) {
          $s->image_url = asset('assets/images/service/' . $s->image);  // إنشاء رابط للصورة
-  
+         $s->price=$this->profitService->getPrice($s); // حساب السعر لكل خدمة
      }
        return response()->json(['services'=>$services ]);
     }
     public function show($id)
     {
-       $service = Service::where('id',$id)->where('status',1)->first();
+       $service = Service::with('category')->where('id',$id)->where('status',1)->first();
        $service->price=$this->profitService->getPrice($service);
-   
+
        return response()->json(['service'=>$service ]);
     }
- 
+
 }

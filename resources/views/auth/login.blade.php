@@ -17,7 +17,7 @@
 <!-- MAIN CSS -->
 <link rel="stylesheet" href="assets/css/main.css">
 <style>
-   
+
 @import url('https://fonts.googleapis.com/css2?family=El+Messiri:wght@400..700&display=swap');
 body.font-nunito {
     font-family: "El Messiri", sans-serif;
@@ -37,20 +37,32 @@ body.font-nunito {
                     <div class="top">
                         <!-- <img src="assets/images/logo-white.svg" alt="Iconic"> -->
                         <img src="assets/images/{{session('logo')}}" alt="Iconic">
-                        
+
                     </div>
 					<div class="card" style="direction:rtl">
                         <div class="header">
                         <div class="card-header" style="text-align:center">{{ __('تسجيل الدخول') }}</div>
                         </div>
                         <div class="body">
+                        @if (session('status'))
+                            <div class="alert alert-success" role="alert" style="text-align: center; margin-bottom: 20px;">
+                                {{ session('status') }}
+                            </div>
+                        @endif
+
+                        @if (session('error'))
+                            <div class="alert alert-danger" role="alert" style="text-align: center; margin-bottom: 20px;">
+                                {{ session('error') }}
+                            </div>
+                        @endif
+
                         <form method="POST" action="{{ route('login') }}">
                          @csrf
                          <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa fa-edit"> </i></span>
                             </div>
-                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" 
+                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
                             required placeholder="البريد الالكتروني" autocomplete="email" name="email" value=""
                             autofocus>
                             @error('email')
@@ -71,8 +83,8 @@ body.font-nunito {
                                 <strong>{{ $message }}</strong>
                             </span>
                             @enderror
-                            </div> 
-                        </div> 
+                            </div>
+                        </div>
                         <div class="row mb-3">
                             <div class="col-md-6 offset-md-4">
                                 <div class="form-check">

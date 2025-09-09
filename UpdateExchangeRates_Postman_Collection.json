@@ -1,0 +1,377 @@
+{
+	"info": {
+		"_postman_id": "update-exchange-rates-api",
+		"name": "Update Exchange Rates API",
+		"description": "Collection for testing UpdateExchangeRates command and related currency APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Currency Management",
+			"item": [
+				{
+					"name": "Get All Currencies",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/currencies",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"currencies"
+							]
+						},
+						"description": "Get list of all currencies with their current rates"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Base Currency",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/currencies/base",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"currencies",
+								"base"
+							]
+						},
+						"description": "Get the base currency information"
+					},
+					"response": []
+				},
+				{
+					"name": "Set Base Currency",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"currency_code\": \"USD\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/currencies/set-base",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"currencies",
+								"set-base"
+							]
+						},
+						"description": "Set a currency as the base currency"
+					},
+					"response": []
+				}
+			],
+			"description": "APIs for managing currencies"
+		},
+		{
+			"name": "Exchange Rate Updates",
+			"item": [
+				{
+					"name": "Manual Update Exchange Rates",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/currencies/update-rates",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"currencies",
+								"update-rates"
+							]
+						},
+						"description": "Manually trigger exchange rates update (calls the UpdateExchangeRates command)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Exchange Rate History",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/currencies/history?currency_code=USD&days=30",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"currencies",
+								"history"
+							],
+							"query": [
+								{
+									"key": "currency_code",
+									"value": "USD",
+									"description": "Currency code to get history for"
+								},
+								{
+									"key": "days",
+									"value": "30",
+									"description": "Number of days to get history for"
+								}
+							]
+						},
+						"description": "Get exchange rate history for a specific currency"
+					},
+					"response": []
+				}
+			],
+			"description": "APIs for updating and managing exchange rates"
+		},
+		{
+			"name": "External API Testing",
+			"item": [
+				{
+					"name": "Test ExchangeRate-API.com",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://v6.exchangerate-api.com/v6/{{exchange_api_key}}/latest/{{base_currency}}",
+							"protocol": "https",
+							"host": [
+								"v6",
+								"exchangerate-api",
+								"com"
+							],
+							"path": [
+								"v6",
+								"{{exchange_api_key}}",
+								"latest",
+								"{{base_currency}}"
+							]
+						},
+						"description": "Test the external ExchangeRate-API.com directly"
+					},
+					"response": []
+				},
+				{
+					"name": "Test API Status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://v6.exchangerate-api.com/v6/{{exchange_api_key}}/status",
+							"protocol": "https",
+							"host": [
+								"v6",
+								"exchangerate-api",
+								"com"
+							],
+							"path": [
+								"v6",
+								"{{exchange_api_key}}",
+								"status"
+							]
+						},
+						"description": "Check API status and remaining requests"
+					},
+					"response": []
+				}
+			],
+			"description": "Test external exchange rate API directly"
+		},
+		{
+			"name": "Admin Commands",
+			"item": [
+				{
+					"name": "Run Artisan Command - Update Rates",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"command\": \"currencies:update\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/artisan",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"artisan"
+							]
+						},
+						"description": "Run the currencies:update artisan command via API"
+					},
+					"response": []
+				}
+			],
+			"description": "Admin commands for running artisan commands"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Set timestamp for requests",
+					"pm.globals.set('timestamp', new Date().toISOString());"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Basic response tests",
+					"pm.test('Status code is successful', function () {",
+					"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);",
+					"});",
+					"",
+					"pm.test('Response time is less than 5000ms', function () {",
+					"    pm.expect(pm.response.responseTime).to.be.below(5000);",
+					"});",
+					"",
+					"pm.test('Response has JSON content-type', function () {",
+					"    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+					"});"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://api.its-server.online",
+			"type": "string"
+		},
+		{
+			"key": "local_url",
+			"value": "http://localhost:8082",
+			"type": "string"
+		},
+		{
+			"key": "exchange_api_key",
+			"value": "2ae6ba4b45bdc5e750ac7312",
+			"type": "string"
+		},
+		{
+			"key": "base_currency",
+			"value": "USD",
+			"type": "string"
+		},
+		{
+			"key": "auth_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "admin_token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

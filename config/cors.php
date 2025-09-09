@@ -13,23 +13,23 @@ return [
     |
     | To learn more: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
     |*/
-    
+
 
     // Defines which paths should be subject to CORS. In this case, it's the API routes.
-    'paths' => ['api/*', 'sanctum/csrf-cookie'],
+    'paths' => ['api/*', 'sanctum/csrf-cookie', 'forgot-password'],
 
     // Specifies the HTTP methods that are allowed in cross-origin requests. '*' allows all methods.
     'allowed_methods' => ['*'],
 
     // Specifies which origins are allowed to access the resources.
     // You can add multiple origins here or use '*' to allow all origins.
-    'allowed_origins' => ['http://localhost:3000','https://its-server.online'],
+    'allowed_origins' => ['http://localhost:3000','http://localhost:3001','https://its-server.online'],
 
     // Patterns that match origins to be allowed. Use this if you need more flexible control over the origin.
     'allowed_origins_patterns' => [],
 
     // Specifies which headers can be included in cross-origin requests. '*' allows all headers.
-    'allowed_headers' => ['Content-Type', 'Authorization', 'X-Requested-With'],
+    'allowed_headers' => ['*'],
     // Specifies which headers should be exposed to the browser in the response.
     'exposed_headers' => [],
 
@@ -39,6 +39,6 @@ return [
     // Allows credentials to be included in cross-origin requests. Set to true if the client-side needs credentials.
     'supports_credentials' => true,
 
-    
+
 
 ];

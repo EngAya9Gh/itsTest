@@ -19,7 +19,9 @@ class UpdateExchangeRates extends Command
         return;
     }
 
-    $apiKey ="2ae6ba4b45bdc5e750ac7312";
+    $apiKey ="151fb02064ca412c11c165d6";
+    //151fb02064ca412c11c165d6
+    //2ae6ba4b45bdc5e750ac7312
     $baseCode = $baseCurrency->code;
 
     $url = "https://v6.exchangerate-api.com/v6/{$apiKey}/latest/{$baseCode}";
@@ -46,9 +48,10 @@ class UpdateExchangeRates extends Command
         }
 
         foreach (Currency::all() as $currency) {
-            if ($currency->code === $baseCurrency) {
+            if ($currency->code === $baseCode) {
                 $currency->rate = 1;
                 $currency->is_base = true;
+                 // $this->info('b= '.$currency->code.'='.$baseCurrency);
             } else {
                 $currency->rate = $rates[$currency->code] ?? $currency->rate;
                 $currency->is_base = false;

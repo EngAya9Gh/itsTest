@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Reset Password API</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <h1>Test Reset Password API</h1>
+
+    <div>
+        <h3>1. Generate Token</h3>
+        <input type="email" id="email" placeholder="Email" value="info.eng.123@gmail.com">
+        <button onclick="generateToken()">Generate Token</button>
+        <div id="tokenResult"></div>
+    </div>
+
+    <div>
+        <h3>2. Reset Password</h3>
+        <input type="text" id="token" placeholder="Token">
+        <input type="email" id="resetEmail" placeholder="Email" value="info.eng.123@gmail.com">
+        <input type="password" id="password" placeholder="New Password" value="newpassword123">
+        <input type="password" id="confirmPassword" placeholder="Confirm Password" value="newpassword123">
+        <button onclick="resetPassword()">Reset Password</button>
+        <div id="resetResult"></div>
+    </div>
+
+    <script>
+        const API_BASE = 'https://api.its-server.online/api';
+
+        async function generateToken() {
+            try {
+                const email = document.getElementById('email').value;
+                const response = await axios.post(`${API_BASE}/forgot-password`, {
+                    email: email,
+                    user_type: 'user'
+                });
+
+                document.getElementById('tokenResult').innerHTML =
+                    `<p style="color: green;">Success: ${response.data.message}</p>`;
+
+                console.log('Generate token response:', response.data);
+            } catch (error) {
+                document.getElementById('tokenResult').innerHTML =
+                    `<p style="color: red;">Error: ${error.response?.data?.message || error.message}</p>`;
+                console.error('Generate token error:', error.response?.data || error.message);
+            }
+        }
+
+        async function resetPassword() {
+            try {
+                const token = document.getElementById('token').value;
+                const email = document.getElementById('resetEmail').value;
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+
+                console.log('Sending data:', {
+                    token: token ? 'present' : 'missing',
+                    email: email || 'missing',
+                    password: password ? 'present' : 'missing',
+                    password_confirmation: confirmPassword ? 'present' : 'missing'
+                });
+
+                const response = await axios.post(`${API_BASE}/reset-password`, {
+                    token: token,
+                    email: email,
+                    password: password,
+                    password_confirmation: confirmPassword
+                });
+
+                document.getElementById('resetResult').innerHTML =
+                    `<p style="color: green;">Success: ${response.data.message}</p>
+                     <p>User Type: ${response.data.user_type}</p>`;
+
+                console.log('Reset password response:', response.data);
+            } catch (error) {
+                let errorMsg = 'Unknown error';
+                if (error.response?.data?.errors) {
+                    errorMsg = Object.values(error.response.data.errors).flat().join(', ');
+                } else if (error.response?.data?.message) {
+                    errorMsg = error.response.data.message;
+                } else if (error.message) {
+                    errorMsg = error.message;
+                }
+
+                document.getElementById('resetResult').innerHTML =
+                    `<p style="color: red;">Error: ${errorMsg}</p>`;
+                console.error('Reset password error:', error.response?.data || error.message);
+            }
+        }
+    </script>
+</body>
+</html>

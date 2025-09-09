@@ -28,7 +28,7 @@ services:
     container_name: laravel_db
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: laravel
+      MYSQL_DATABASE: root
       MYSQL_ROOT_PASSWORD: secret
     ports:
       - "3308:3306"
@@ -48,6 +48,23 @@ services:
       - ./etc/php/php.ini:/usr/local/etc/php/conf.d/php.ini
     depends_on:
       - db
+
+  react:
+    build:
+      context: ./its-server.online
+      dockerfile: Dockerfile
+    container_name: react_app
+    restart: unless-stopped
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./its-server.online:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_API_BASE_URL=http://localhost:8082/api
+    stdin_open: true
+    tty: true
 
 volumes:
   db_data:

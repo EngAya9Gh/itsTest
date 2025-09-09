@@ -53,6 +53,9 @@ use App\Http\Controllers\FavoriteController;
 
 use App\Http\Controllers\ApiCurrencyController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ApiOrderitsController;
+use App\Http\Controllers\ApiCurrencyExchangeController;
+
 
 
 
@@ -74,8 +77,10 @@ use App\Http\Controllers\NotificationController;
   Route::post('/check-email-for-reset', [ApiUserController::class, 'checkEmailForReset']);
   Route::post('/reset-password', [ApiUserController::class, 'resetPassword']);
 
-
-
+  // Currency Exchange Routes
+  Route::get('currencies', [ApiCurrencyExchangeController::class, 'index']);
+  Route::get('currencies/base', [ApiCurrencyExchangeController::class, 'getBaseCurrency']);
+  Route::get('currencies/history', [ApiCurrencyExchangeController::class, 'getHistory']);
 
   Route::get('slider', [ApiSliderController::class, 'sliders']);
 
@@ -98,6 +103,7 @@ Route::get('totalRecords',[ApiAllServicesTotalController::class, 'index']);
 
 
   Route::post('service/order/{id}',[ApiServiceOrderController::class, 'store']);
+  Route::post('service/orderits/{id}',[ApiOrderitsController::class, 'store']);
   Route::post('fatura/order/{id}',[ApiFaturaOrderController::class, 'store']);
   Route::get('/admin/unread-notifications', [NotificationController::class, 'getUnreadNotifications'])->name('unread.notifications');
   Route::post('/admin/mark-as-read/{notification}', [NotificationController::class, 'markAsRead']);
@@ -120,8 +126,10 @@ Route::get('totalRecords',[ApiAllServicesTotalController::class, 'index']);
 
   Route::post('transfer/order',[ApiTransferOrderController::class, 'store']);
 
-
-
+  // Protected Currency Exchange Routes (Admin only)
+  Route::post('currencies/set-base', [ApiCurrencyExchangeController::class, 'setBaseCurrency']);
+  Route::post('currencies/update-rates', [ApiCurrencyExchangeController::class, 'updateRates']);
+  Route::post('admin/artisan', [ApiCurrencyExchangeController::class, 'runArtisanCommand']);
 
 
   Route::get('logged-in-user', [ApiUserController::class, 'getLoggedInUser']);
