@@ -79,13 +79,13 @@
                                             @endif
 
                                             <td>
-                                                @if($section->type==2)
+                                                {{-- @if($section->type==2) --}}
                                                 @if($service->status )
                                                     <a href="javascript:void(0);" data-toggle="modal" class="btn btn-primary" data-target="#enableModal{{$service->id}}" style="background-color:#22a191"><i class="fa fa-add">ايقاف</i></a>
                                                 @else
                                                     <a href="javascript:void(0);" data-toggle="modal" class="btn btn-primary" data-target="#enableModal{{$service->id}}" style="background-color:#23b5a7a1"><i class="fa fa-add">تفعيل</i></a>
                                                 @endif
-                                                 @endif
+                                                 {{-- @endif --}}
                                             </td>
                                         </tr>
                                         @endforeach

@@ -53,7 +53,26 @@ class UpdateExchangeRates extends Command
                 $currency->is_base = true;
                  // $this->info('b= '.$currency->code.'='.$baseCurrency);
             } else {
-                $currency->rate = $rates[$currency->code] ?? $currency->rate;
+                // Use API rate if available; otherwise keep the current one
+                $newRate = $rates[$currency->code] ?? $currency->rate;
+
+                // Add 20 cents if the currency is USD
+              $newRate = $rates[$currency->code] ?? $currency->rate;
+
+if ($currency->code === 'USD') {
+    // نفترض أن 0.20 هي من عملة الأساس (مثلاً TRY)
+    $basePerUSD = 1 / $newRate;   // كم TRY مقابل 1 USD
+    $basePerUSD += 0.20;          // أضف 20 قرش/0.20 TRY
+    $newRate = 1 / $basePerUSD;   // رجّعها لصيغة USD لكل 1 TRY
+}
+
+$currency->rate = $newRate;
+$currency->is_base = false;
+  if ($currency->code === 'USD') {
+                    $newRate += 0.20;
+                }
+
+                $currency->rate = $newRate;
                 $currency->is_base = false;
             }
             $currency->save();
