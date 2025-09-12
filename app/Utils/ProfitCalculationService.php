@@ -9,7 +9,7 @@ use App\Models\Profit;
 use App\Models\Currency;
 class ProfitCalculationService
   {
-  
+
   public function getRateAtTime($currency)
   {
       $baseCurrency = Currency::where('is_base', true)->first();
@@ -27,12 +27,17 @@ class ProfitCalculationService
           throw new \Exception("سعر صرف غير صالح للعملة: {$currency}");
       }
 
+      // إذا كانت العملة المطلوبة هي الليرة التركية، استخدم المعدل المحدد
+      if (strtoupper($currency) === 'TRY' || strtoupper($targetCurrency->code) === 'TRY') {
+          return 0.0242145;
+      }
+
       // السعر هو: قيمة العملة الأساسية / قيمة العملة الهدف
       $rateAtTime = $baseCurrency->rate / $targetCurrency->rate;
 
       return round($rateAtTime, 6);
   }
-  
+
   public function convertToBasicPrice($price, $currency)
   {
       $baseCurrency = Currency::where('is_base', true)->first();
@@ -51,16 +56,34 @@ class ProfitCalculationService
           throw new \Exception("سعر صرف غير صالح للعملة: {$currency}");
       }
 
-      $convertedAmount = $price * ($baseCurrency->rate / $orderCurrency->rate);
+      // إذا كانت العملة هي الليرة التركية، استخدم المعدل المحدد
+      if (strtoupper($currency) === 'TRY' || strtoupper($orderCurrency->code) === 'TRY') {
+          $convertedAmount = $price * 0.0242145;
+      } else {
+          $convertedAmount = $price * ($baseCurrency->rate / $orderCurrency->rate);
+      }
 
       return round($convertedAmount, 2);
   }
-  
+
+  /**
+   * إضافة رسوم التحويل (20 سنت للدولار الأمريكي)
+   */
+  public function addConversionFee($amount, $targetCurrency)
+  {
+      // إذا كانت العملة المستهدفة هي الدولار الأمريكي، أضف 20 سنت
+      if (strtoupper($targetCurrency) === 'USD') {
+          return $amount + 0.20;
+      }
+
+      return $amount;
+  }
+
   public function calculateProfit($order, $modelType, $serviceId)
 {
     $user = User::find($order->user_id);
     $service = $modelType::findOrFail($serviceId);
-    
+
     $count = $order->count ?? 1;
     $profitDifference = ($service->price - $service->basic_price) * $count;
 
@@ -153,7 +176,16 @@ class ProfitCalculationService
 
         if ($preferredCurrency && $preferredCurrency->id !== $baseCurrency->id) {
             // تحويل من العملة الأساسية إلى عملة المستخدم المفضلة
-            $convertedPrice = round($price * $preferredCurrency->rate, 4);
+            if (strtoupper($preferredCurrency->code) === 'TRY') {
+                // استخدام المعدل المحدد للليرة التركية
+                $convertedPrice = round($price * 0.0242145, 4);
+            } else {
+                $convertedPrice = round($price * $preferredCurrency->rate, 4);
+            }
+
+            // إضافة رسوم التحويل إذا كانت العملة المفضلة هي الدولار
+            $convertedPrice = $this->addConversionFee($convertedPrice, $preferredCurrency->code);
+
             return $convertedPrice;
         }
     }
@@ -171,7 +203,16 @@ class ProfitCalculationService
     $baseCurrency = \App\Models\Currency::getBaseCurrency(); // مثل TRY
 
     if ($preferredCurrency && $preferredCurrency->id !== $baseCurrency->id) {
-        $convertedPrice = round($price * $preferredCurrency->rate, 4);
+        if (strtoupper($preferredCurrency->code) === 'TRY') {
+            // استخدام المعدل المحدد للليرة التركية
+            $convertedPrice = round($price * 0.0242145, 4);
+        } else {
+            $convertedPrice = round($price * $preferredCurrency->rate, 4);
+        }
+
+        // إضافة رسوم التحويل إذا كانت العملة المفضلة هي الدولار
+        $convertedPrice = $this->addConversionFee($convertedPrice, $preferredCurrency->code);
+
         return $convertedPrice;
     }
 
@@ -235,19 +276,19 @@ class ProfitCalculationService
         // الوارد
         $incoming = Transaction::where('to_user_id', $userId)
                                 ->sum('amount');
-    
+
         // الصادر
         $outgoing = Transaction::where('from_user_id', $userId)
                                 ->sum('amount');
-    
+
         // الأرباح
         $profitTotals = Profit::where('user_id', $userId)->sum('profit_amount');
-        
+
         // الديون
         $debts = Transaction::where('to_user_id', $userId)
                             ->where('payment_done', 0)
                             ->sum('amount');
-    
+
         return [
             'incoming' => $incoming,
             'outgoing' => $outgoing,
@@ -257,19 +298,19 @@ class ProfitCalculationService
             'profit'=>$profit,
         ];
     }
-  */  
+  */
 
     public function getDebts($userId)
     {
         $balance=User::find($userId)->balance;
         $profit=User::find($userId)->balance_profit;
-           
+
         $debts = Transaction::where('to_user_id', $userId)
                             ->where('payment_done', 0)
                             ->sum('amount');
-       
+
         return $debts ;
     }
-    
+
 
 }

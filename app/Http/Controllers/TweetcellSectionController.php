@@ -10,6 +10,18 @@ use Illuminate\Support\Facades\DB;
 
 class TweetcellSectionController extends Controller
 {
+    public function index()
+    {
+        $services = TweetcellSection::orderBy('id', 'desc')->paginate(500);
+        return view('backend.tweetcell.tweetcellSections.index', compact('services'));
+    }
+
+    public function getByType($type)
+    {
+        $services = TweetcellSection::where('type', $type)->orderBy('id', 'desc')->paginate(500);
+        return view('backend.tweetcell.tweetcellSections.index', compact('services'));
+    }
+
     public function getByTypeByProvider($type,$apiNo)
     { //dd('kkk');
         $services=DB::table('tweetcell_sections')->select('*')->where('type',$type)->where('api_no',$apiNo)->orderBy('id', 'desc')->paginate(500);
@@ -17,13 +29,13 @@ class TweetcellSectionController extends Controller
     }
 
 
-    
+
 
 
     public function store(Request $request)
     {
         $input = $request->all();
-      
+
          if($request->file('image')!="")
          {
             if ($file = $request->file('image')) {
@@ -52,7 +64,7 @@ class TweetcellSectionController extends Controller
     {
         $game = TweetcellSection::findOrFail($id);
         $input = $request->all();
-      
+
         if($request->file('image')!="")
         {
            if ($file = $request->file('image')) {
@@ -80,7 +92,7 @@ class TweetcellSectionController extends Controller
     {
 
         $myservice= TweetcellSection::findOrFail($id);
-       
+
         if($myservice->status)
          { $myservice->status=0;
            $myservice->save();

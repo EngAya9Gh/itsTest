@@ -221,6 +221,7 @@ Route::group(['middleware'=> 'auth'], function(){
 
     Route::resource('oyun' , TweetcellController::class);
     Route::resource('oyun-section' , TweetcellSectionController::class);
+    Route::get('oyun-section/{id}/type' , [ TweetcellSectionController::class,'getByType']);
     Route::get('oyun-section/{id}/type/{api}/provider' , [ TweetcellSectionController::class,'getByTypeByProvider']);
     Route::get('/oyun/{id}/category',[ TweetcellController::class,'showGames']);
     Route::get('oyun-order/{type}' , [TweetcellOrderController::class, 'index']);
